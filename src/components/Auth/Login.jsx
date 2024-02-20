@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const buttonSubmitHandler = () => {
+    console.log("Email is", email);
+  };
+
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
       <div className="row justify-content-center align-items-center">
@@ -21,7 +28,9 @@ const Login = () => {
                 type="email"
                 className="form-control"
                 id="email"
+                value={email}
                 placeholder="Email"
+                onChange={(event) => setEmail(event.target.value)}
               />
               <label htmlFor="email">Email</label>
             </div>
@@ -31,7 +40,9 @@ const Login = () => {
                 type="password"
                 className="form-control"
                 id="password"
+                value={password}
                 placeholder="Password"
+                onChange={(event) => setPassword(event.target.value)}
               />
               <label htmlFor="password">Password</label>
             </div>
@@ -42,6 +53,7 @@ const Login = () => {
               <button
                 type="submit"
                 className="login-btn btn btn-primary rounded-3"
+                onClick={buttonSubmitHandler}
               >
                 Login
               </button>
