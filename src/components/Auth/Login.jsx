@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
+
+import {
+  getEmailValidationRules,
+  getPasswordValidationRules,
+} from "../../utils/validators";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
 
-  const buttonSubmitHandler = () => {
-    console.log("Email is", email);
+  const onSubmit = (data) => {
+    console.log("Form Submitted", data);
   };
 
   return (
@@ -21,17 +32,24 @@ const Login = () => {
           />
         </div>
         <div className="col-md-5">
-          <form className="py-5 px-4">
+          <form
+            className="py-5 px-4"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+          >
             <h4 className="login-title text-center py-2 mb-4">Login</h4>
             <div className="form-floating mb-3">
               <input
                 type="email"
                 className="form-control"
                 id="email"
-                value={email}
                 placeholder="Email"
-                onChange={(event) => setEmail(event.target.value)}
+                {...register("email", getEmailValidationRules())}
               />
+              {errors.email && (
+                <p className="errorMsg">{errors.email.message}</p>
+              )}
+
               <label htmlFor="email">Email</label>
             </div>
 
@@ -40,10 +58,12 @@ const Login = () => {
                 type="password"
                 className="form-control"
                 id="password"
-                value={password}
                 placeholder="Password"
-                onChange={(event) => setPassword(event.target.value)}
+                {...register("password", getPasswordValidationRules())}
               />
+              {errors.password && (
+                <p className="errorMsg">{errors.password.message}</p>
+              )}
               <label htmlFor="password">Password</label>
             </div>
             <div className="text-end mb-4">
@@ -53,7 +73,6 @@ const Login = () => {
               <button
                 type="submit"
                 className="login-btn btn btn-primary rounded-3"
-                onClick={buttonSubmitHandler}
               >
                 Login
               </button>
@@ -62,6 +81,7 @@ const Login = () => {
               <Link to="/sign-up">New User?</Link>
             </div>
           </form>
+          <DevTool control={control} />
         </div>
       </div>
     </div>

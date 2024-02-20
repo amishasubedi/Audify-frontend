@@ -26,3 +26,9 @@
     outline: none;
   }
 }
+
+.errorMsg {
+  color: red;
+  font-size: 12px;
+  text-align: left;
+}

@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
-import Layout from "./components/Layout/Layout";
 import VerifyEmail from "./components/Auth/VerifyEmail";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 
