@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./style.css";
-import { useForm } from "react-hook-form";
+import useCustomForm from "../Hooks/form-hook";
+import { Link } from "react-router-dom";
+import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
 
 import {
@@ -11,16 +12,9 @@ import {
 } from "../../utils/validators";
 
 const Signup = () => {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
+  const onSubmit = (data) => console.log("Form Submitted", data);
 
-  const onSubmit = (data) => {
-    console.log("Form Submitted", data);
-  };
+  const { register, handleSubmit, control, errors } = useCustomForm(onSubmit);
 
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
@@ -33,56 +27,36 @@ const Signup = () => {
           />
         </div>
         <div className="col-md-5">
-          <form
-            className="py-5 px-4"
-            onSubmit={handleSubmit(onSubmit)}
-            noValidate
-          >
-            <h4 className="login-title text-center py-2 mb-4">Login</h4>
-
-            <div className="form-floating mb-3">
-              <input
-                type="name"
-                className="form-control"
-                id="name"
-                placeholder="Name"
-                {...register("email", getNameValidationRules)}
-              />
-              {errors.name && <p className="errorMsg">{errors.name.message}</p>}
-
-              <label htmlFor="email">Name</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="Email"
-                {...register("email", getEmailValidationRules())}
-              />
-              {errors.email && (
-                <p className="errorMsg">{errors.email.message}</p>
-              )}
-
-              <label htmlFor="email">Email</label>
-            </div>
-
-            <div className="form-floating">
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                {...register("password", getPasswordValidationRules())}
-              />
-              {errors.password && (
-                <p className="errorMsg">{errors.password.message}</p>
-              )}
-              <label htmlFor="password">Password</label>
-            </div>
+          <form onSubmit={handleSubmit} noValidate>
+            <h4 className="login-title text-center py-2 mb-4">Signup</h4>
+            <FormField
+              id="name"
+              label="Name"
+              type="text"
+              register={register}
+              registerOptions={getNameValidationRules()}
+              errors={errors}
+            />
+            <FormField
+              id="email"
+              label="Email"
+              type="email"
+              register={register}
+              registerOptions={getEmailValidationRules()}
+              errors={errors}
+            />
+            <FormField
+              id="password"
+              label="Password"
+              type="password"
+              register={register}
+              registerOptions={getPasswordValidationRules()}
+              errors={errors}
+            />
             <div className="text-end mb-4">
               <Link to="/forgot-password">Forgot Password?</Link>
             </div>
+
             <div className="text-center">
               <button
                 type="submit"
@@ -92,7 +66,7 @@ const Signup = () => {
               </button>
             </div>
             <div className="text-end mb-4">
-              <Link to="/sign-up">New User?</Link>
+              <Link to="/sign-in">Already have an account?</Link>
             </div>
           </form>
           <DevTool control={control} />

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import FormField from "../Shared/FormField";
 
 import {
   getEmailValidationRules,
@@ -38,34 +39,22 @@ const Login = () => {
             noValidate
           >
             <h4 className="login-title text-center py-2 mb-4">Login</h4>
-            <div className="form-floating mb-3">
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="Email"
-                {...register("email", getEmailValidationRules())}
-              />
-              {errors.email && (
-                <p className="errorMsg">{errors.email.message}</p>
-              )}
-
-              <label htmlFor="email">Email</label>
-            </div>
-
-            <div className="form-floating">
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                {...register("password", getPasswordValidationRules())}
-              />
-              {errors.password && (
-                <p className="errorMsg">{errors.password.message}</p>
-              )}
-              <label htmlFor="password">Password</label>
-            </div>
+            <FormField
+              id="email"
+              label="Email"
+              type="email"
+              register={register}
+              registerOptions={getEmailValidationRules()}
+              errors={errors}
+            />
+            <FormField
+              id="password"
+              label="Password"
+              type="password"
+              register={register}
+              registerOptions={getPasswordValidationRules()}
+              errors={errors}
+            />
             <div className="text-end mb-4">
               <Link to="/forgot-password">Forgot Password?</Link>
             </div>

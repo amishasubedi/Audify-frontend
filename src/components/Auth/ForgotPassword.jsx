@@ -18,15 +18,14 @@ const ForgotPassword = () => {
             <h4 className="login-title text-center py-2 mb-4">
               Forget Password
             </h4>
-            <div className="form-floating mb-3">
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="Email"
-              />
-              <label htmlFor="email">Email</label>
-            </div>
+            <FormField
+              id="email"
+              label="Email"
+              type="email"
+              register={register}
+              registerOptions={getEmailValidationRules()}
+              errors={errors}
+            />
 
             <div className="d-flex justify-content-between mb-4">
               <Link to="/sign-up">Signup</Link>
