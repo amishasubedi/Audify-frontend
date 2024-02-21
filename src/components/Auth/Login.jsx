@@ -8,7 +8,7 @@ import FormField from "../Shared/FormField";
 import {
   getEmailValidationRules,
   getPasswordValidationRules,
-} from "../../utils/validators";
+} from "../utils/validators";
 
 const Login = () => {
   const {

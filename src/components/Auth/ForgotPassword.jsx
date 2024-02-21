@@ -1,8 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FormField from "../Shared/FormField";
+import { getEmailValidationRules } from "../utils/validators";
+import { useForm } from "react-hook-form";
 import "./style.css";
 
 const ForgotPassword = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("Form Submitted", data);
+  };
+
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
       <div className="row justify-content-center align-items-center">
@@ -14,7 +27,11 @@ const ForgotPassword = () => {
           />
         </div>
         <div className="col-md-5">
-          <form className="py-5 px-4">
+          <form
+            className="py-5 px-4"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+          >
             <h4 className="login-title text-center py-2 mb-4">
               Forget Password
             </h4>

@@ -4,15 +4,26 @@ import useCustomForm from "../Hooks/form-hook";
 import { Link } from "react-router-dom";
 import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
+import axios from "axios";
 
 import {
   getEmailValidationRules,
   getNameValidationRules,
   getPasswordValidationRules,
-} from "../../utils/validators";
+} from "../utils/validators";
 
 const Signup = () => {
-  const onSubmit = (data) => console.log("Form Submitted", data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/users/sign-up",
+        data
+      );
+      console.log("Signup successful", response.data);
+    } catch (error) {
+      console.error("Signup error", error);
+    }
+  };
 
   const { register, handleSubmit, control, errors } = useCustomForm(onSubmit);
 
@@ -62,7 +73,7 @@ const Signup = () => {
                 type="submit"
                 className="login-btn btn btn-primary rounded-3"
               >
-                Login
+                Signup
               </button>
             </div>
             <div className="text-end mb-4">
