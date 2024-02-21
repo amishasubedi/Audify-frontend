@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import useCustomForm from "../Hooks/form-hook";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
 import axios from "axios";
@@ -13,6 +13,10 @@ import {
 } from "../utils/validators";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, reset, control, errors } = useCustomForm();
+
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
@@ -20,12 +24,13 @@ const Signup = () => {
         data
       );
       console.log("Signup successful", response.data);
+      navigate("/verify-email");
     } catch (error) {
       console.error("Signup error", error);
+      navigate("/error-page");
     }
+    reset();
   };
-
-  const { register, handleSubmit, control, errors } = useCustomForm(onSubmit);
 
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
@@ -38,7 +43,7 @@ const Signup = () => {
           />
         </div>
         <div className="col-md-5">
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <h4 className="login-title text-center py-2 mb-4">Signup</h4>
             <FormField
               id="name"

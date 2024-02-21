@@ -11,7 +11,7 @@ const useCustomForm = (onSubmit) => {
 
   return {
     register,
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit,
     control,
     errors,
     reset,

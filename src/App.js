@@ -5,6 +5,7 @@ import Signup from "./components/Auth/Signup";
 import VerifyEmail from "./components/Auth/VerifyEmail";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import Header from "./components/Layout/Header";
+import ErrorPage from "./components/utils/error_page";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="sign-up" element={<Signup />} />
         <Route path="verify-email" element={<VerifyEmail />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="error-page" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );
