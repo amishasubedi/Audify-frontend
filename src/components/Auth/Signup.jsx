@@ -4,7 +4,8 @@ import useCustomForm from "../Hooks/form-hook";
 import { Link, useNavigate } from "react-router-dom";
 import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
-import axios from "axios";
+
+import { useSignupUserMutation } from "../../redux/Services/api_service";
 
 import {
   getEmailValidationRules,
@@ -15,22 +16,29 @@ import {
 const Signup = () => {
   const navigate = useNavigate();
 
+  const [SignupUser, { isLoading, isSuccess, isError }] =
+    useSignupUserMutation();
+
   const { register, handleSubmit, reset, control, errors } = useCustomForm();
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/users/sign-up",
-        data
-      );
-      console.log("Signup successful", response.data);
-      navigate("/verify-email");
+      const response = await SignupUser(data).unwrap();
+      console.log("Signup successful", response);
     } catch (error) {
       console.error("Signup error", error);
-      navigate("/error-page");
     }
     reset();
   };
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      navigate("/verify-email");
+    }
+    if (isError) {
+      navigate("/error-page");
+    }
+  }, [isSuccess, isError, navigate]);
 
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
@@ -77,6 +85,7 @@ const Signup = () => {
               <button
                 type="submit"
                 className="login-btn btn btn-primary rounded-3"
+                disabled={isLoading}
               >
                 Signup
               </button>

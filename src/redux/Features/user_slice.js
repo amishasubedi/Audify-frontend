@@ -9,10 +9,8 @@ const initialState = {
 const userSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    // reducers - login, signup, ...
-  },
+  reducers: {},
 });
 
-// export const {} = userSlice.actions - all api implemented are actions
+export const { actions } = userSlice;
 export default userSlice.reducer;
