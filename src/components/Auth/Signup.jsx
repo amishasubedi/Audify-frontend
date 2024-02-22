@@ -35,10 +35,12 @@ const Signup = () => {
     if (isSuccess) {
       navigate("/verify-email");
     }
+
     if (isError) {
-      navigate("/error-page");
+      alert("Some thing went wrong, Please try again");
+      reset();
     }
-  }, [isSuccess, isError, navigate]);
+  }, [isSuccess, isError, navigate, isLoading, reset]);
 
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
@@ -87,7 +89,7 @@ const Signup = () => {
                 className="login-btn btn btn-primary rounded-3"
                 disabled={isLoading}
               >
-                Signup
+                {isLoading ? "Creating Account..." : "Signup"}
               </button>
             </div>
             <div className="text-end mb-4">
