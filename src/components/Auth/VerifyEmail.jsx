@@ -1,8 +1,19 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getEmailValidationRules } from "../utils/validators";
+import { useUser } from "../Context/user_context";
+import useCustomForm from "../Hooks/form-hook";
+import { useVerifyEmailMutation } from "../../redux/Services/api_service";
 import "./style.css";
 
 const VerifyEmail = () => {
+  const navigate = useNavigate();
+  const { userDetails } = useUser();
+  const [VerifyEmail, { isLoading, isSuccess, isError }] =
+    useVerifyEmailMutation();
+
+  const { register, handleSubmit, reset, errors } = useCustomForm();
+
   const initialOtpState = Array(6).fill("");
   const [otp, setOtp] = useState(initialOtpState);
   const otpInputRefs = useRef([]);
@@ -34,7 +45,6 @@ const VerifyEmail = () => {
   };
 
   const handleOtpPaste = (e) => {
-    e.preventDefault();
     const pastedData = e.clipboardData
       .getData("text/plain")
       .slice(0, 6)
@@ -45,6 +55,35 @@ const VerifyEmail = () => {
       otpInputRefs.current[5].focus();
     }
   };
+
+  const onSubmit = async (e) => {
+    const otpToken = otp.join("");
+
+    const userInfo = {
+      token: otpToken,
+      userId: userDetails.userId,
+    };
+
+    try {
+      const response = await VerifyEmail(userInfo).unwrap(); // for some reason, it is not populating anything in user_email_verifications
+      console.log("Email Verified", response);
+    } catch (error) {
+      console.error("Email Verification Error", error);
+      alert("Verification failed, please try again.");
+    }
+    reset();
+  };
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      navigate("/home");
+    }
+
+    if (isError) {
+      alert("Some thing went wrong, Please try again");
+      reset();
+    }
+  }, [isSuccess, isError, navigate, isLoading, reset]);
 
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
@@ -57,7 +96,7 @@ const VerifyEmail = () => {
           />
         </div>
         <div className="col-md-5">
-          <form className="py-5 px-4">
+          <form className="py-5 px-4" onSubmit={handleSubmit(onSubmit)}>
             <h4 className="login-title text-center py-2 mb-4">Verify Email</h4>
             <p>Your code was sent to you via email</p>
             <div className="otp-field mb-4" onPaste={handleOtpPaste}>
@@ -68,6 +107,9 @@ const VerifyEmail = () => {
                   maxLength="1"
                   className="otp-input"
                   value={otp[index]}
+                  register={register}
+                  registerOptions={getEmailValidationRules}
+                  errors={errors}
                   onChange={(e) => handleOtpChange(e.target.value, index)}
                   ref={(el) => (otpInputRefs.current[index] = el)}
                 />
@@ -77,8 +119,9 @@ const VerifyEmail = () => {
               <button
                 type="submit"
                 className="login-btn btn btn-primary rounded-3"
+                disabled={isLoading}
               >
-                Verify
+                {isLoading ? "Verifying user..." : "Verify"}
               </button>
             </div>
             <div className="text-end mb-4">

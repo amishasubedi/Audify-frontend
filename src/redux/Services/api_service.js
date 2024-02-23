@@ -16,10 +16,10 @@ export const apiSlice = createApi({
     }),
 
     VerifyEmail: builder.mutation({
-      query: (email) => ({
+      query: (user) => ({
         url: "users/verify",
         method: "POST",
-        body: email,
+        body: user,
       }),
     }),
 
@@ -41,4 +41,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useSignupUserMutation } = apiSlice;
+export const { useSignupUserMutation, useVerifyEmailMutation } = apiSlice;

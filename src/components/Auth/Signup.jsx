@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 import useCustomForm from "../Hooks/form-hook";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../Context/user_context";
 import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
 
@@ -14,6 +15,8 @@ import {
 } from "../utils/validators";
 
 const Signup = () => {
+  const { userDetails, saveUserDetails } = useUser();
+
   const navigate = useNavigate();
 
   const [SignupUser, { isLoading, isSuccess, isError }] =
@@ -24,7 +27,17 @@ const Signup = () => {
   const onSubmit = async (data) => {
     try {
       const response = await SignupUser(data).unwrap();
-      console.log("Signup successful", response);
+      console.log("Signup successful", response.data);
+
+      const userData = {
+        userId: response.data.ID,
+        name: response.data.Name,
+        email: response.data.Email,
+        followers: response.data.Followers,
+        followings: response.data.Followings,
+      };
+
+      saveUserDetails(userData);
     } catch (error) {
       console.error("Signup error", error);
     }
