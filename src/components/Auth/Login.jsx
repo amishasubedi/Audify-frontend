@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useUser } from "../Context/user_context";
 import FormField from "../Shared/FormField";
+import { useSigninUserMutation } from "../../redux/Services/api_service";
 
 import {
   getEmailValidationRules,
@@ -11,19 +13,47 @@ import {
 } from "../utils/validators";
 
 const Login = () => {
+  const { userDetails, saveUserDetails } = useUser();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Submitted", data);
+  const [SigninUser, { isLoading, isSuccess, isError }] =
+    useSigninUserMutation();
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await SigninUser(data).unwrap();
+      console.log("Sign in successful", response);
+
+      // save auth token to local storage
+      await localStorage.setItem("jsonwebtoken", response.token);
+
+      saveUserDetails(data);
+    } catch (error) {
+      console.error("Signin error", error);
+    }
+    reset();
   };
 
+  React.useEffect(() => {
+    if (isSuccess) {
+      navigate("/home");
+    }
+
+    if (isError) {
+      alert("Some thing went wrong, Please try again");
+      reset();
+    }
+  }, [isSuccess, isError, navigate, isLoading, reset]);
+
   return (
-    <div className="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div className="container min-vh-100 d-flex align-items-centera justify-content-center">
       <div className="row justify-content-center align-items-center">
         <div className="col-md-5">
           <img
