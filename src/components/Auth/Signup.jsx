@@ -7,6 +7,7 @@ import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
 
 import { useSignupUserMutation } from "../../redux/Services/api_service";
+import "./style.css";
 
 import {
   getEmailValidationRules,

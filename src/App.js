@@ -11,8 +11,8 @@ import Layout from "./components/Home/Layout";
 
 function App() {
   return (
-    <Layout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Layout>
         <Routes>
           <Route path="sign-in" element={<Login />} />
           <Route path="sign-up" element={<Signup />} />
@@ -21,8 +21,8 @@ function App() {
           <Route path="error-page" element={<ErrorPage />} />
           <Route path="home" element={<Home />} />
         </Routes>
-      </BrowserRouter>
-    </Layout>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
