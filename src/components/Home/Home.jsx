@@ -1,5 +1,11 @@
-const Home = () => {
-  return <h2>Welcome to Home page</h2>;
+import Sidebar from "./Sidebar";
+
+const Home = ({ children }) => {
+  return (
+    <div>
+      <Sidebar>{children}</Sidebar>
+    </div>
+  );
 };
 
 export default Home;

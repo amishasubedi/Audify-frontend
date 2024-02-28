@@ -13,6 +13,7 @@ import {
   getNameValidationRules,
   getPasswordValidationRules,
 } from "../utils/validators";
+import Layout from "../Home/Layout";
 
 const Signup = () => {
   const { userDetails, saveUserDetails } = useUser();
