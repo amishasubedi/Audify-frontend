@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 import "./Style.css";
 
 const sidebarStyle = {
-  backgroundColor: "#000 !important",
+  backgroundColor: "bg-neutral-900",
 };
 
 const Sidebar = () => {
@@ -38,12 +38,12 @@ const Sidebar = () => {
                 Home
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
+            <NavLink exact to="/explore" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="compass" className="NavLink">
                 Explore
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
+            <NavLink exact to="/library" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="music" className="NavLink">
                 Library
               </CDBSidebarMenuItem>
@@ -51,23 +51,23 @@ const Sidebar = () => {
             <hr />
             <div className="d-flex justify-content-center">
               <NavLink exact to="/profile" activeClassName="activeClicked">
-                <button className=" text-white p-1 px-5 btn">
+                <button className=" text-white p-1 px-5 playlist-btn">
                   + New Playlist
                 </button>
               </NavLink>
             </div>
 
-            <NavLink exact to="/profile" activeClassName="activeClicked">
+            <NavLink exact to="/favorites" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="heart" className="NavLink">
                 Liked Music
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
+            <NavLink exact to="/playlist" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="book" className="NavLink">
                 Playlist 1
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
+            <NavLink exact to="/ep-later" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="tv" className="NavLink">
                 Episodes for later
               </CDBSidebarMenuItem>

@@ -7,16 +7,15 @@ import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
 
 import { useSignupUserMutation } from "../../redux/Services/api_service";
-import "./style.css";
 
 import {
   getEmailValidationRules,
   getNameValidationRules,
   getPasswordValidationRules,
 } from "../utils/validators";
-import Layout from "../Home/Layout";
 
 const Signup = () => {
+  //console.log("Backend url", process.env.REACT_APP_BASE_URL);
   const { userDetails, saveUserDetails } = useUser();
 
   const navigate = useNavigate();

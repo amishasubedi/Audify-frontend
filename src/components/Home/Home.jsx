@@ -1,9 +1,9 @@
 import Sidebar from "./Sidebar";
 
-const Home = ({ children }) => {
+const Home = () => {
   return (
     <div>
-      <Sidebar>{children}</Sidebar>
+      <h2> This is the content of home page</h2>
     </div>
   );
 };
