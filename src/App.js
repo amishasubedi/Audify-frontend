@@ -8,11 +8,13 @@ import Home from "./components/Home/Home";
 import ErrorPage from "./components/utils/error_page";
 import Layout from "./components/Home/Layout";
 import Player from "./components/Audio/player";
+import Header from "./components/Home/Header";
 
 function App() {
   return (
     <BrowserRouter>
       <Layout>
+        <Header />
         <Routes>
           <Route path="sign-in" element={<Login />} />
           <Route path="sign-up" element={<Signup />} />

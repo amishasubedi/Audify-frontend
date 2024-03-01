@@ -1,10 +1,14 @@
 import Sidebar from "./Sidebar";
+import "./Style.css";
 
 const Home = () => {
   return (
-    <div>
-      <h2> This is the content of home page</h2>
-    </div>
+    <>
+      <div className="full-screen-background">
+        <div className="overlay"></div>
+        <h2>Rendering audios soon...</h2>
+      </div>
+    </>
   );
 };
 

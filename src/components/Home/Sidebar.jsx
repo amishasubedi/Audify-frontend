@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 import "./Style.css";
 
 const sidebarStyle = {
-  backgroundColor: "bg-neutral-900",
+  backgroundColor: "black",
 };
 
 const Sidebar = () => {
