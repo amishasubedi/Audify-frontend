@@ -1,0 +1,79 @@
+.playlist-btn {
+  border-radius: 20px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.playlist-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.NavLink:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 0.25rem;
+}
+
+.background {
+  position: relative;
+  height: 100vh;
+  background: url("https://img.freepik.com/free-vector/gradient-black-background-with-wavy-lines_23-2149151738.jpg?size=626&ext=jpg&ga=GA1.1.1395880969.1709337600&semt=ais")
+    no-repeat center center/cover;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(248, 247, 216, 0.2);
+}
+
+.has-search {
+  position: relative;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+  position: relative;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  display: block;
+  z-index: 2;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.search-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  background: transparent;
+}
+
+.search-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.category-btn {
+  border-radius: 10px;
+  border: none;
+  cursor: e-resize;
+  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease-in-out;
+  z-index: 2;
+  position: relative;
+}
+
+.category-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}

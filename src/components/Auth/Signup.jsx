@@ -15,6 +15,7 @@ import {
 } from "../utils/validators";
 
 const Signup = () => {
+  //console.log("Backend url", process.env.REACT_APP_BASE_URL);
   const { userDetails, saveUserDetails } = useUser();
 
   const navigate = useNavigate();

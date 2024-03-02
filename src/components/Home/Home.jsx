@@ -1,5 +1,17 @@
+import Categories from "./Categories";
+import Header from "./Header";
+import "./Style.css";
+
 const Home = () => {
-  return <h2>Welcome to Home page</h2>;
+  return (
+    <>
+      <div className="background">
+        <div className="layer"></div>
+        <Header />
+        <Categories />
+      </div>
+    </>
+  );
 };
 
 export default Home;
