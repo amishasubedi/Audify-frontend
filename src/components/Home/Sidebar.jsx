@@ -8,7 +8,6 @@ import {
   CDBSidebarMenuItem,
 } from "cdbreact";
 import { NavLink } from "react-router-dom";
-import "./Style.css";
 
 const sidebarStyle = {
   backgroundColor: "black",
@@ -33,7 +32,7 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
+            <NavLink exact to="/home" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="home" className="NavLink">
                 Home
               </CDBSidebarMenuItem>
@@ -50,7 +49,7 @@ const Sidebar = () => {
             </NavLink>
             <hr />
             <div className="d-flex justify-content-center">
-              <NavLink exact to="/profile" activeClassName="activeClicked">
+              <NavLink exact to="/add/playlist">
                 <button className=" text-white p-1 px-5 playlist-btn">
                   + New Playlist
                 </button>

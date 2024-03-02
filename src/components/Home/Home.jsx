@@ -1,12 +1,14 @@
-import Sidebar from "./Sidebar";
+import Categories from "./Categories";
+import Header from "./Header";
 import "./Style.css";
 
 const Home = () => {
   return (
     <>
-      <div className="full-screen-background">
-        <div className="overlay"></div>
-        <h2>Rendering audios soon...</h2>
+      <div className="background">
+        <div className="layer"></div>
+        <Header />
+        <Categories />
       </div>
     </>
   );
