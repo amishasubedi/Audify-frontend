@@ -36,6 +36,8 @@
   border-radius: 20px;
   border: 1px solid #ced4da;
   text-align: center;
+  z-index: 3;
+  position: relative;
 
   &:focus {
     border-color: #80bdff;

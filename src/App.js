@@ -7,7 +7,6 @@ import ForgotPassword from "./components/Auth/ForgotPassword";
 import Home from "./components/Home/Home";
 import ErrorPage from "./components/utils/error_page";
 import Layout from "./components/Home/Layout";
-import Player from "./components/Audio/player";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="error-page" element={<ErrorPage />} />
           <Route path="home" element={<Home />} />
-          <Route path="player" element={<Player />} />
         </Routes>
       </Layout>
     </BrowserRouter>

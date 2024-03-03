@@ -1,4 +1,5 @@
 import Categories from "./Categories";
+import Audio from "../Audios/Audio";
 import Header from "./Header";
 import "./Style.css";
 
@@ -7,6 +8,7 @@ const Home = () => {
     <>
       <Header />
       <Categories />
+      <Audio />
     </>
   );
 };
