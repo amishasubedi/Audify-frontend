@@ -7,8 +7,14 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Categories />
-      <Audio />
+      <div className="row">
+        <div className="col-8 px-1">
+          <Categories />
+        </div>
+        <div className="col-8 px-2">
+          <Audio />
+        </div>
+      </div>
     </>
   );
 };

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="text-white px-5 py-3 d-flex justify-content-between">
-      <div className="form-group has-search col-5 px-5">
+      <div className="form-group has-search col-5 px-4">
         <span className="fa fa-search form-control-feedback"></span>
         <input
           type="text"

@@ -1,0 +1,86 @@
+.custom-card {
+  position: relative;
+  background-color: #000000;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.custom-card:hover {
+  background-color: #111111;
+}
+
+.card-title {
+  font-size: 1.2rem;
+}
+
+.card-text.text-secondary {
+  font-size: 0.9rem;
+}
+
+.card-text.small {
+  font-size: 0.8rem;
+  color: #888888;
+}
+
+.card-body {
+  position: relative;
+}
+
+.img-container {
+  position: relative;
+}
+
+.img-fluid {
+  width: 100%;
+  height: auto;
+}
+
+/* Play button styles */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  cursor: pointer;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.img-container:hover .play-button {
+  opacity: 1;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #111111;
+  color: #ffffff;
+  transition: bottom 0.3s ease;
+  z-index: 1000; /* Ensure the audio player is above other elements */
+}
+
+.audio-player.visible {
+  display: block;
+}
+
+/* Cursor pointer for the entire card */
+.custom-card,
+.custom-card:hover {
+  cursor: pointer;
+}
+
+/* Cursor pointer for the image */
+.img-container:hover {
+  cursor: pointer;
+}
+
+/* Player visibility transition */
+.custom-card:hover .audio-player {
+  bottom: -50px;
+}
