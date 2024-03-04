@@ -1,86 +1,64 @@
 .custom-card {
+  background-color: black;
+  color: #fff;
+  display: flex;
+  border-radius: 4px;
+  max-width: 350px;
+  cursor: pointer;
+  z-index: 3;
   position: relative;
-  background-color: #000000;
-  border: none;
-  transition: background-color 0.3s ease;
 }
 
 .custom-card:hover {
-  background-color: #111111;
-}
-
-.card-title {
-  font-size: 1.2rem;
-}
-
-.card-text.text-secondary {
-  font-size: 0.9rem;
-}
-
-.card-text.small {
-  font-size: 0.8rem;
-  color: #888888;
+  background-color: #222222;
 }
 
 .card-body {
-  position: relative;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.img-container {
-  position: relative;
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
 }
 
-.img-fluid {
-  width: 100%;
-  height: auto;
+.card-text {
+  font-size: 14px;
 }
 
-/* Play button styles */
-.play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
-  cursor: pointer;
-  color: #ffffff;
+.custom-img {
+  width: 60px;
+  height: 75px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.card-icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: visibility 0s, opacity 0.3s ease;
 }
 
-.img-container:hover .play-button {
+.custom-card:hover .card-icons {
+  visibility: visible;
   opacity: 1;
 }
 
-/* Audio player styles */
-.audio-player {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #111111;
-  color: #ffffff;
-  transition: bottom 0.3s ease;
-  z-index: 1000; /* Ensure the audio player is above other elements */
+.icon {
+  margin-left: 10px;
 }
 
-.audio-player.visible {
-  display: block;
+.custom-card:hover .icon {
+  color: #fff;
 }
 
-/* Cursor pointer for the entire card */
-.custom-card,
-.custom-card:hover {
-  cursor: pointer;
-}
-
-/* Cursor pointer for the image */
-.img-container:hover {
-  cursor: pointer;
-}
-
-/* Player visibility transition */
-.custom-card:hover .audio-player {
-  bottom: -50px;
+.icon + .icon {
+  margin-left: 10px;
 }

@@ -11,7 +11,7 @@ const Home = () => {
         <div className="col-8 px-1">
           <Categories />
         </div>
-        <div className="col-8 px-2">
+        <div className="col-8 px-3">
           <Audio />
         </div>
       </div>
