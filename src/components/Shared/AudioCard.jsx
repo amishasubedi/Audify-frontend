@@ -1,9 +1,14 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { FaPlay, FaHeart, FaEllipsisH } from "react-icons/fa";
+import React, { useContext } from "react";
+import { FaPlay, FaPause, FaHeart, FaEllipsisH } from "react-icons/fa";
+import { PlayerContext } from "../Context/player-context";
 import "./Style.css";
 
 const AudioCard = ({ title, artist, imageUrl, audioUrl }) => {
+  const { isPlaying, handlePlayPause, audioRef } = useContext(PlayerContext);
+
+  // Set the audio source
+  audioRef.current = new Audio(audioUrl);
+
   return (
     <div className="px-5 p-3 justify-content-center mt-5">
       <div className="px-4">
@@ -13,8 +18,12 @@ const AudioCard = ({ title, artist, imageUrl, audioUrl }) => {
             <h5 className="card-title">{title}</h5>
             <p className="card-text">{artist}</p>
           </div>
-          <div className="card-icons">
-            <FaPlay className="icon" />
+          <div className="card-icons" onClick={handlePlayPause}>
+            {isPlaying ? (
+              <FaPause className="icon" />
+            ) : (
+              <FaPlay className="icon" />
+            )}
             <FaHeart className="icon" />
             <FaEllipsisH className="icon" />
           </div>

@@ -8,7 +8,6 @@ const Categories = () => {
     { name: "Study", path: "/category/study" },
     { name: "Party", path: "/category/party" },
     { name: "Chill", path: "/category/chill" },
-    { name: "Classics", path: "/category/classics" },
   ];
 
   return (
