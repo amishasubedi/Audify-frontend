@@ -7,7 +7,7 @@ import {
   CDBSidebarMenu,
   CDBSidebarMenuItem,
 } from "cdbreact";
-import { NavLink } from "react-router-dom";
+import ProtectedLink from "../Auth/ProtectedLink";
 
 const sidebarStyle = {
   backgroundColor: "black",
@@ -32,45 +32,49 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/home" activeClassName="activeClicked">
+            <ProtectedLink exact to="/home" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="home" className="NavLink">
                 Home
               </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/explore" activeClassName="activeClicked">
+            </ProtectedLink>
+            <ProtectedLink exact to="/explore" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="compass" className="NavLink">
                 Explore
               </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/library" activeClassName="activeClicked">
+            </ProtectedLink>
+            <ProtectedLink exact to="/library" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="music" className="NavLink">
                 Library
               </CDBSidebarMenuItem>
-            </NavLink>
+            </ProtectedLink>
             <hr />
             <div className="d-flex justify-content-center">
-              <NavLink exact to="/add/playlist">
+              <ProtectedLink exact to="/add/playlist">
                 <button className=" text-white p-1 px-5 playlist-btn">
                   + New Playlist
                 </button>
-              </NavLink>
+              </ProtectedLink>
             </div>
 
-            <NavLink exact to="/favorites" activeClassName="activeClicked">
+            <ProtectedLink
+              exact
+              to="/favorites"
+              activeClassName="activeClicked"
+            >
               <CDBSidebarMenuItem icon="heart" className="NavLink">
                 Liked Music
               </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/playlist" activeClassName="activeClicked">
+            </ProtectedLink>
+            <ProtectedLink exact to="/playlist" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="book" className="NavLink">
                 Playlist 1
               </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/ep-later" activeClassName="activeClicked">
+            </ProtectedLink>
+            <ProtectedLink exact to="/ep-later" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="tv" className="NavLink">
                 Episodes for later
               </CDBSidebarMenuItem>
-            </NavLink>
+            </ProtectedLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 

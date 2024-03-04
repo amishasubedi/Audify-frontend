@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../Context/user_context";
 
 const Header = () => {
+  const { userDetails, saveUserDetails } = useUser();
+
   return (
     <div className="text-white px-5 py-3 d-flex justify-content-between">
       <div className="form-group has-search col-5 px-4">
@@ -30,32 +33,43 @@ const Header = () => {
             A
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li>
-              <Link to="/profile" className="dropdown-item">
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link to="/settings" className="dropdown-item">
-                Settings
-              </Link>
-            </li>
-            <li>
-              <Link to="/settings" className="dropdown-item">
-                Upload Music
-              </Link>
-            </li>
-            <li>
-              <Link to="/settings" className="dropdown-item">
-                History
-              </Link>
-            </li>
-            <li></li>
-            <li>
-              <Link to="/sign-in" className="dropdown-item">
-                Login
-              </Link>
-            </li>
+            {userDetails.userId ? (
+              <>
+                {/* Links for logged in users */}
+                <li>
+                  <Link to="/profile" className="dropdown-item">
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/settings" className="dropdown-item">
+                    Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/upload" className="dropdown-item">
+                    Upload Music
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/history" className="dropdown-item">
+                    History
+                  </Link>
+                </li>
+                <li>
+                  <button className="dropdown-item">Logout</button>
+                </li>
+              </>
+            ) : (
+              <>
+                {/* Link for users not logged in */}
+                <li>
+                  <Link to="/sign-in" className="dropdown-item">
+                    Login
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
