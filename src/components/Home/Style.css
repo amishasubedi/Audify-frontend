@@ -24,6 +24,11 @@
     no-repeat center center/cover;
 }
 
+.header {
+  background-color: black;
+  z-index: 1020;
+}
+
 .layer {
   position: absolute;
   top: 0;

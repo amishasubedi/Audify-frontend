@@ -8,6 +8,7 @@ import Layout from "../Home/Layout";
 import FormField from "../Shared/FormField";
 import { DevTool } from "@hookform/devtools";
 import "./Style.css";
+import Header from "../Home/Header";
 
 const AudioForm = () => {
   const {
@@ -18,6 +19,7 @@ const AudioForm = () => {
 
   return (
     <Layout>
+      <Header />
       <div className="wrapper min-vh-100 align-items-center justify-content-center">
         <div className="row justify-content-center align-items-center">
           <div className="col-md-5">

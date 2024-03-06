@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAuthState } from "../../redux/Features/user_slice";
 
+import "./Style.css";
+
 const Header = () => {
   const authState = useSelector(getAuthState);
   console.log(authState);
 
   return (
-    <div className="text-white px-5 py-3 d-flex justify-content-between">
+    <div className="header sticky-top text-white px-5 py-3 d-flex justify-content-between">
       <div className="form-group has-search col-5 px-4">
         <span className="fa fa-search form-control-feedback"></span>
         <input
