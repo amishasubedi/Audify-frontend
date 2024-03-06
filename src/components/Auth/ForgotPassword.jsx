@@ -32,7 +32,7 @@ const ForgotPassword = () => {
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
-            <h4 className="login-title text-center py-2 mb-4">
+            <h4 className="login-title text-center py-2 mb-4 text-white">
               Forget Password
             </h4>
             <FormField
@@ -44,15 +44,15 @@ const ForgotPassword = () => {
               errors={errors}
             />
 
-            <div className="d-flex justify-content-between mb-4">
-              <Link to="/sign-up">Signup</Link>
-              <Link to="/sign-in">Signin</Link>
+            <div className="d-flex justify-content-between mb-4 link">
+              <Link to="/sign-up">Sign up</Link>
+              <Link to="/sign-in">Sign in</Link>
             </div>
 
             <div className="text-center">
               <button
                 type="submit"
-                className="login-btn btn btn-primary rounded-3"
+                className="login-btn p-2 text-white rounded-3"
               >
                 Send Link
               </button>

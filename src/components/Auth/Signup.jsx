@@ -15,7 +15,6 @@ import {
 } from "../utils/validators";
 
 const Signup = () => {
-  //console.log("Backend url", process.env.REACT_APP_BASE_URL);
   const { userDetails, saveUserDetails } = useUser();
 
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ const Signup = () => {
         </div>
         <div className="col-md-5">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <h4 className="login-title text-center py-2 mb-4">Signup</h4>
+            <h4 className="login-title text-white py-2 mb-4">Signup</h4>
             <FormField
               id="name"
               label="Name"
@@ -93,20 +92,20 @@ const Signup = () => {
               registerOptions={getPasswordValidationRules()}
               errors={errors}
             />
-            <div className="text-end mb-4">
+            <div className="text-end mb-4 link">
               <Link to="/forgot-password">Forgot Password?</Link>
             </div>
 
             <div className="text-center">
               <button
                 type="submit"
-                className="login-btn btn btn-primary rounded-3"
+                className="login-btn p-2 text-white rounded-3"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Signup"}
               </button>
             </div>
-            <div className="text-end mb-4">
+            <div className="text-end mb-4 link">
               <Link to="/sign-in">Already have an account?</Link>
             </div>
           </form>

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./style.css";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useUser } from "../Context/user_context";
@@ -68,7 +67,7 @@ const Login = () => {
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
-            <h4 className="login-title text-center py-2 mb-4">Login</h4>
+            <h4 className="login-title text-white  py-2 mb-4">Login</h4>
             <FormField
               id="email"
               label="Email"
@@ -85,18 +84,18 @@ const Login = () => {
               registerOptions={getPasswordValidationRules()}
               errors={errors}
             />
-            <div className="text-end mb-4">
+            <div className="text-end mb-4 link">
               <Link to="/forgot-password">Forgot Password?</Link>
             </div>
             <div className="text-center">
               <button
                 type="submit"
-                className="login-btn btn btn-primary rounded-3"
+                className="login-btn p-2 text-white rounded-3"
               >
                 Login
               </button>
             </div>
-            <div className="text-end mb-4">
+            <div className="text-end mb-4 link">
               <Link to="/sign-up">New User?</Link>
             </div>
           </form>

@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  z-index: 2;
+}
+
+.footer-player {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #333;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.container.d-flex {
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.container.d-flex {
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}

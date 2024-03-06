@@ -8,11 +8,10 @@ const Categories = () => {
     { name: "Study", path: "/category/study" },
     { name: "Party", path: "/category/party" },
     { name: "Chill", path: "/category/chill" },
-    { name: "Classics", path: "/category/classics" },
   ];
 
   return (
-    <div className="justify-content-center flex-wrap px-5 py-1 mt-5">
+    <div className="justify-content-right px-4 py-1 mt-5">
       <div className="px-5">
         {categories.map((category, index) => (
           <NavLink key={index} exact to={category.path} className="mx-2 ">

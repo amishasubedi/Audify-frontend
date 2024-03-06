@@ -118,13 +118,13 @@ const VerifyEmail = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="login-btn btn btn-primary rounded-3"
+                className="login-btn p-2 rounded-3"
                 disabled={isLoading}
               >
                 {isLoading ? "Verifying user..." : "Verify"}
               </button>
             </div>
-            <div className="text-end mb-4">
+            <div className="text-end mb-4 link">
               <Link to="/verify-email">Request Again?</Link>
             </div>
           </form>

@@ -4,13 +4,29 @@
   font-weight: bold;
   width: 100%;
   border-radius: 20px;
+  position: relative;
+  z-index: 2;
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.login-btn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .container {
   .row {
     gap: 2rem;
   }
+}
+
+.link a {
+  position: relative;
+  z-index: 2;
+  color: #fcf5e5;
+}
+
+.link a:hover {
+  color: #d3d3d3;
 }
 
 .otp-input {
@@ -20,6 +36,8 @@
   border-radius: 20px;
   border: 1px solid #ced4da;
   text-align: center;
+  z-index: 3;
+  position: relative;
 
   &:focus {
     border-color: #80bdff;
