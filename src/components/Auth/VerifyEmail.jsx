@@ -65,7 +65,7 @@ const VerifyEmail = () => {
     };
 
     try {
-      const response = await VerifyEmail(userInfo).unwrap(); // for some reason, it is not populating anything in user_email_verifications
+      const response = await VerifyEmail(userInfo).unwrap();
       console.log("Email Verified", response);
     } catch (error) {
       console.error("Email Verification Error", error);

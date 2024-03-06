@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import { useUser } from "../Context/user_context";
 import FormField from "../Shared/FormField";
 import { useSigninUserMutation } from "../../redux/Services/api_service";
 
@@ -10,9 +9,14 @@ import {
   getEmailValidationRules,
   getPasswordValidationRules,
 } from "../utils/validators";
+import {
+  updateLoggedInState,
+  updateProfile,
+} from "../../redux/Features/user_slice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
-  const { userDetails, saveUserDetails } = useUser();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     register,
@@ -28,12 +32,15 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const response = await SigninUser(data).unwrap();
-      console.log("Sign in successful", response);
 
-      // save auth token to local storage
+      console.log(
+        "Dispatching updateProfile and updateLoggedInState actions",
+        response.profile
+      );
+      dispatch(updateProfile(response.profile));
+      dispatch(updateLoggedInState(true));
+
       await localStorage.setItem("jsonwebtoken", response.token);
-
-      saveUserDetails(data);
     } catch (error) {
       console.error("Signin error", error);
     }
@@ -42,7 +49,7 @@ const Login = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      navigate("/home");
+      navigate("/");
     }
 
     if (isError) {
