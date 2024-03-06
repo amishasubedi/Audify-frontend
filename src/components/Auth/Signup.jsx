@@ -13,6 +13,7 @@ import {
   getNameValidationRules,
   getPasswordValidationRules,
 } from "../utils/validators";
+import AuthLayout from "./AuthLayout";
 
 const Signup = () => {
   const { userDetails, saveUserDetails } = useUser();
@@ -56,63 +57,65 @@ const Signup = () => {
   }, [isSuccess, isError, navigate, isLoading, reset]);
 
   return (
-    <div className="container min-vh-100 d-flex align-items-center justify-content-center">
-      <div className="row justify-content-center align-items-center">
-        <div className="col-md-5">
-          <img
-            src="https://assets.online.berklee.edu/catalog-site-heroes/careers-illustration-v2.png"
-            alt="login visual"
-            className="img-fluid"
-          />
-        </div>
-        <div className="col-md-5">
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <h4 className="login-title text-white py-2 mb-4">Signup</h4>
-            <FormField
-              id="name"
-              label="Name"
-              type="text"
-              register={register}
-              registerOptions={getNameValidationRules()}
-              errors={errors}
+    <AuthLayout>
+      <div className="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div className="row justify-content-center align-items-center">
+          <div className="col-md-5">
+            <img
+              src="https://assets.online.berklee.edu/catalog-site-heroes/careers-illustration-v2.png"
+              alt="login visual"
+              className="img-fluid"
             />
-            <FormField
-              id="email"
-              label="Email"
-              type="email"
-              register={register}
-              registerOptions={getEmailValidationRules()}
-              errors={errors}
-            />
-            <FormField
-              id="password"
-              label="Password"
-              type="password"
-              register={register}
-              registerOptions={getPasswordValidationRules()}
-              errors={errors}
-            />
-            <div className="text-end mb-4 link">
-              <Link to="/forgot-password">Forgot Password?</Link>
-            </div>
+          </div>
+          <div className="col-md-5">
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <h4 className="login-title text-white py-2 mb-4">Signup</h4>
+              <FormField
+                id="name"
+                label="Name"
+                type="text"
+                register={register}
+                registerOptions={getNameValidationRules()}
+                errors={errors}
+              />
+              <FormField
+                id="email"
+                label="Email"
+                type="email"
+                register={register}
+                registerOptions={getEmailValidationRules()}
+                errors={errors}
+              />
+              <FormField
+                id="password"
+                label="Password"
+                type="password"
+                register={register}
+                registerOptions={getPasswordValidationRules()}
+                errors={errors}
+              />
+              <div className="text-end mb-4 link">
+                <Link to="/forgot-password">Forgot Password?</Link>
+              </div>
 
-            <div className="text-center">
-              <button
-                type="submit"
-                className="login-btn p-2 text-white rounded-3"
-                disabled={isLoading}
-              >
-                {isLoading ? "Creating Account..." : "Signup"}
-              </button>
-            </div>
-            <div className="text-end mb-4 link">
-              <Link to="/sign-in">Already have an account?</Link>
-            </div>
-          </form>
-          <DevTool control={control} />
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="login-btn p-2 text-white rounded-3"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Creating Account..." : "Signup"}
+                </button>
+              </div>
+              <div className="text-end mb-4 link">
+                <Link to="/sign-in">Already have an account?</Link>
+              </div>
+            </form>
+            <DevTool control={control} />
+          </div>
         </div>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

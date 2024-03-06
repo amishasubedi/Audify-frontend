@@ -35,9 +35,7 @@ const Header = () => {
             A
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {/* {userDetails.userId ? ( */}
             <>
-              {/* Links for logged in users */}
               <li>
                 <Link to="/profile" className="dropdown-item">
                   Profile
@@ -59,19 +57,11 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <button className="dropdown-item">Logout</button>
-              </li>
-            </>
-            {/* ) : ( */}
-            <>
-              {/* Link for users not logged in */}
-              <li>
                 <Link to="/sign-in" className="dropdown-item">
-                  Login
+                  Logout
                 </Link>
               </li>
             </>
-            {/* )} */}
           </ul>
         </div>
       </div>
