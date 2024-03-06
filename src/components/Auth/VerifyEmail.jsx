@@ -5,6 +5,7 @@ import { useUser } from "../Context/user_context";
 import useCustomForm from "../Hooks/form-hook";
 import { useVerifyEmailMutation } from "../../redux/Services/api_service";
 import "./style.css";
+import AuthLayout from "./AuthLayout";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const VerifyEmail = () => {
     };
 
     try {
-      const response = await VerifyEmail(userInfo).unwrap(); // for some reason, it is not populating anything in user_email_verifications
+      const response = await VerifyEmail(userInfo).unwrap();
       console.log("Email Verified", response);
     } catch (error) {
       console.error("Email Verification Error", error);
@@ -86,51 +87,55 @@ const VerifyEmail = () => {
   }, [isSuccess, isError, navigate, isLoading, reset]);
 
   return (
-    <div className="container min-vh-100 d-flex align-items-center justify-content-center">
-      <div className="row justify-content-center align-items-center">
-        <div className="col-md-5">
-          <img
-            src="https://assets.online.berklee.edu/catalog-site-heroes/careers-illustration-v2.png"
-            alt="login visual"
-            className="img-fluid"
-          />
-        </div>
-        <div className="col-md-5">
-          <form className="py-5 px-4" onSubmit={handleSubmit(onSubmit)}>
-            <h4 className="login-title text-center py-2 mb-4">Verify Email</h4>
-            <p>Your code was sent to you via email</p>
-            <div className="otp-field mb-4" onPaste={handleOtpPaste}>
-              {initialOtpState.map((_, index) => (
-                <input
-                  key={index}
-                  type="number"
-                  maxLength="1"
-                  className="otp-input"
-                  value={otp[index]}
-                  register={register}
-                  registerOptions={getEmailValidationRules}
-                  errors={errors}
-                  onChange={(e) => handleOtpChange(e.target.value, index)}
-                  ref={(el) => (otpInputRefs.current[index] = el)}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <button
-                type="submit"
-                className="login-btn p-2 rounded-3"
-                disabled={isLoading}
-              >
-                {isLoading ? "Verifying user..." : "Verify"}
-              </button>
-            </div>
-            <div className="text-end mb-4 link">
-              <Link to="/verify-email">Request Again?</Link>
-            </div>
-          </form>
+    <AuthLayout>
+      <div className="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div className="row justify-content-center align-items-center">
+          <div className="col-md-5">
+            <img
+              src="https://assets.online.berklee.edu/catalog-site-heroes/careers-illustration-v2.png"
+              alt="login visual"
+              className="img-fluid"
+            />
+          </div>
+          <div className="col-md-5">
+            <form className="py-5 px-4" onSubmit={handleSubmit(onSubmit)}>
+              <h4 className="login-title text-center py-2 mb-4">
+                Verify Email
+              </h4>
+              <p>Your code was sent to you via email</p>
+              <div className="otp-field mb-4" onPaste={handleOtpPaste}>
+                {initialOtpState.map((_, index) => (
+                  <input
+                    key={index}
+                    type="number"
+                    maxLength="1"
+                    className="otp-input"
+                    value={otp[index]}
+                    register={register}
+                    registerOptions={getEmailValidationRules}
+                    errors={errors}
+                    onChange={(e) => handleOtpChange(e.target.value, index)}
+                    ref={(el) => (otpInputRefs.current[index] = el)}
+                  />
+                ))}
+              </div>
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="login-btn p-2 rounded-3"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Verifying user..." : "Verify"}
+                </button>
+              </div>
+              <div className="text-end mb-4 link">
+                <Link to="/verify-email">Request Again?</Link>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

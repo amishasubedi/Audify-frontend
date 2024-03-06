@@ -1,12 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useUser } from "../Context/user_context";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { getAuthState } from "../../redux/Features/user_slice";
+
+import "./Style.css";
 
 const Header = () => {
-  const { userDetails, saveUserDetails } = useUser();
+  const authState = useSelector(getAuthState);
+  console.log(authState);
 
   return (
-    <div className="text-white px-5 py-3 d-flex justify-content-between">
+    <div className="header sticky-top text-white px-5 py-3 d-flex justify-content-between">
       <div className="form-group has-search col-5 px-4">
         <span className="fa fa-search form-control-feedback"></span>
         <input
@@ -33,43 +37,33 @@ const Header = () => {
             A
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {userDetails.userId ? (
-              <>
-                {/* Links for logged in users */}
-                <li>
-                  <Link to="/profile" className="dropdown-item">
-                    Profile
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/settings" className="dropdown-item">
-                    Settings
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/upload" className="dropdown-item">
-                    Upload Music
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/history" className="dropdown-item">
-                    History
-                  </Link>
-                </li>
-                <li>
-                  <button className="dropdown-item">Logout</button>
-                </li>
-              </>
-            ) : (
-              <>
-                {/* Link for users not logged in */}
-                <li>
-                  <Link to="/sign-in" className="dropdown-item">
-                    Login
-                  </Link>
-                </li>
-              </>
-            )}
+            <>
+              <li>
+                <NavLink to="/profile" className="dropdown-item">
+                  Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/settings" className="dropdown-item">
+                  Settings
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/upload" className="dropdown-item">
+                  Upload Music
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/history" className="dropdown-item">
+                  History
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/sign-in" className="dropdown-item">
+                  Logout
+                </NavLink>
+              </li>
+            </>
           </ul>
         </div>
       </div>
