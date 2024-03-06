@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { getAuthState } from "../../redux/Features/user_slice";
 
 const Header = () => {
@@ -37,29 +37,29 @@ const Header = () => {
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <>
               <li>
-                <Link to="/profile" className="dropdown-item">
+                <NavLink to="/profile" className="dropdown-item">
                   Profile
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/settings" className="dropdown-item">
+                <NavLink to="/settings" className="dropdown-item">
                   Settings
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/upload" className="dropdown-item">
+                <NavLink to="/upload" className="dropdown-item">
                   Upload Music
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/history" className="dropdown-item">
+                <NavLink to="/history" className="dropdown-item">
                   History
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/sign-in" className="dropdown-item">
+                <NavLink to="/sign-in" className="dropdown-item">
                   Logout
-                </Link>
+                </NavLink>
               </li>
             </>
           </ul>

@@ -50,7 +50,7 @@ const Login = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      navigate("/");
+      navigate("/home");
     }
 
     if (isError) {

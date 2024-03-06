@@ -7,19 +7,22 @@ import ForgotPassword from "./components/Auth/ForgotPassword";
 import Home from "./components/Home/Home";
 import ErrorPage from "./components/utils/error_page";
 import Player from "./components/Audios/player";
+import UploadAudio from "./components/Audios/UploadAudio";
+import AudioForm from "./components/Audios/AudioForm";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="sign-in" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="sign-up" element={<Signup />} />
         <Route path="verify-email" element={<VerifyEmail />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="error-page" element={<ErrorPage />} />
 
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/player" element={<Player />} />
+        <Route path="/upload" element={<AudioForm />} />
       </Routes>
     </BrowserRouter>
   );

@@ -24,3 +24,25 @@
   align-items: center;
   padding: 10px;
 }
+
+.wrapper {
+  .row {
+    gap: 2rem;
+  }
+}
+
+.iconcontainer: {
+  height: 70px;
+  aspectratio: 1;
+  borderwidth: 2px;
+  bordercolor: gray;
+  borderradius: 7px;
+  display: flex;
+  alignitems: center;
+  justifycontent: center;
+}
+
+.btntitle: {
+  color: rgba(255, 255, 255, 0.1);
+  margintop: 5px;
+}
