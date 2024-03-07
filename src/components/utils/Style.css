@@ -1,0 +1,41 @@
+.input {
+  position: relative;
+  z-index: 3;
+}
+
+.file-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.file-select-btn {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.file-select-btn:hover {
+  background-color: #004494;
+}
+
+.file-select-btn svg {
+  margin-right: 0.5rem;
+}
+
+.file-input {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}

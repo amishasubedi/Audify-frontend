@@ -61,7 +61,7 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <div className="container min-vh-100 d-flex align-items-centera justify-content-center">
+      <div className="container min-vh-100 d-flex align-items-center justify-content-center">
         <div className="row justify-content-center align-items-center">
           <div className="col-md-5">
             <img

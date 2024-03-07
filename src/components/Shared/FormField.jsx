@@ -1,4 +1,4 @@
-import React from "react";
+// Inside your FormField.jsx (or wherever the FormField component is defined)
 
 const FormField = ({
   id,
@@ -7,17 +7,22 @@ const FormField = ({
   registerOptions,
   errors,
   type = "text",
+  children,
 }) => (
   <div className="form-floating mb-3">
-    <input
-      type={type}
-      className={`form-control ${errors[id] ? "is-invalid" : ""}`}
-      id={id}
-      placeholder={label}
-      {...register(id, registerOptions)}
-    />
-    {errors[id] && <p className="errorMsg">{errors[id].message}</p>}
+    {type !== "select" ? (
+      <input
+        type={type}
+        className={`form-control ${errors[id] ? "is-invalid" : ""}`}
+        id={id}
+        placeholder={label}
+        {...register(id, registerOptions)}
+      />
+    ) : (
+      children
+    )}
     <label htmlFor={id}>{label}</label>
+    {errors[id] && <div className="invalid-feedback">{errors[id].message}</div>}
   </div>
 );
 
