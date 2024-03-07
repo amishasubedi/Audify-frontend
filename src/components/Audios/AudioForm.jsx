@@ -1,9 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import {
-  getEmailValidationRules,
-  getPasswordValidationRules,
-} from "../utils/validators";
+import { uploadAudioSchema } from "../utils/validators";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Home/Layout";
 import FormField from "../Shared/FormField";
 
@@ -14,9 +12,20 @@ import Header from "../Home/Header";
 const AudioForm = () => {
   const {
     register,
+    handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(uploadAudioSchema),
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const onError = (errors) => {
+    console.error(errors);
+  };
 
   return (
     <Layout>
@@ -24,7 +33,11 @@ const AudioForm = () => {
       <div className="wrapper  min-vh-100 align-items-center justify-content-center">
         <div className="row justify-content-center align-items-center">
           <div className="col-md-5">
-            <form className="py-5 px-4" noValidate>
+            <form
+              className="py-5 px-4"
+              onSubmit={handleSubmit(onSubmit, onError)}
+              noValidate
+            >
               <h4 className="login-title text-white  py-2 mb-4">
                 Upload Audio
               </h4>
@@ -33,7 +46,6 @@ const AudioForm = () => {
                 label="Title"
                 type="text"
                 register={register}
-                registerOptions={getEmailValidationRules()}
                 errors={errors}
               />
               <FormField
@@ -41,7 +53,6 @@ const AudioForm = () => {
                 label="About"
                 type="text"
                 register={register}
-                registerOptions={getPasswordValidationRules()}
                 errors={errors}
               />
 
@@ -51,7 +62,6 @@ const AudioForm = () => {
                 type="select"
                 register={register}
                 errors={errors}
-                registerOptions={{ required: "Category is required" }}
               >
                 <select
                   className="form-control"
@@ -62,7 +72,6 @@ const AudioForm = () => {
                   <option value="music">Music</option>
                   <option value="podcast">Podcast</option>
                   <option value="audiobook">Audiobook</option>
-                  // Add more categories as needed
                 </select>
               </FormField>
 

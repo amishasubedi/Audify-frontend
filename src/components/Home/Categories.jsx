@@ -1,5 +1,17 @@
 import { NavLink } from "react-router-dom";
 
+export const categories = [
+  "Arts",
+  "Business",
+  "Education",
+  "Entertainment",
+  "Kids & Family",
+  "Music",
+  "Science",
+  "Tech",
+  "Others",
+];
+
 const Categories = () => {
   const categories = [
     { name: "Energize", path: "/category/energize" },

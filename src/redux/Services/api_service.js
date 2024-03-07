@@ -38,6 +38,14 @@ export const apiSlice = createApi({
         body: user,
       }),
     }),
+
+    UploadAudio: builder.mutation({
+      query: (audio) => ({
+        url: "audio/create",
+        method: "POST",
+        body: audio,
+      }),
+    }),
   }),
 });
 
