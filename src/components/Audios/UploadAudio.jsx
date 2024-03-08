@@ -12,7 +12,7 @@ const UploadAudio = () => {
   const { reset } = useCustomForm();
 
   const handleUpload = async (formData) => {
-    console.log("type of handle upload", typeof handleUpload); // Should log "function"
+    console.log("type of handle upload", typeof handleUpload);
     try {
       const response = await UploadAudio(formData).unwrap();
       console.log("Uploaded audio successfully", response);

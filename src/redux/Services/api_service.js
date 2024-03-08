@@ -46,6 +46,16 @@ export const apiSlice = createApi({
         body: audio,
       }),
     }),
+
+    IsAuth: builder.query({
+      query: () => "users/is-auth",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("AUTH_TOKEN")}`,
+      },
+      transformResponse: (response, meta, error) => {
+        return response;
+      },
+    }),
   }),
 });
 
@@ -54,4 +64,5 @@ export const {
   useVerifyEmailMutation,
   useSigninUserMutation,
   useUploadAudioMutation,
+  useIsAuthQuery,
 } = apiSlice;
