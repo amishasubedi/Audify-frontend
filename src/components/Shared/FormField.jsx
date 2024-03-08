@@ -21,7 +21,7 @@ const FormField = ({
       children
     )}
     <label htmlFor={id}>{label}</label>
-    {errors[id] && <div className="invalid-feedback">{errors[id].message}</div>}
+    {errors[id] && <div className="text-danger">{errors[id].message}</div>}
   </div>
 );
 

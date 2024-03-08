@@ -17,7 +17,7 @@ const UploadAudio = () => {
       const response = await UploadAudio(formData).unwrap();
       console.log("Uploaded audio successfully", response);
     } catch (error) {
-      console.log("Upload failed", error);
+      alert("Failed to upload audio");
     }
   };
 
@@ -34,7 +34,7 @@ const UploadAudio = () => {
 
   return (
     <>
-      <AudioForm onSubmit={handleUpload} />
+      <AudioForm onSubmit={handleUpload} isLoading={isLoading} />
     </>
   );
 };

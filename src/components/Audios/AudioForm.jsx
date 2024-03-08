@@ -1,18 +1,27 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Home/Layout";
 import FormField from "../Shared/FormField";
 
 import { DevTool } from "@hookform/devtools";
 import "./Style.css";
 import Header from "../Home/Header";
+import {
+  getAboutValidationRules,
+  getCategoryValidationRules,
+  getTitleValidationRules,
+  uploadAudioSchema,
+  validateFileInput,
+} from "../utils/validators";
 
-const AudioForm = ({ onSubmit }) => {
+const AudioForm = ({ onSubmit, isLoading }) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
+    setError,
   } = useForm({
     defaultValues: {
       title: "",
@@ -21,18 +30,20 @@ const AudioForm = ({ onSubmit }) => {
       audioFile: undefined,
       coverFile: undefined,
     },
+
+    resolver: yupResolver(uploadAudioSchema),
   });
 
-  const handleFormSubmit = (data, event) => {
+  const handleFormSubmit = (data) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("category", data.category);
     formData.append("about", data.about);
 
-    if (data.file[0]) {
+    if (data.file && data.file.length > 0) {
       formData.append("audioFile", data.file[0]);
     }
-    if (data.poster[0]) {
+    if (data.poster && data.poster.length > 0) {
       formData.append("coverFile", data.poster[0]);
     }
 
@@ -64,6 +75,7 @@ const AudioForm = ({ onSubmit }) => {
                 label="Title"
                 type="text"
                 register={register}
+                registerOptions={getTitleValidationRules()}
                 errors={errors}
               />
               <FormField
@@ -71,6 +83,7 @@ const AudioForm = ({ onSubmit }) => {
                 label="About"
                 type="text"
                 register={register}
+                registerOptions={getAboutValidationRules()}
                 errors={errors}
               />
 
@@ -79,6 +92,7 @@ const AudioForm = ({ onSubmit }) => {
                 label="Category"
                 type="select"
                 register={register}
+                registerOptions={getCategoryValidationRules()}
                 errors={errors}
               >
                 <select
@@ -98,6 +112,7 @@ const AudioForm = ({ onSubmit }) => {
                 control={control}
                 render={({ field }) => (
                   <input
+                    {...field}
                     type="file"
                     className="file text-white mb-3 mt-5"
                     onChange={(e) => field.onChange(e.target.files)}
@@ -108,9 +123,9 @@ const AudioForm = ({ onSubmit }) => {
               <Controller
                 name="poster"
                 control={control}
-                className="file"
                 render={({ field }) => (
                   <input
+                    {...field}
                     type="file"
                     className="file text-white"
                     onChange={(e) => field.onChange(e.target.files)}
@@ -123,7 +138,7 @@ const AudioForm = ({ onSubmit }) => {
                   type="submit"
                   className="login-btn p-2 text-white rounded-3 mt-4"
                 >
-                  Upload
+                  {isLoading ? "Uploading audio..." : "Upload"}
                 </button>
               </div>
             </form>

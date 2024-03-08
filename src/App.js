@@ -8,6 +8,7 @@ import Home from "./components/Home/Home";
 import ErrorPage from "./components/utils/error_page";
 import Player from "./components/Audios/player";
 import UploadAudio from "./components/Audios/UploadAudio";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/player" element={<Player />} />
         <Route path="/upload" element={<UploadAudio />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
