@@ -1,5 +1,3 @@
-// Inside your FormField.jsx (or wherever the FormField component is defined)
-
 const FormField = ({
   id,
   label,

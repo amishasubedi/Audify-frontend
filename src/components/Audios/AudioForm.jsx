@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Layout from "../Home/Layout";
 import FormField from "../Shared/FormField";
 
@@ -18,23 +18,25 @@ const AudioForm = ({ onSubmit }) => {
       title: "",
       category: "",
       about: "",
-      file: undefined,
-      poster: undefined,
+      audioFile: undefined,
+      coverFile: undefined,
     },
   });
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = (data, event) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("category", data.category);
     formData.append("about", data.about);
-    if (data.poster && data.poster.length > 0) {
-      formData.append("poster", data.poster[0]);
+
+    if (data.file[0]) {
+      formData.append("audioFile", data.file[0]);
     }
-    if (data.file && data.file.length > 0) {
-      formData.append("file", data.file[0]);
+    if (data.poster[0]) {
+      formData.append("coverFile", data.poster[0]);
     }
 
+    console.log("Form data ", [...formData]);
     onSubmit(formData);
   };
 
@@ -51,6 +53,7 @@ const AudioForm = ({ onSubmit }) => {
             <form
               className="py-5 px-4"
               onSubmit={handleSubmit(handleFormSubmit, onError)}
+              encType="multipart/form-data"
               noValidate
             >
               <h4 className="login-title text-white  py-2 mb-4">
@@ -90,20 +93,29 @@ const AudioForm = ({ onSubmit }) => {
                 </select>
               </FormField>
 
-              <FormField
-                id="upload-music"
-                type="file"
-                label="Upload Audio"
-                register={register}
-                errors={errors}
+              <Controller
+                name="file"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    type="file"
+                    className="file text-white mb-3 mt-5"
+                    onChange={(e) => field.onChange(e.target.files)}
+                  />
+                )}
               />
 
-              <FormField
-                id="upload-poster"
-                type="file"
-                label="Upload Poster"
-                register={register}
-                errors={errors}
+              <Controller
+                name="poster"
+                control={control}
+                className="file"
+                render={({ field }) => (
+                  <input
+                    type="file"
+                    className="file text-white"
+                    onChange={(e) => field.onChange(e.target.files)}
+                  />
+                )}
               />
 
               <div className="text-center">

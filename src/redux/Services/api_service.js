@@ -43,6 +43,9 @@ export const apiSlice = createApi({
       query: (audio) => ({
         url: "audio/create",
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
+        },
         body: audio,
       }),
     }),
@@ -50,7 +53,7 @@ export const apiSlice = createApi({
     IsAuth: builder.query({
       query: () => "users/is-auth",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("AUTH_TOKEN")}`,
+        Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
       },
       transformResponse: (response, meta, error) => {
         return response;
