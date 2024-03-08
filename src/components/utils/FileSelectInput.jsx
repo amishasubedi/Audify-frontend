@@ -1,26 +1,16 @@
 import React from "react";
+import "./Style.css";
 
-const FileSelectInput = ({ icon, onSelect, btnTitle }) => {
-  const handleDocumentSelect = useCallback(
-    (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        onSelect(file);
-      }
-    },
-    [onSelect]
-  );
-
+const FileSelectInput = ({ BtnTitle, onSelect }) => {
   return (
-    <div
-      className="d-flex flex-column align-items-center justify-content-center"
-      style={customStyles.btnContainer}
-    >
-      <label className="btn btn-secondary" style={customStyles.iconContainer}>
-        {icon}
-        <input type="file" className="d-none" onChange={handleDocumentSelect} />
-      </label>
-      {btnTitle && <span style={customStyles.btnTitle}>{btnTitle}</span>}
+    <div className="form-floating mb-3">
+      <input
+        type={type}
+        className={`form-control ${errors[id] ? "is-invalid" : ""}`}
+        id={id}
+        placeholder={label}
+        {...register(id, registerOptions)}
+      />
     </div>
   );
 };

@@ -38,6 +38,37 @@ export const apiSlice = createApi({
         body: user,
       }),
     }),
+
+    UploadAudio: builder.mutation({
+      query: (audio) => ({
+        url: "audio/create",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
+        },
+        body: audio,
+      }),
+    }),
+
+    IsAuth: builder.query({
+      query: () => "users/is-auth",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
+      },
+      transformResponse: (response, meta, error) => {
+        return response;
+      },
+    }),
+
+    GetAllAudios: builder.query({
+      query: () => "audio/",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
+      },
+      transformResponse: (response, meta, error) => {
+        return response;
+      },
+    }),
   }),
 });
 
@@ -45,4 +76,7 @@ export const {
   useSignupUserMutation,
   useVerifyEmailMutation,
   useSigninUserMutation,
+  useUploadAudioMutation,
+  useIsAuthQuery,
+  useGetAllAudiosQuery,
 } = apiSlice;

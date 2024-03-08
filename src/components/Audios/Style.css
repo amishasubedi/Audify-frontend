@@ -46,3 +46,13 @@
   color: rgba(255, 255, 255, 0.1);
   margintop: 5px;
 }
+
+.btn {
+  position: relative;
+  z-index: 100;
+}
+
+.file {
+  position: relative;
+  z-index: 100;
+}
