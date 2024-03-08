@@ -59,6 +59,16 @@ export const apiSlice = createApi({
         return response;
       },
     }),
+
+    GetAllAudios: builder.query({
+      query: () => "audio/",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
+      },
+      transformResponse: (response, meta, error) => {
+        return response;
+      },
+    }),
   }),
 });
 
@@ -68,4 +78,5 @@ export const {
   useSigninUserMutation,
   useUploadAudioMutation,
   useIsAuthQuery,
+  useGetAllAudiosQuery,
 } = apiSlice;

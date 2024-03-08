@@ -17,7 +17,7 @@ const UploadAudio = () => {
       const response = await UploadAudio(formData).unwrap();
       console.log("Uploaded audio successfully", response);
     } catch (error) {
-      alert("Failed to upload audio");
+      console.log("Upload failed", error);
     }
   };
 
