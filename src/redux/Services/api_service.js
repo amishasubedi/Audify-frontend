@@ -53,4 +53,5 @@ export const {
   useSignupUserMutation,
   useVerifyEmailMutation,
   useSigninUserMutation,
+  useUploadAudioMutation,
 } = apiSlice;

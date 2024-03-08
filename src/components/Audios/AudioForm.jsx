@@ -1,7 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { uploadAudioSchema } from "../utils/validators";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Home/Layout";
 import FormField from "../Shared/FormField";
 
@@ -9,18 +7,35 @@ import { DevTool } from "@hookform/devtools";
 import "./Style.css";
 import Header from "../Home/Header";
 
-const AudioForm = () => {
+const AudioForm = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(uploadAudioSchema),
+    defaultValues: {
+      title: "",
+      category: "",
+      about: "",
+      file: undefined,
+      poster: undefined,
+    },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleFormSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("category", data.category);
+    formData.append("about", data.about);
+    if (data.poster && data.poster.length > 0) {
+      formData.append("poster", data.poster[0]);
+    }
+    if (data.file && data.file.length > 0) {
+      formData.append("file", data.file[0]);
+    }
+
+    onSubmit(formData);
   };
 
   const onError = (errors) => {
@@ -35,7 +50,7 @@ const AudioForm = () => {
           <div className="col-md-5">
             <form
               className="py-5 px-4"
-              onSubmit={handleSubmit(onSubmit, onError)}
+              onSubmit={handleSubmit(handleFormSubmit, onError)}
               noValidate
             >
               <h4 className="login-title text-white  py-2 mb-4">

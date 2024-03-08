@@ -6,6 +6,7 @@ const FormField = ({
   register,
   registerOptions,
   errors,
+  onChange,
   type = "text",
   children,
 }) => (
