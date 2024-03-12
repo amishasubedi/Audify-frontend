@@ -29,10 +29,10 @@ const AudioForm = ({ onSubmit, isLoading }) => {
     formData.append("category", data.category);
     formData.append("about", data.about);
 
-    if (data.file[0]) {
+    if (data.file && data.file.length > 0) {
       formData.append("audioFile", data.file[0]);
     }
-    if (data.poster[0]) {
+    if (data.poster && data.poster.length > 0) {
       formData.append("coverFile", data.poster[0]);
     }
 

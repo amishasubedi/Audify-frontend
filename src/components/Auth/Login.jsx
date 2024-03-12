@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import FormField from "../Shared/FormField";
 import { useSigninUserMutation } from "../../redux/Services/api_service";
+import catchAsyncError from "../utils/AsyncErrors";
 
 import {
   getEmailValidationRules,
@@ -15,6 +16,7 @@ import {
 } from "../../redux/Features/user_slice";
 import { useDispatch } from "react-redux";
 import AuthLayout from "./AuthLayout";
+import { updateAlert } from "../../redux/Features/alert_slice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -43,7 +45,8 @@ const Login = () => {
 
       await localStorage.setItem("jsonwebtoken", response.token);
     } catch (error) {
-      console.error("Signin error", error);
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
     }
     reset();
   };
