@@ -39,22 +39,45 @@ export const apiSlice = createApi({
       }),
     }),
 
+    GetAllAudios: builder.query({
+      query: () => "audio/",
+      transformResponse: (response, meta, error) => {
+        return response;
+      },
+    }),
+
+    GetLatestUploads: builder.query({
+      query: () => "audio/latest-uploads",
+      transformResponse: (response, meta, error) => {
+        return response;
+      },
+    }),
+  }),
+});
+
+export const authApiSlice = createApi({
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("jsonwebtoken");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
+
+  endpoints: (builder) => ({
     UploadAudio: builder.mutation({
       query: (audio) => ({
         url: "audio/create",
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
-        },
         body: audio,
       }),
     }),
 
     IsAuth: builder.query({
       query: () => "users/is-auth",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
-      },
       transformResponse: (response, meta, error) => {
         return response;
       },
@@ -62,9 +85,6 @@ export const apiSlice = createApi({
 
     GetAllAudios: builder.query({
       query: () => "audio/",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jsonwebtoken")}`,
-      },
       transformResponse: (response, meta, error) => {
         return response;
       },
@@ -76,7 +96,11 @@ export const {
   useSignupUserMutation,
   useVerifyEmailMutation,
   useSigninUserMutation,
+} = apiSlice;
+
+export const {
   useUploadAudioMutation,
   useIsAuthQuery,
   useGetAllAudiosQuery,
-} = apiSlice;
+  useGetLatestUploadsQuery,
+} = authApiSlice;
