@@ -1,14 +1,12 @@
 import React from "react";
 import { PlayerProvider } from "../Context/player-context";
 import Categories from "./Categories";
-import Audio from "../Audios/Audio";
 import Header from "./Header";
 import "./Style.css";
 import Layout from "./Layout";
+import LatestUploads from "../Audios/LatestUploads";
 
 const Home = () => {
-  //const { loggedIn } = useSelector(getAuthState);
-  //console.log("Checking the logged in status", loggedIn);
   return (
     <Layout>
       <PlayerProvider>
@@ -17,8 +15,9 @@ const Home = () => {
           <div className="col-8 px-1">
             <Categories />
           </div>
-          <div className="col-8 px-3">
-            <Audio />
+          <div className="col-8 px-5">
+            <h3 className="text-white px-5 mt-5">Latest Uploads...</h3>
+            <LatestUploads />
           </div>
         </div>
       </PlayerProvider>

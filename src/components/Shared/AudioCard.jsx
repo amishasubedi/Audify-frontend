@@ -10,7 +10,7 @@ const AudioCard = ({ title, artist, imageUrl, audioUrl }) => {
   audioRef.current = new Audio(audioUrl);
 
   return (
-    <div className="px-5 p-3 justify-content-center mt-5">
+    <div className="px-5 mt-5">
       <div className="px-4">
         <div className="custom-card">
           <img src={imageUrl} alt={title} className="custom-img" />

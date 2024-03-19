@@ -13,18 +13,6 @@
   z-index: 1000;
 }
 
-.container.d-flex {
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-
-.container.d-flex {
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-
 .wrapper {
   .row {
     gap: 2rem;

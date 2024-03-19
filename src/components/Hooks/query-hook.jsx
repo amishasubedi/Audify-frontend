@@ -14,7 +14,7 @@ export const useFetchLatestAudios = () => {
   const dispatch = useDispatch();
 
   return useQuery(["latest-uploads"], {
-    queryFn: () => fetchLatest,
+    queryFn: fetchLatest,
 
     onError(err) {
       const errorMessage = catchAsyncError(err);
