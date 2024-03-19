@@ -9,17 +9,16 @@ import {
 } from "cdbreact";
 import { NavLink } from "react-router-dom";
 
-const sidebarStyle = {
-  backgroundColor: "black",
-};
-
 const Sidebar = () => {
   return (
-    <div
-      className="d-flex flex-column"
-      style={{ height: "100vh", overflow: "scroll initial" }}
-    >
-      <CDBSidebar style={sidebarStyle} textColor="#fff">
+    <div className="d-flex flex-column">
+      <CDBSidebar
+        style={{
+          backgroundColor: "black",
+          position: "fixed",
+        }}
+        textColor="#fff"
+      >
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a
             href="/"

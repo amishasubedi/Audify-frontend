@@ -8,6 +8,13 @@
   transition: background-color 0.2s ease-in-out;
 }
 
+.sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 600;
+  height: 100vh;
+}
+
 .playlist-btn:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
@@ -18,15 +25,15 @@
 }
 
 .background {
-  position: relative;
-  height: 100vh;
+  min-height: 100vh;
   background: url("https://img.freepik.com/free-vector/gradient-black-background-with-wavy-lines_23-2149151738.jpg?size=626&ext=jpg&ga=GA1.1.1395880969.1709337600&semt=ais")
     no-repeat center center/cover;
+  background-attachment: fixed;
 }
 
 .header {
   background-color: black;
-  z-index: 1020;
+  z-index: 10;
 }
 
 .layer {
@@ -35,7 +42,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(248, 247, 216, 0.2);
 }
 
 .has-search {
@@ -83,11 +89,6 @@
   background-color: rgba(255, 255, 255, 0.3) !important;
 }
 
- {
-   {
-    /* .container {
-  z-index: 2;
-  position: relative;
-} */
-  }
+.main-content {
+  padding-left: 240px;
 }

@@ -18,7 +18,7 @@ const LatestUploads = () => {
       className="container-fluid"
       style={{ border: "1px solid #000", padding: "1rem" }}
     >
-      <div style={{ overflowX: "auto", color: "rgba(255, 255, 255, 0.1)" }}>
+      <div style={{ color: "rgba(255, 255, 255, 0.1)" }}>
         <div className="row g-3">
           {data.map((audio) => (
             <div className="col-md-4" key={audio.id}>
