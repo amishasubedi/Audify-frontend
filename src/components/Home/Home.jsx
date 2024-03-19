@@ -15,9 +15,12 @@ const Home = () => {
           <div className="col-8 px-1">
             <Categories />
           </div>
-          <div className="col-8 px-5">
+          <div className="px-5">
             <h3 className="text-white px-5 mt-5">Latest Uploads...</h3>
-            <LatestUploads />
+            <div className="px-5 bg-transparent">
+              {" "}
+              <LatestUploads />
+            </div>
           </div>
         </div>
       </PlayerProvider>
