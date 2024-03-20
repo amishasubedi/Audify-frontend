@@ -53,7 +53,7 @@ const Login = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      navigate("/home");
+      navigate("/");
     }
 
     if (isError) {

@@ -1,3 +1,5 @@
+import "./Style.css";
+
 const PlayAnimation = ({ visible }) => {
   if (!visible) return null;
 

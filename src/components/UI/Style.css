@@ -57,3 +57,36 @@
 .icon + .icon {
   margin-left: 20px;
 }
+
+.animated-stroke {
+  width: 4px;
+  background-color: #fff;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-name: dance;
+  /* Other styles... */
+}
+
+.stroke-1 {
+  animation-delay: 0s;
+  padding: 2px;
+}
+
+.stroke-2 {
+  animation-delay: 0.1s;
+}
+
+.stroke-3 {
+  animation-delay: 0.2s;
+}
+
+@keyframes dance {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(2);
+  }
+}
