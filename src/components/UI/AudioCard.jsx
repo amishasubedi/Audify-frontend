@@ -4,10 +4,6 @@ import PlayAnimation from "./PlayAnimation";
 import "./Style.css";
 
 const AudioCard = ({ title, artist, imageUrl, playing = false, onClick }) => {
-  // useEffect(() => {
-  //   audioRef.current = new Audio(audioUrl);
-  // }, [audioUrl]);
-
   return (
     <div className="custom-card" onClick={onClick}>
       <img src={imageUrl} alt={title} className="custom-img" />

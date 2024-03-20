@@ -3,7 +3,7 @@ import "./style.css";
 import useCustomForm from "../Hooks/form-hook";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../Context/user_context";
-import FormField from "../Shared/FormField";
+import FormField from "../UI/FormField";
 import { DevTool } from "@hookform/devtools";
 
 import { useSignupUserMutation } from "../../redux/Services/api_service";

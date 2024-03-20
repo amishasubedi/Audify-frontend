@@ -2,15 +2,13 @@ import React from "react";
 import { PlayerProvider } from "../Context/player-context";
 import Categories from "./Categories";
 import Header from "./Header";
-import "./Style.css";
 import Layout from "./Layout";
 import LatestUploads from "../Audios/LatestUploads";
-
-const onAudioPressHandler = () => {
-  console.log("Render info here");
-};
+import useAudioPlayback from "../Hooks/useAudioPlayback";
+import "./Style.css";
 
 const Home = () => {
+  const { onAudioPress } = useAudioPlayback();
   return (
     <Layout>
       <PlayerProvider>
@@ -23,7 +21,7 @@ const Home = () => {
             <h3 className="text-white px-5 mt-5">Latest Uploads...</h3>
             <div className="px-5 bg-transparent">
               {" "}
-              <LatestUploads onAudioPress={onAudioPressHandler} />
+              <LatestUploads onAudioClick={onAudioPress} />
             </div>
             <h3 className="text-white px-5 mt-5">Latest Uploads...</h3>
             <div className="px-5 bg-transparent">

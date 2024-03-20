@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../Home/Layout";
-import FormField from "../Shared/FormField";
+import FormField from "../UI/FormField";
 
 import { DevTool } from "@hookform/devtools";
 import "./Style.css";
