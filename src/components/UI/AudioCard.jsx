@@ -4,6 +4,7 @@ import PlayAnimation from "./PlayAnimation";
 import "./Style.css";
 
 const AudioCard = ({ title, artist, imageUrl, playing = false, onClick }) => {
+  console.log(`Playing status for ${title}:`, playing);
   return (
     <div className="custom-card" onClick={onClick}>
       <img src={imageUrl} alt={title} className="custom-img" />
@@ -11,7 +12,7 @@ const AudioCard = ({ title, artist, imageUrl, playing = false, onClick }) => {
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{artist}</p>
       </div>
-      <div>
+      <div className="animation">
         <PlayAnimation visible={playing} />
       </div>
     </div>

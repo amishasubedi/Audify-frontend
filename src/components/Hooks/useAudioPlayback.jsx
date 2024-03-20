@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Howl } from "howler";
 import {
@@ -11,9 +11,9 @@ const useAudioPlayback = () => {
   const [playerState, setPlayerState] = useState("idle");
   const [tracks, setTracks] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { onGoingAudio, onGoingList } = useSelector(getPlayerState);
+  const { onGoingAudio } = useSelector(getPlayerState);
   const dispatch = useDispatch();
-  let sound = null;
+  const sound = useRef(null);
 
   const updateQueue = (data) => {
     const lists = data.map((item) => ({
@@ -31,21 +31,26 @@ const useAudioPlayback = () => {
 
   useEffect(() => {
     return () => {
-      if (sound) {
-        sound.stop();
+      if (sound.current) {
+        sound.current.stop();
       }
     };
-  }, [sound]);
+  }, []);
 
   const play = () => {
-    if (tracks.length === 0) return;
+    if (
+      tracks.length === 0 ||
+      currentIndex < 0 ||
+      currentIndex >= tracks.length
+    )
+      return;
 
     const track = tracks[currentIndex];
-    if (sound) {
-      sound.stop();
+    if (sound.current) {
+      sound.current.stop();
     }
 
-    sound = new Howl({
+    sound.current = new Howl({
       src: [track.url],
       html5: true,
       onend: () => {
@@ -53,60 +58,39 @@ const useAudioPlayback = () => {
       },
     });
 
-    sound.play();
+    sound.current.play();
     setPlayerState("playing");
   };
 
   const pause = () => {
-    if (sound) {
-      sound.pause();
+    if (sound.current) {
+      sound.current.pause();
       setPlayerState("paused");
-      console.log("paused");
     }
   };
 
-  const skipToNextTrack = () => {
-    const nextIndex = (currentIndex + 1) % tracks.length;
-    setCurrentIndex(nextIndex);
-    play();
-  };
-
-  const onAudioPress = async (item, data) => {
-    updateQueue(data);
-
-    dispatch(updateOnGoingAudio(item));
-
-    const index = data.findIndex((audio) => audio.id === item.id);
-
-    if (index !== -1) {
-      setCurrentIndex(index);
-
-      if (playerState === "idle" || playerState === "paused") {
+  const onAudioPress = (item, data) => {
+    if (onGoingAudio?.id === item.id) {
+      if (playerState === "playing") {
+        pause();
+      } else if (playerState === "paused") {
         play();
-      } else if (playerState === "playing") {
-        if (sound) sound.stop();
+      }
+    } else {
+      updateQueue(data);
+      dispatch(updateOnGoingAudio(item));
+
+      const index = data.findIndex((audio) => audio.id === item.id);
+      if (index !== -1) {
+        setCurrentIndex(index);
         play();
       }
 
-      return dispatch(updateOnGoingList(data));
-    }
-
-    if (
-      playerState === "playing" &&
-      data.findIndex((audio) => audio.id === item.id)
-    ) {
-      return await pause();
-    }
-
-    if (
-      playerState === "paused" &&
-      data.findIndex((audio) => audio.id === item.id)
-    ) {
-      return await play();
+      dispatch(updateOnGoingList(data));
     }
   };
 
-  return { onAudioPress, play, pause, skipToNextTrack };
+  return { onAudioPress, play, pause };
 };
 
 export default useAudioPlayback;
