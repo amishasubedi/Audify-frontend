@@ -7,7 +7,7 @@ import logger from "redux-logger";
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    auth: userReducer,
     player: playerReducer,
     alert: alertReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,

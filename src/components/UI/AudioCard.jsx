@@ -4,7 +4,7 @@ import PlayAnimation from "./PlayAnimation";
 import "./Style.css";
 
 const AudioCard = ({ title, artist, imageUrl, playing = false, onClick }) => {
-  console.log(`Playing status for ${title}:`, playing);
+  // console.log(`Playing status for ${title}:`, playing);
   return (
     <div className="custom-card" onClick={onClick}>
       <img src={imageUrl} alt={title} className="custom-img" />

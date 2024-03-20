@@ -26,33 +26,43 @@ const useAudioPlayback = () => {
       isLiveStream: item.isLiveStream,
     }));
     setTracks([...lists]);
-    setCurrentIndex(0);
   };
 
   useEffect(() => {
     return () => {
       if (sound.current) {
-        sound.current.stop();
+        sound.current.unload();
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof currentIndex === "number" && tracks[currentIndex]) {
+      play();
+    }
+  }, [currentIndex, tracks]);
 
   const play = () => {
     if (
       tracks.length === 0 ||
       currentIndex < 0 ||
       currentIndex >= tracks.length
-    )
+    ) {
+      console.error("Track index is out of bounds. Cannot play.");
       return;
+    }
 
     const track = tracks[currentIndex];
     if (sound.current) {
-      sound.current.stop();
+      sound.current.unload();
     }
 
     sound.current = new Howl({
       src: [track.url],
       html5: true,
+      onplayerror: (id, err) => {
+        console.error("Error playing track:", err);
+      },
       onend: () => {
         setPlayerState("idle");
       },
@@ -70,23 +80,19 @@ const useAudioPlayback = () => {
   };
 
   const onAudioPress = (item, data) => {
-    if (onGoingAudio?.id === item.id) {
+    const isNewTrack = onGoingAudio?.id !== item.id;
+    if (isNewTrack) {
+      updateQueue(data);
+      const index = data.findIndex((audio) => audio.id === item.id);
+      setCurrentIndex(index);
+      dispatch(updateOnGoingAudio(item));
+      dispatch(updateOnGoingList(data));
+    } else {
       if (playerState === "playing") {
         pause();
-      } else if (playerState === "paused") {
+      } else if (playerState === "paused" || playerState === "idle") {
         play();
       }
-    } else {
-      updateQueue(data);
-      dispatch(updateOnGoingAudio(item));
-
-      const index = data.findIndex((audio) => audio.id === item.id);
-      if (index !== -1) {
-        setCurrentIndex(index);
-        play();
-      }
-
-      dispatch(updateOnGoingList(data));
     }
   };
 
