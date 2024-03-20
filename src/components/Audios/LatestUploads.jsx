@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
-import AudioCard from "../Shared/AudioCard";
+import AudioCard from "../UI/AudioCard";
 import { useFetchLatestAudios } from "../Hooks/query-hook";
+import { useSelector } from "react-redux";
+import { getPlayerState } from "../../redux/Features/player_slice";
 
-const LatestUploads = () => {
+const LatestUploads = ({ onAudioClick }) => {
   const { data, isLoading } = useFetchLatestAudios();
+  const { onGoingAudio } = useSelector(getPlayerState);
 
   if (isLoading) {
     return (
@@ -28,6 +31,8 @@ const LatestUploads = () => {
                 artist={audio.artist}
                 imageUrl={audio.poster}
                 audioUrl={audio.file}
+                onClick={() => onAudioClick(audio, data)}
+                playing={audio.id === onGoingAudio?.id}
               />
             </div>
           ))}
