@@ -1,41 +1,64 @@
 import React from "react";
-import PlayAnimation from "./PlayAnimation";
 
 import "./Style.css";
 import ReactSlider from "react-slider";
 import PlaybackButton from "./PlaybackButton";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
 
 const AudioPlayerCard = ({
   title,
   artist,
   imageUrl,
-  playing = false,
   onClick,
   onSliderChange,
 }) => {
+  const { playing, togglePlayPause, onNext, onPrevious, mute } =
+    useAudioPlayback();
+
+  const onToggleHandler = async () => {
+    await togglePlayPause();
+    console.log("Value of playing", playing);
+  };
+
+  const onPlayNextHandler = async () => {
+    await onNext();
+  };
+
+  const onPlayPreviousHandler = async () => {
+    await onPrevious();
+  };
+
   return (
     <div className="audio-player-card bg-dark" onClick={onClick}>
       <div className="controls-container">
-        <PlaybackButton size={45} ignoreContainer={true}>
+        <PlaybackButton
+          size={45}
+          ignoreContainer={true}
+          onClick={onPlayPreviousHandler}
+        >
           <i className="fa fa-step-backward" aria-hidden="true"></i>
         </PlaybackButton>
-        <PlaybackButton size={45} ignoreContainer={true}>
+        <PlaybackButton
+          size={45}
+          ignoreContainer={true}
+          onClick={onToggleHandler}
+        >
           {playing ? (
             <i className="fa fa-pause p-2" aria-hidden="true"></i>
           ) : (
             <i className="fa fa-play p-2" aria-hidden="true"></i>
           )}
         </PlaybackButton>
-        <PlaybackButton size={45} ignoreContainer={true}>
+        <PlaybackButton
+          size={45}
+          ignoreContainer={true}
+          onClick={onPlayNextHandler}
+        >
           <i className="fa fa-step-forward p-5" aria-hidden="true"></i>
         </PlaybackButton>
       </div>
       <div className="album-art-container">
-        <img
-          src="https://lh3.googleusercontent.com/hwau7OVWx96XaME5KpRuJ0I_MscrerK6SbRH1UwYHYaxIDQQtn7RZK02LDSfBzCreidFgDsJeXyqDct6EZiH6vsV=w640-h400-e365-rj-sc0x00ffffff"
-          alt="alu"
-          className="custom-img"
-        />
+        <img src={imageUrl} className="custom-img" />
       </div>
       <div className="track-info-container">
         <h2 className="title text-white">{title}</h2>
