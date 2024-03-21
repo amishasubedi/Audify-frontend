@@ -9,6 +9,8 @@ import PrivateRoutes from "./components/utils/PrivateRoutes";
 import UploadAudio from "./components/Audios/UploadAudio";
 import Profile from "./components/Profile/Profile";
 
+import AudioPlayerCard from "./components/UI/AudioPlayerCard";
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +20,7 @@ function App() {
         <Route path="verify-email" element={<VerifyEmail />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="/" element={<Home />} />
+        <Route path="/ui" element={<AudioPlayerCard />} />
 
         <Route element={<PrivateRoutes />}>
           <Route path="/upload" element={<UploadAudio />} />

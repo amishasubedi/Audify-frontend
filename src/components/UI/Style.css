@@ -104,3 +104,67 @@
   justify-content: center;
   background-color: transparent;
 }
+
+.audio-player-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.controls-container,
+.additional-controls-container {
+  display: flex;
+  align-items: center;
+}
+
+.album-art-container img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.track-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.title {
+  margin: 0;
+  color: white;
+}
+
+.artist {
+  margin: 0;
+  color: gray;
+}
+
+.slider-container {
+  width: 100%;
+  padding: 0 16px;
+}
+
+.slider-bar {
+  height: 4px;
+  background: #aaa;
+}
+
+.slider-thumb {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+.current-time,
+.duration {
+  padding: 0 16px;
+}

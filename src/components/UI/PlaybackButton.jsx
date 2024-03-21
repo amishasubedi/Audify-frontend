@@ -12,6 +12,7 @@ const PlaybackButton = ({ size = 45, ignoreContainer, children, onClick }) => {
         width: size,
         height: size,
         borderRadius: size / 2,
+        color: "white",
       }}
       onClick={onClick}
     >
