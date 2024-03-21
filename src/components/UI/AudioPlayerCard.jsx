@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Style.css";
 import ReactSlider from "react-slider";
@@ -12,12 +12,11 @@ const AudioPlayerCard = ({
   onClick,
   onSliderChange,
 }) => {
-  const { playing, togglePlayPause, onNext, onPrevious, mute } =
+  const { togglePlayPause, onNext, onPrevious, mute, playing } =
     useAudioPlayback();
 
   const onToggleHandler = async () => {
     await togglePlayPause();
-    console.log("Value of playing", playing);
   };
 
   const onPlayNextHandler = async () => {
@@ -28,8 +27,12 @@ const AudioPlayerCard = ({
     await onPrevious();
   };
 
+  useEffect(() => {
+    console.log("Playing state changed:", playing);
+  }, [playing]);
+
   return (
-    <div className="audio-player-card bg-dark" onClick={onClick}>
+    <div className="audio-player-card" onClick={onClick}>
       <div className="controls-container">
         <PlaybackButton
           size={45}
@@ -38,11 +41,7 @@ const AudioPlayerCard = ({
         >
           <i className="fa fa-step-backward" aria-hidden="true"></i>
         </PlaybackButton>
-        <PlaybackButton
-          size={45}
-          ignoreContainer={true}
-          onClick={onToggleHandler}
-        >
+        <PlaybackButton size={45} onClick={onToggleHandler}>
           {playing ? (
             <i className="fa fa-pause p-2" aria-hidden="true"></i>
           ) : (
@@ -60,7 +59,7 @@ const AudioPlayerCard = ({
       <div className="album-art-container">
         <img src={imageUrl} className="custom-img" />
       </div>
-      <div className="track-info-container">
+      <div className="track-info-container p-2">
         <h2 className="title text-white">{title}</h2>
         <h7 className="artist text-white">{artist}</h7>
       </div>

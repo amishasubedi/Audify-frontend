@@ -8,7 +8,7 @@ import {
 } from "../../redux/Features/player_slice";
 
 const useAudioPlayback = () => {
-  const { onGoingList } = useSelector(getPlayerState);
+  const { onGoingAudio, onGoingList } = useSelector(getPlayerState);
   const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
@@ -83,7 +83,7 @@ const useAudioPlayback = () => {
       updateQueue(data);
     } else if (index !== currentIndex) {
       setCurrentIndex(index);
-    } else if (playing) {
+    } else if (playing && index === currentIndex) {
       pause();
     } else {
       play();
@@ -94,6 +94,7 @@ const useAudioPlayback = () => {
     onAudioPress,
     play,
     pause,
+    playing,
     currentIndex,
     stop,
     seek,
