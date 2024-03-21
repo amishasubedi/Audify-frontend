@@ -6,9 +6,13 @@ import Layout from "./Layout";
 import LatestUploads from "../Audios/LatestUploads";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 import "./Style.css";
+import { useSelector } from "react-redux";
+import { getPlayerState } from "../../redux/Features/player_slice";
+import AudioPlayer from "../Audios/AudioPlayer";
 
 const Home = () => {
   const { onAudioPress } = useAudioPlayback();
+  const { onGoingAudio } = useSelector(getPlayerState);
   return (
     <Layout>
       <PlayerProvider>
@@ -28,6 +32,7 @@ const Home = () => {
               {" "}
               <LatestUploads />
             </div>
+            <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
           </div>
         </div>
       </PlayerProvider>
