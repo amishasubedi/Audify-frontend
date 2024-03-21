@@ -22,6 +22,7 @@ const useAudioPlayback = () => {
     setRate,
     mute,
     togglePlayPause,
+    onend,
   } = useGlobalAudioPlayer();
   const updateQueue = useCallback(
     (data) => {
@@ -47,7 +48,10 @@ const useAudioPlayback = () => {
       typeof currentIndex === "number" &&
       onGoingList[currentIndex]
     ) {
-      load(onGoingList[currentIndex].url, { autoplay: true });
+      load(onGoingList[currentIndex].url, {
+        autoplay: true,
+        onend: () => setCurrentIndex(currentIndex + 1),
+      });
       dispatch(updateOnGoingAudio(onGoingList[currentIndex]));
     }
   }, [currentIndex, onGoingList, dispatch, load]);
