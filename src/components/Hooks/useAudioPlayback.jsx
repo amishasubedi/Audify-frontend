@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Howl } from "howler";
+import { useGlobalAudioPlayer } from "react-use-audio-player";
 import {
   getPlayerState,
   updateOnGoingAudio,
@@ -8,95 +8,78 @@ import {
 } from "../../redux/Features/player_slice";
 
 const useAudioPlayback = () => {
-  const [playerState, setPlayerState] = useState("idle");
-  const [tracks, setTracks] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const { onGoingList } = useSelector(getPlayerState);
   const dispatch = useDispatch();
-  const sound = useRef(null);
-
-  const updateQueue = (data) => {
-    const lists = data.map((item) => ({
-      id: item.id,
-      title: item.title,
-      url: item.file,
-      artwork: item.poster,
-      artist: item.owner.name,
-      genre: item.category,
-      isLiveStream: item.isLiveStream,
-    }));
-    setTracks([...lists]);
-  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const {
+    load,
+    play,
+    pause,
+    playing,
+    stop,
+    seek,
+    setVolume,
+    setRate,
+    mute,
+    togglePlayPause,
+  } = useGlobalAudioPlayer();
+  const updateQueue = useCallback(
+    (data) => {
+      const lists = data.map((item) => ({
+        id: item.id,
+        title: item.title,
+        url: item.file,
+        artwork: item.poster,
+        artist: item.owner.name,
+        genre: item.category,
+        isLiveStream: item.isLiveStream,
+      }));
+      dispatch(updateOnGoingList(lists));
+      setCurrentIndex(0);
+      load(lists[0].url, { autoplay: true });
+    },
+    [dispatch, load]
+  );
 
   useEffect(() => {
-    return () => {
-      if (sound.current) {
-        sound.current.unload();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (typeof currentIndex === "number" && tracks[currentIndex]) {
-      play();
-    }
-  }, [currentIndex, tracks]);
-
-  const play = () => {
     if (
-      tracks.length === 0 ||
-      currentIndex < 0 ||
-      currentIndex >= tracks.length
+      onGoingList.length > 0 &&
+      typeof currentIndex === "number" &&
+      onGoingList[currentIndex]
     ) {
-      console.error("Track index is out of bounds. Cannot play.");
-      return;
+      load(onGoingList[currentIndex].url, { autoplay: true });
+      dispatch(updateOnGoingAudio(onGoingList[currentIndex]));
     }
-
-    const track = tracks[currentIndex];
-    if (sound.current) {
-      sound.current.unload();
-    }
-
-    sound.current = new Howl({
-      src: [track.url],
-      html5: true,
-      onplayerror: (id, err) => {
-        console.error("Error playing track:", err);
-      },
-      onend: () => {
-        setPlayerState("idle");
-      },
-    });
-
-    sound.current.play();
-    setPlayerState("playing");
-  };
-
-  const pause = () => {
-    if (sound.current) {
-      sound.current.pause();
-      setPlayerState("paused");
-    }
-  };
+  }, [currentIndex, onGoingList, dispatch, load]);
 
   const onAudioPress = (item, data) => {
-    const isNewTrack = onGoingAudio?.id !== item.id;
-    if (isNewTrack) {
+    const index = data.findIndex((audio) => audio.id === item.id);
+    const isNewQueue =
+      onGoingList.length === 0 || onGoingList[0].id !== data[0].id;
+
+    if (isNewQueue) {
       updateQueue(data);
-      const index = data.findIndex((audio) => audio.id === item.id);
+    } else if (index !== currentIndex) {
       setCurrentIndex(index);
-      dispatch(updateOnGoingAudio(item));
-      dispatch(updateOnGoingList(data));
+    } else if (playing) {
+      pause();
     } else {
-      if (playerState === "playing") {
-        pause();
-      } else if (playerState === "paused" || playerState === "idle") {
-        play();
-      }
+      play();
     }
   };
 
-  return { onAudioPress, play, pause };
+  return {
+    onAudioPress,
+    play,
+    pause,
+    currentIndex,
+    stop,
+    seek,
+    setVolume,
+    togglePlayPause,
+    setRate,
+    mute,
+  };
 };
 
 export default useAudioPlayback;
