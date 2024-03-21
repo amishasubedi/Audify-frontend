@@ -90,3 +90,17 @@
     transform: scaleY(2);
   }
 }
+
+.player-controller {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+.player-controller-ignore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}

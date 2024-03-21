@@ -8,7 +8,6 @@ import Home from "./components/Home/Home";
 import PrivateRoutes from "./components/utils/PrivateRoutes";
 import UploadAudio from "./components/Audios/UploadAudio";
 import Profile from "./components/Profile/Profile";
-import GridExample from "./components/Audios/player";
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route element={<PrivateRoutes />}>
-          <Route path="/player" element={<GridExample />} />
           <Route path="/upload" element={<UploadAudio />} />
           <Route path="/profile" element={<Profile />} />
         </Route>

@@ -22,8 +22,8 @@ const useAudioPlayback = () => {
     setRate,
     mute,
     togglePlayPause,
-    onend,
   } = useGlobalAudioPlayer();
+
   const updateQueue = useCallback(
     (data) => {
       const lists = data.map((item) => ({
@@ -50,11 +50,29 @@ const useAudioPlayback = () => {
     ) {
       load(onGoingList[currentIndex].url, {
         autoplay: true,
-        onend: () => setCurrentIndex(currentIndex + 1),
+        onend: () => {
+          if (currentIndex < onGoingList.length - 1) {
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+          } else {
+            stop();
+          }
+        },
       });
       dispatch(updateOnGoingAudio(onGoingList[currentIndex]));
     }
-  }, [currentIndex, onGoingList, dispatch, load]);
+  }, [currentIndex, onGoingList, dispatch, load, stop]);
+
+  const onNext = () => {
+    if (currentIndex < onGoingList.length - 1) {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
+  const onPrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+    }
+  };
 
   const onAudioPress = (item, data) => {
     const index = data.findIndex((audio) => audio.id === item.id);
@@ -83,6 +101,8 @@ const useAudioPlayback = () => {
     togglePlayPause,
     setRate,
     mute,
+    onNext,
+    onPrevious,
   };
 };
 
