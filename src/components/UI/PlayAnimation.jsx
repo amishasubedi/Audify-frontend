@@ -1,8 +1,7 @@
+import { useEffect } from "react";
 import "./Style.css";
 
-const PlayAnimation = ({ visible }) => {
-  if (!visible) return null;
-
+const PlayAnimation = () => {
   return (
     <div
       className="d-flex justify-content-center align-items-center"

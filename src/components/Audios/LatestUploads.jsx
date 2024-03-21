@@ -3,6 +3,7 @@ import AudioCard from "../UI/AudioCard";
 import { useFetchLatestAudios } from "../Hooks/query-hook";
 import { useSelector } from "react-redux";
 import { getPlayerState } from "../../redux/Features/player_slice";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
 
 const LatestUploads = ({ onAudioClick }) => {
   const { data, isLoading } = useFetchLatestAudios();
