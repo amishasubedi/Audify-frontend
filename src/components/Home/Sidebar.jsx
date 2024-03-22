@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -8,8 +8,21 @@ import {
   CDBSidebarMenuItem,
 } from "cdbreact";
 import { NavLink } from "react-router-dom";
+import PlaylistModal from "../Playlist/PlaylistModal";
 
 const Sidebar = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOnAddToPlaylist = () => {
+    setShowModal(true);
+    console.log("Open the modal");
+    console.log("Modal ?", showModal);
+  };
+
+  const handlePlaylistSubmit = () => {
+    console.log("Created new playlist");
+  };
+
   return (
     <div className="d-flex flex-column">
       <CDBSidebar
@@ -48,12 +61,23 @@ const Sidebar = () => {
             </NavLink>
             <hr />
             <div className="d-flex justify-content-center">
-              <NavLink exact to="/add/playlist">
-                <button className=" text-white p-1 px-5 playlist-btn">
+              <div>
+                <button
+                  className=" text-white p-1 px-5 playlist-btn"
+                  onClick={handleOnAddToPlaylist}
+                >
                   + New Playlist
                 </button>
-              </NavLink>
+              </div>
             </div>
+
+            <PlaylistModal
+              visible={showModal}
+              onRequestClose={() => {
+                setShowModal(false);
+              }}
+              onSubmit={handlePlaylistSubmit}
+            />
 
             <NavLink exact to="/favorites" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="heart" className="NavLink">
