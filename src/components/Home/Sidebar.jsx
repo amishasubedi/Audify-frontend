@@ -7,11 +7,21 @@ import {
   CDBSidebarMenu,
   CDBSidebarMenuItem,
 } from "cdbreact";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PlaylistModal from "../Playlist/PlaylistModal";
+import { useDispatch } from "react-redux";
+import { useCreatePlaylistMutation } from "../../redux/Services/api_service";
+import useCustomForm from "../Hooks/form-hook";
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const reset = useCustomForm();
+
+  const navigate = useNavigate();
+  const [CreateAudio, { isLoading, isSuccess, isError }] =
+    useCreatePlaylistMutation();
 
   const handleOnAddToPlaylist = () => {
     setShowModal(true);
@@ -19,9 +29,26 @@ const Sidebar = () => {
     console.log("Modal ?", showModal);
   };
 
-  const handlePlaylistSubmit = () => {
-    console.log("Created new playlist");
+  const handleUpload = async (formData, event) => {
+    event.preventDefault();
+    try {
+      const response = await CreateAudio(formData).unwrap();
+      console.log("Uploaded audio successfully", response);
+    } catch (error) {
+      console.log("Upload failed", error);
+    }
   };
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+    }
+
+    if (isError) {
+      alert("Some thing went wrong, Please try again");
+      reset();
+    }
+  }, [isSuccess, isError, navigate, isLoading, reset]);
 
   return (
     <div className="d-flex flex-column">
@@ -76,7 +103,7 @@ const Sidebar = () => {
               onRequestClose={() => {
                 setShowModal(false);
               }}
-              onSubmit={handlePlaylistSubmit}
+              onSubmit={handleUpload}
             />
 
             <NavLink exact to="/favorites" activeClassName="activeClicked">

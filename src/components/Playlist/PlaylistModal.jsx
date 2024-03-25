@@ -2,13 +2,15 @@ import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
+import {
+  getCategoryValidationRules,
+  getTitleValidationRules,
+} from "../utils/validators";
 
 const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
   const {
     register,
     handleSubmit,
-    control,
-    reset,
     formState: { errors },
   } = useForm();
 
@@ -23,7 +25,10 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
   };
 
   const handleFormSubmit = (data, event) => {
-    onSubmit(playlistInfo);
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("category", data.visibility);
+    onSubmit(formData);
     handleClose();
   };
 
@@ -37,15 +42,16 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
     <ModalContainer show={visible} onHide={handleClose}>
       <form
         className="py-5 px-4"
-        onSubmit={handleSubmit(handleFormSubmit)}
         encType="multipart/form-data"
+        handleSubmit={handleSubmit(handleFormSubmit)}
         noValidate
       >
-        <div className="text-white font-bold">Create New Playlist</div>
+        <div className="text-white title-header mb-5">New Playlist</div>
         <FormField
           id="title"
           label="Title"
           type="title"
+          registerOptions={getTitleValidationRules}
           register={register}
           errors={errors}
         />
@@ -53,6 +59,7 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
           id="visibility"
           label="Visibility"
           type="select"
+          registerOptions={getCategoryValidationRules}
           register={register}
           errors={errors}
         >
