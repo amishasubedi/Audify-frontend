@@ -10,6 +10,7 @@ import UploadAudio from "./components/Audios/UploadAudio";
 import Profile from "./components/Profile/Profile";
 
 import AudioPlayerCard from "./components/UI/AudioPlayerCard";
+import PlaylistDetail from "./components/Playlist/PlaylistDetail";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="/" element={<Home />} />
         <Route path="/ui" element={<AudioPlayerCard />} />
+        <Route path="/playlist/detail" element={<PlaylistDetail />} />
 
         <Route element={<PrivateRoutes />}>
           <Route path="/upload" element={<UploadAudio />} />

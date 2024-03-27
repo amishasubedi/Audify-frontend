@@ -17,7 +17,7 @@ const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
-  const reset = useCustomForm();
+  const { reset } = useCustomForm();
 
   const navigate = useNavigate();
   const [CreatePlaylist, { isLoading, isSuccess, isError }] =
