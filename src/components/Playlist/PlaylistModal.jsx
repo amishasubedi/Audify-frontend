@@ -24,10 +24,10 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
     onRequestClose();
   };
 
-  const handleFormSubmit = (data, event) => {
+  const handleFormSubmit = (data) => {
     const formData = new FormData();
     formData.append("title", data.title);
-    formData.append("category", data.visibility);
+    formData.append("visibility", data.visibility);
     onSubmit(formData);
     handleClose();
   };
@@ -43,7 +43,7 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
       <form
         className="py-5 px-4"
         encType="multipart/form-data"
-        handleSubmit={handleSubmit(handleFormSubmit)}
+        onSubmit={handleSubmit(handleFormSubmit)}
         noValidate
       >
         <div className="text-white title-header mb-5">New Playlist</div>
@@ -65,12 +65,12 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
         >
           <select
             className="form-control"
-            id="category"
-            {...register("category")}
+            id="visibility"
+            {...register("visibility")}
           >
             <option value="">Select Visibility Option</option>
-            <option value="music">Public</option>
-            <option value="podcast">Private</option>
+            <option value="public">Public</option>
+            <option value="private">Private</option>
           </select>
         </FormField>
         <div className="text-center">

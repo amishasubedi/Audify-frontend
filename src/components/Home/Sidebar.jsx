@@ -20,7 +20,7 @@ const Sidebar = () => {
   const reset = useCustomForm();
 
   const navigate = useNavigate();
-  const [CreateAudio, { isLoading, isSuccess, isError }] =
+  const [CreatePlaylist, { isLoading, isSuccess, isError }] =
     useCreatePlaylistMutation();
 
   const handleOnAddToPlaylist = () => {
@@ -30,9 +30,8 @@ const Sidebar = () => {
   };
 
   const handleUpload = async (formData, event) => {
-    event.preventDefault();
     try {
-      const response = await CreateAudio(formData).unwrap();
+      const response = await CreatePlaylist(formData).unwrap();
       console.log("Uploaded audio successfully", response);
     } catch (error) {
       console.log("Upload failed", error);
