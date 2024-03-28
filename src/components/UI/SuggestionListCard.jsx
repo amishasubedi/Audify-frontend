@@ -3,41 +3,43 @@ import PlayAnimation from "./PlayAnimation";
 const SuggestionListCard = ({
   title,
   artist,
-  category,
   imageUrl,
+  category,
   duration,
   playing,
   onClick,
 }) => {
   return (
-    <div
-      className="d-flex justify-content-start align-items-center text-white mb-2 p-2"
-      onClick={onClick}
-      style={{
-        background: "black", // Assuming the background is black
-        cursor: "pointer", // Change cursor on hover
-        borderBottom: "none", // Remove border
-        textDecoration: "none", // In case it's being styled like a link
-        transition: "background-color 0.2s", // Smooth transition for hover effect
-      }}
-    >
-      <img
-        src={imageUrl}
-        alt={title}
-        className="img-fluid me-3"
-        style={{ width: "50px", height: "50px" }}
-      />
-      <div className="flex-grow-1 d-flex align-items-center justify-content-between">
-        <div>
-          <div className="fw-bold">{title}</div>
-          <div>{artist}</div>
-        </div>
-        <div className="text-center mx-5">
-          <div>{category}</div>
-        </div>
-        <div className="d-flex align-items-center">
-          <span>{duration}</span>
-          {playing && <PlayAnimation />}
+    <div className="list-group list-group-flush">
+      <div className="list-group-item bg" onClick={onClick}>
+        <div
+          className="d-flex justify-content-between align-items-center text-white mb-2 p-2"
+          style={{
+            background: "black",
+            cursor: "pointer",
+            textDecoration: "none",
+          }}
+        >
+          <img
+            src={imageUrl}
+            alt={title}
+            className="img-fluid me-3"
+            style={{ width: "50px", height: "50px" }}
+          />
+          <div className="flex-grow-1 d-flex justify-content-between align-items-center">
+            <div>
+              <h5 className="mb-0">{title}</h5>
+              <div className="d-flex align-items-center">
+                <span className="me-2">{artist}</span>
+                <span>•</span>
+                <span className="ms-2">{category}</span>
+              </div>
+            </div>
+            <div>
+              <span>{duration}</span>
+              {playing && <PlayAnimation />}
+            </div>
+          </div>
         </div>
       </div>
     </div>
