@@ -12,6 +12,7 @@ import PlaylistModal from "../Playlist/PlaylistModal";
 import { useDispatch } from "react-redux";
 import { useCreatePlaylistMutation } from "../../redux/Services/api_service";
 import useCustomForm from "../Hooks/form-hook";
+import { updateAlert } from "../../redux/Features/alert_slice";
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -32,23 +33,26 @@ const Sidebar = () => {
   const handleUpload = async (formData, event) => {
     try {
       const response = await CreatePlaylist(formData).unwrap();
-      console.log("Uploaded audio successfully", response);
+      dispatch(
+        updateAlert({
+          message: "successfully created new playlist",
+          type: "success",
+        })
+      );
+
+      if (response.playlist && response.playlist.id) {
+        navigate(`/playlist/detail/${response.playlist.id}`);
+      }
     } catch (error) {
-      console.log("Upload failed", error);
-    }
-  };
-
-  React.useEffect(() => {
-    if (isSuccess) {
-      // navigate(`/playlists/${response.playlist.id}`);
-      navigate("/");
-    }
-
-    if (isError) {
-      alert("Some thing went wrong, Please try again");
+      dispatch(
+        updateAlert({
+          message: "can't create new playlist",
+          type: "error",
+        })
+      );
       reset();
     }
-  }, [isSuccess, isError, navigate, isLoading, reset]);
+  };
 
   return (
     <div className="d-flex flex-column">

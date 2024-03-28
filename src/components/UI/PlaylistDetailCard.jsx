@@ -21,11 +21,11 @@ const PlaylistDetailCard = ({
         </div>
 
         <div className="col mt-5">
-          <h2 className="mb-0">{playlistName}</h2>
-          <p className="mb-0">
+          <h2 className="mb-0 text-white fw-bold">{playlistName}</h2>
+          <p className="mb-0 text-white">
             {visibility} . {artist}
           </p>
-          <p>{count}</p>
+          <p className="text-white">{`${count} tracks`}</p>
           <button className="btn btn-outline-primary btn-sm">
             Edit playlist
           </button>

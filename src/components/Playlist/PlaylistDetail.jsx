@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AudioPlayer from "../Audios/AudioPlayer";
@@ -8,34 +8,36 @@ import SuggestionsList from "../Audios/SuggestionList";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 import Layout from "../Home/Layout";
 import Header from "../Home/Header";
+import { useFetchPlaylistDetail } from "../Hooks/query-hook";
 
 const PlaylistDetail = () => {
   const { id } = useParams();
   const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);
 
-  //   useEffect(() => {
-  //     const fetchPlaylistDetails = async () => {
-  //       try {
-  //         const response = await axios.get(`/api/playlists/${id}`);
-  //         setPlaylistDetails(response.data);
-  //       } catch (error) {
-  //         console.error("Error fetching playlist details:", error);
-  //       }
-  //     };
+  const { data, isLoading, error, refetch } = useFetchPlaylistDetail(id);
 
-  //     fetchPlaylistDetails();
-  //   }, [id]);
+  useEffect(() => {
+    refetch();
+  }, [id, refetch]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching playlist details: {error.message}</div>;
+  }
 
   return (
     <Layout>
       <Header />
       <div className="container">
         <PlaylistDetailCard
-          playlistName="Playlist1"
-          visibility="private"
-          count="5"
-          artist="Amisha Subedi"
+          playlistName={data.title}
+          visibility={data.visibility}
+          count={data.song_count}
+          artist={data.owner_name}
         />
         <SuggestionsList onAudioClick={onAudioPress} />
         <div>{onGoingAudio ? <AudioPlayer /> : null}</div>

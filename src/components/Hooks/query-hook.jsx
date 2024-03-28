@@ -42,12 +42,23 @@ export const useFetchRecommendation = () => {
   });
 };
 
-const fetchPlaylistDetails = async () => {
+const fetchPlaylistDetails = async (playlistId) => {
   const client = new getClient();
-  const { data } = await client("/playlist/detail/:playlistId");
+  const { data } = await client(`/playlist/detail/${playlistId}`);
   return data.playlist;
 };
 
-export const useFetchPlaylistDetail = async () => {
-  // set up the reducer first in redux
+export const useFetchPlaylistDetail = (playlistId) => {
+  const dispatch = useDispatch();
+
+  return useQuery(
+    ["playlist-details", playlistId],
+    () => fetchPlaylistDetails(playlistId),
+    {
+      onError: (err) => {
+        const errorMessage = catchAsyncError(err);
+        dispatch(updateAlert({ message: errorMessage, type: "error" }));
+      },
+    }
+  );
 };
