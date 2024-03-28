@@ -40,6 +40,7 @@ const Sidebar = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
+      // navigate(`/playlists/${response.playlist.id}`);
       navigate("/");
     }
 

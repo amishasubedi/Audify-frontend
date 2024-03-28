@@ -1,34 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import AudioPlayer from "../Audios/AudioPlayer";
+import { getPlayerState } from "../../redux/Features/player_slice";
+import PlaylistDetailCard from "../UI/PlaylistDetailCard";
 import SuggestionsList from "../Audios/SuggestionList";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
+import Layout from "../Home/Layout";
+import Header from "../Home/Header";
 
 const PlaylistDetail = () => {
-  return (
-    <div className="container my-4">
-      <div className="row">
-        <div className="col-auto">
-          <img
-            id="img"
-            draggable="false"
-            alt="Playlist"
-            width="264"
-            src="https://www.gstatic.com/youtube/media/ytm/images/pbg/playlist-empty-state-@576.png"
-          />
-        </div>
+  const { id } = useParams();
+  const { onAudioPress } = useAudioPlayback();
+  const { onGoingAudio } = useSelector(getPlayerState);
 
-        <div className="col mt-5">
-          <h2 className="mb-0">Playlist Name</h2>
-          <p className="mb-0">Private · Amisha Subedi</p>
-          <p>0 tracks · 0 seconds</p>
-          <p>iytfyy</p>
-          <button className="btn btn-outline-primary btn-sm">
-            Edit playlist
-          </button>
-        </div>
+  //   useEffect(() => {
+  //     const fetchPlaylistDetails = async () => {
+  //       try {
+  //         const response = await axios.get(`/api/playlists/${id}`);
+  //         setPlaylistDetails(response.data);
+  //       } catch (error) {
+  //         console.error("Error fetching playlist details:", error);
+  //       }
+  //     };
+
+  //     fetchPlaylistDetails();
+  //   }, [id]);
+
+  return (
+    <Layout>
+      <Header />
+      <div className="container">
+        <PlaylistDetailCard
+          playlistName="Playlist1"
+          visibility="private"
+          count="5"
+          artist="Amisha Subedi"
+        />
+        <SuggestionsList onAudioClick={onAudioPress} />
+        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
       </div>
-      <div>
-        <SuggestionsList />
-      </div>
-    </div>
+    </Layout>
   );
 };
 

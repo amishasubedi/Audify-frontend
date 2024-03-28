@@ -22,3 +22,22 @@ export const useFetchLatestAudios = () => {
     },
   });
 };
+
+const fetchRecommendationForPlaylist = async () => {
+  const client = await getClient();
+  const { data } = await client("/audio/recommendation");
+  return data.audios;
+};
+
+export const useFetchRecommendation = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(["recommendation"], {
+    queryFn: fetchRecommendationForPlaylist,
+
+    onError(err) {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};

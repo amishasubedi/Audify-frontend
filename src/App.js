@@ -22,7 +22,7 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="/" element={<Home />} />
         <Route path="/ui" element={<AudioPlayerCard />} />
-        <Route path="/playlist/detail" element={<PlaylistDetail />} />
+        <Route path="/playlists/:id" element={<PlaylistDetail />} />
 
         <Route element={<PrivateRoutes />}>
           <Route path="/upload" element={<UploadAudio />} />

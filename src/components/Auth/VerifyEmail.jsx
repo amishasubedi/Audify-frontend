@@ -77,7 +77,7 @@ const VerifyEmail = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      navigate("/");
+      navigate("/sign-in");
     }
 
     if (isError) {
@@ -99,10 +99,10 @@ const VerifyEmail = () => {
           </div>
           <div className="col-md-5">
             <form className="py-5 px-4" onSubmit={handleSubmit(onSubmit)}>
-              <h4 className="login-title text-center py-2 mb-4">
+              <h4 className="login-title text-center py-2 mb-4 text-white">
                 Verify Email
               </h4>
-              <p>Your code was sent to you via email</p>
+              <p className="text-white">Your code was sent to you via email</p>
               <div className="otp-field mb-4" onPaste={handleOtpPaste}>
                 {initialOtpState.map((_, index) => (
                   <input
@@ -122,7 +122,7 @@ const VerifyEmail = () => {
               <div className="text-center">
                 <button
                   type="submit"
-                  className="login-btn p-2 rounded-3"
+                  className="login-btn p-2 rounded-3 text-white"
                   disabled={isLoading}
                 >
                   {isLoading ? "Verifying user..." : "Verify"}
