@@ -23,7 +23,6 @@ const SuggestionsList = ({ onAudioClick }) => {
             artist={audio.owner.name}
             imageUrl={audio.poster}
             category={audio.category}
-            duration="3:06"
             onClick={() => onAudioClick(audio, data)}
             playing={audio.id === onGoingAudio?.id}
           />

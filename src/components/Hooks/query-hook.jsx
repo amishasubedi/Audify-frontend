@@ -41,3 +41,13 @@ export const useFetchRecommendation = () => {
     },
   });
 };
+
+const fetchPlaylistDetails = async () => {
+  const client = new getClient();
+  const { data } = await client("/playlist/detail/:playlistId");
+  return data.playlist;
+};
+
+export const useFetchPlaylistDetail = async () => {
+  // set up the reducer first in redux
+};

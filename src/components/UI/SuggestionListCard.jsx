@@ -1,17 +1,17 @@
 import PlayAnimation from "./PlayAnimation";
+import PlaybackButton from "./PlaybackButton";
 
 const SuggestionListCard = ({
   title,
   artist,
   imageUrl,
   category,
-  duration,
   playing,
   onClick,
 }) => {
   return (
-    <div className="list-group list-group-flush">
-      <div className="list-group-item bg" onClick={onClick}>
+    <div className="list-group list-group-flush" onClick={onClick}>
+      <div className="list-group-item bg">
         <div
           className="d-flex justify-content-between align-items-center text-white mb-2 p-2"
           style={{
@@ -35,10 +35,13 @@ const SuggestionListCard = ({
                 <span className="ms-2">{category}</span>
               </div>
             </div>
-            <div>
-              <span>{duration}</span>
-              {playing && <PlayAnimation />}
-            </div>
+
+            <div>{playing && <PlayAnimation />}</div>
+          </div>
+          <div className="additional-controls-container">
+            <PlaybackButton size={45}>
+              <i class="fa-solid fa-list-music" aria-hidden="true"></i>
+            </PlaybackButton>
           </div>
         </div>
       </div>
