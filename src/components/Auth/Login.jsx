@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import FormField from "../Shared/FormField";
+import FormField from "../UI/FormField";
 import { useSigninUserMutation } from "../../redux/Services/api_service";
 import catchAsyncError from "../utils/AsyncErrors";
 
@@ -53,7 +53,7 @@ const Login = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      navigate("/home");
+      navigate("/");
     }
 
     if (isError) {

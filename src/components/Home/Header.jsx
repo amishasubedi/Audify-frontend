@@ -6,9 +6,6 @@ import { getAuthState } from "../../redux/Features/user_slice";
 import "./Style.css";
 
 const Header = () => {
-  const authState = useSelector(getAuthState);
-  console.log(authState);
-
   return (
     <div className="header sticky-top text-white px-5 py-3 d-flex justify-content-between">
       <div className="form-group has-search col-5 px-4">

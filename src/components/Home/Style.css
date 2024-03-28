@@ -11,16 +11,16 @@
 .sidebar {
   position: sticky;
   top: 0;
-  z-index: 600;
+  z-index: 11;
   height: 100vh;
 }
 
 .playlist-btn:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .NavLink:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 0.25rem;
 }
 
@@ -34,6 +34,7 @@
 .header {
   background-color: black;
   z-index: 10;
+  position: fixed;
 }
 
 .layer {

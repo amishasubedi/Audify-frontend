@@ -28,10 +28,7 @@ const userSlice = createSlice({
   },
 });
 
-export const getAuthState = createSelector(
-  (state) => state,
-  (authState) => authState
-);
+export const getAuthState = (state) => state.auth;
 
 export const { updateLoggedInState, updateProfile } = userSlice.actions;
 export default userSlice.reducer;

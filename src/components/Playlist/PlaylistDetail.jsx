@@ -1,0 +1,49 @@
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import AudioPlayer from "../Audios/AudioPlayer";
+import { getPlayerState } from "../../redux/Features/player_slice";
+import PlaylistDetailCard from "../UI/PlaylistDetailCard";
+import SuggestionsList from "../Audios/SuggestionList";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
+import Layout from "../Home/Layout";
+import Header from "../Home/Header";
+import { useFetchPlaylistDetail } from "../Hooks/query-hook";
+
+const PlaylistDetail = () => {
+  const { id } = useParams();
+  const { onAudioPress } = useAudioPlayback();
+  const { onGoingAudio } = useSelector(getPlayerState);
+
+  const { data, isLoading, error, refetch } = useFetchPlaylistDetail(id);
+
+  useEffect(() => {
+    refetch();
+  }, [id, refetch]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching playlist details: {error.message}</div>;
+  }
+
+  return (
+    <Layout>
+      <Header />
+      <div className="container">
+        <PlaylistDetailCard
+          playlistName={data.title}
+          visibility={data.visibility}
+          count={data.song_count}
+          artist={data.owner_name}
+        />
+        <SuggestionsList onAudioClick={onAudioPress} />
+        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
+      </div>
+    </Layout>
+  );
+};
+
+export default PlaylistDetail;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -7,9 +7,53 @@ import {
   CDBSidebarMenu,
   CDBSidebarMenuItem,
 } from "cdbreact";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import PlaylistModal from "../Playlist/PlaylistModal";
+import { useDispatch } from "react-redux";
+import { useCreatePlaylistMutation } from "../../redux/Services/api_service";
+import useCustomForm from "../Hooks/form-hook";
+import { updateAlert } from "../../redux/Features/alert_slice";
 
 const Sidebar = () => {
+  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const { reset } = useCustomForm();
+
+  const navigate = useNavigate();
+  const [CreatePlaylist, { isLoading, isSuccess, isError }] =
+    useCreatePlaylistMutation();
+
+  const handleOnAddToPlaylist = () => {
+    setShowModal(true);
+    console.log("Open the modal");
+    console.log("Modal ?", showModal);
+  };
+
+  const handleUpload = async (formData, event) => {
+    try {
+      const response = await CreatePlaylist(formData).unwrap();
+      dispatch(
+        updateAlert({
+          message: "successfully created new playlist",
+          type: "success",
+        })
+      );
+
+      if (response.playlist && response.playlist.id) {
+        navigate(`/playlist/detail/${response.playlist.id}`);
+      }
+    } catch (error) {
+      dispatch(
+        updateAlert({
+          message: "can't create new playlist",
+          type: "error",
+        })
+      );
+      reset();
+    }
+  };
+
   return (
     <div className="d-flex flex-column">
       <CDBSidebar
@@ -31,7 +75,7 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/home" activeClassName="activeClicked">
+            <NavLink exact to="/" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="home" className="NavLink">
                 Home
               </CDBSidebarMenuItem>
@@ -48,12 +92,23 @@ const Sidebar = () => {
             </NavLink>
             <hr />
             <div className="d-flex justify-content-center">
-              <NavLink exact to="/add/playlist">
-                <button className=" text-white p-1 px-5 playlist-btn">
+              <div>
+                <button
+                  className=" text-white p-1 px-5 playlist-btn"
+                  onClick={handleOnAddToPlaylist}
+                >
                   + New Playlist
                 </button>
-              </NavLink>
+              </div>
             </div>
+
+            <PlaylistModal
+              visible={showModal}
+              onRequestClose={() => {
+                setShowModal(false);
+              }}
+              onSubmit={handleUpload}
+            />
 
             <NavLink exact to="/favorites" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="heart" className="NavLink">

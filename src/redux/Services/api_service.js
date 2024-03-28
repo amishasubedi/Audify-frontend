@@ -76,6 +76,14 @@ export const authApiSlice = createApi({
       }),
     }),
 
+    CreatePlaylist: builder.mutation({
+      query: (playlist) => ({
+        url: "playlist/create",
+        method: "POST",
+        body: playlist,
+      }),
+    }),
+
     IsAuth: builder.query({
       query: () => "users/is-auth",
       transformResponse: (response, meta, error) => {
@@ -103,4 +111,5 @@ export const {
   useIsAuthQuery,
   useGetAllAudiosQuery,
   useGetLatestUploadsQuery,
+  useCreatePlaylistMutation,
 } = authApiSlice;

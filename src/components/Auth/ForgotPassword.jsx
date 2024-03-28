@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FormField from "../Shared/FormField";
+import FormField from "../UI/FormField";
 import { getEmailValidationRules } from "../utils/validators";
 import { useForm } from "react-hook-form";
 import "./style.css";

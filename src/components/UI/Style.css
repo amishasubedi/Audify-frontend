@@ -1,0 +1,221 @@
+.custom-card {
+  background-color: black;
+  color: #fff;
+  display: flex;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  z-index: 3;
+  position: relative;
+}
+
+.custom-card:hover {
+  background-color: #222222;
+}
+
+.bg {
+  background-color: black;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.card-text {
+  font-size: 14px;
+}
+
+.custom-img {
+  width: 60px;
+  height: 75px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.card-icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease;
+}
+
+.custom-card:hover .card-icons {
+  visibility: visible;
+  opacity: 1;
+}
+
+.custom-card:hover .icon {
+  color: #fff;
+}
+
+.icon + .icon {
+  margin-left: 20px;
+}
+
+.animated-stroke {
+  width: 4px;
+  background-color: #fff;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-name: dance;
+}
+
+.stroke-1 {
+  animation-delay: 0s;
+  padding: 2px;
+}
+
+.stroke-2 {
+  animation-delay: 0.1s;
+}
+
+.stroke-3 {
+  animation-delay: 0.2s;
+}
+
+@keyframes dance {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(2);
+  }
+}
+
+.player-controller {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+.player-controller-ignore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.audio-player-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: black;
+}
+
+.controls-container,
+.additional-controls-container {
+  display: flex;
+  align-items: center;
+}
+
+.album-art-container img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.track-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.title {
+  margin: 0;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  display: block;
+}
+
+.title-header {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.artist {
+  margin: 0;
+  color: gray;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  display: block;
+}
+
+.slider-container {
+  width: 100%;
+  padding: 0 16px;
+}
+
+.slider-bar {
+  height: 4px;
+  background: #aaa;
+}
+
+.slider-thumb {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+.current-time,
+.duration {
+  padding: 0 16px;
+}
+
+.audio-player-card {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1200;
+}
+
+.modal-custom .modal-content {
+  border-radius: 10px;
+  z-index: 1050;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5 !important;
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.suggestion-card:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.suggestion-card {
+  border: none;
+  margin-bottom: 1rem;
+}
