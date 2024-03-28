@@ -15,11 +15,7 @@ const PlaylistDetail = () => {
   const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);
 
-  const { data, isLoading, error, refetch } = useFetchPlaylistDetail(id);
-
-  useEffect(() => {
-    refetch();
-  }, [id, refetch]);
+  const { data, isLoading, error } = useFetchPlaylistDetail(id);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -32,15 +28,17 @@ const PlaylistDetail = () => {
   return (
     <Layout>
       <Header />
-      <div className="container">
-        <PlaylistDetailCard
-          playlistName={data.title}
-          visibility={data.visibility}
-          count={data.song_count}
-          artist={data.owner_name}
-        />
-        <SuggestionsList onAudioClick={onAudioPress} />
-        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
+      <div className="container px-5">
+        <div className="px-5">
+          <PlaylistDetailCard
+            playlistName={data.title}
+            visibility={data.visibility}
+            count={data.song_count}
+            artist={data.owner_name}
+          />
+          <SuggestionsList onAudioClick={onAudioPress} />
+          <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
+        </div>
       </div>
     </Layout>
   );

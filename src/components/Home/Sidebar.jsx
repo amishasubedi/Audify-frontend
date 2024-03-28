@@ -16,21 +16,18 @@ import { updateAlert } from "../../redux/Features/alert_slice";
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
-  const dispatch = useDispatch();
-
-  const { reset } = useCustomForm();
-
   const navigate = useNavigate();
   const [CreatePlaylist, { isLoading, isSuccess, isError }] =
     useCreatePlaylistMutation();
 
+  const { reset } = useCustomForm();
+  const dispatch = useDispatch();
+
   const handleOnAddToPlaylist = () => {
     setShowModal(true);
-    console.log("Open the modal");
-    console.log("Modal ?", showModal);
   };
 
-  const handleUpload = async (formData, event) => {
+  const handleUpload = async (formData) => {
     try {
       const response = await CreatePlaylist(formData).unwrap();
       dispatch(
@@ -41,7 +38,7 @@ const Sidebar = () => {
       );
 
       if (response.playlist && response.playlist.id) {
-        navigate(`/playlist/detail/${response.playlist.id}`);
+        navigate(`/playlists/${response.playlist.id}`);
       }
     } catch (error) {
       dispatch(
@@ -53,6 +50,13 @@ const Sidebar = () => {
       reset();
     }
   };
+
+  React.useEffect(() => {
+    if (isError) {
+      alert("Some thing went wrong, Please try again");
+      reset();
+    }
+  }, [isSuccess, isError, navigate, isLoading, reset]);
 
   return (
     <div className="d-flex flex-column">

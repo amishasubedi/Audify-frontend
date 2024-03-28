@@ -4,6 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
  * This method registers all the api endpoints
  */
 export const apiSlice = createApi({
+  reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
 
   endpoints: (builder) => ({
@@ -38,24 +39,11 @@ export const apiSlice = createApi({
         body: user,
       }),
     }),
-
-    GetAllAudios: builder.query({
-      query: () => "audio/",
-      transformResponse: (response, meta, error) => {
-        return response;
-      },
-    }),
-
-    GetLatestUploads: builder.query({
-      query: () => "audio/latest-uploads",
-      transformResponse: (response, meta, error) => {
-        return response;
-      },
-    }),
   }),
 });
 
 export const authApiSlice = createApi({
+  reducerPath: "authApiSlice",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BASE_URL,
     prepareHeaders: (headers) => {
@@ -66,6 +54,7 @@ export const authApiSlice = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Playlist", "Audio"],
 
   endpoints: (builder) => ({
     UploadAudio: builder.mutation({
@@ -74,6 +63,7 @@ export const authApiSlice = createApi({
         method: "POST",
         body: audio,
       }),
+      invalidatesTags: ["Audio"],
     }),
 
     CreatePlaylist: builder.mutation({
@@ -82,6 +72,12 @@ export const authApiSlice = createApi({
         method: "POST",
         body: playlist,
       }),
+      invalidatesTags: ["Playlist"],
+    }),
+
+    GetAllPlaylists: builder.query({
+      query: () => "playlists",
+      providesTags: ["Playlist"],
     }),
 
     IsAuth: builder.query({
@@ -89,13 +85,7 @@ export const authApiSlice = createApi({
       transformResponse: (response, meta, error) => {
         return response;
       },
-    }),
-
-    GetAllAudios: builder.query({
-      query: () => "audio/",
-      transformResponse: (response, meta, error) => {
-        return response;
-      },
+      providesTags: (result, error, id) => [{ type: "User", id }],
     }),
   }),
 });
@@ -113,3 +103,6 @@ export const {
   useGetLatestUploadsQuery,
   useCreatePlaylistMutation,
 } = authApiSlice;
+
+export const { middleware: apiSliceMiddleware } = apiSlice;
+export const { middleware: authApiSliceMiddleware } = authApiSlice;

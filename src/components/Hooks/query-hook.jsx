@@ -43,7 +43,7 @@ export const useFetchRecommendation = () => {
 };
 
 const fetchPlaylistDetails = async (playlistId) => {
-  const client = new getClient();
+  const client = await getClient();
   const { data } = await client(`/playlist/detail/${playlistId}`);
   return data.playlist;
 };

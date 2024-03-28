@@ -3,7 +3,8 @@ import userReducer from "./Features/user_slice";
 import playerReducer from "./Features/player_slice";
 import alertReducer from "./Features/alert_slice";
 import playlistReducer from "./Features/playlist_slice";
-import { apiSlice } from "./Services/api_service";
+import { apiSlice, authApiSlice } from "./Services/api_service";
+
 import logger from "redux-logger";
 
 const store = configureStore({
@@ -13,9 +14,13 @@ const store = configureStore({
     alert: alertReducer,
     playlist: playlistReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [authApiSlice.reducerPath]: authApiSlice.reducer,
   },
+
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware, logger),
+    getDefaultMiddleware()
+      .concat(apiSlice.middleware, authApiSlice.middleware)
+      .concat(logger),
 });
 
 export default store;
