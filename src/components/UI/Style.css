@@ -211,11 +211,21 @@
 .modal-content {
   background-color: rgba(0, 0, 0, 0.5);
 }
-.suggestion-card:hover {
-  background-color: rgba(255, 255, 255, 0.4);
+.bg:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .suggestion-card {
   border: none;
   margin-bottom: 1rem;
+}
+
+.artist-link {
+  color: rgb(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+.artist-link:hover {
+  text-decoration: underline;
+  color: white;
 }
