@@ -62,3 +62,25 @@ export const useFetchPlaylistDetail = (playlistId) => {
     }
   );
 };
+
+const fetchAudiosByCategory = async (category) => {
+  const client = await getClient();
+  const { data } = await client(`/audio/category?category=${category}`);
+  return data.audios;
+};
+
+export const useFetchAudiosByCategory = (category) => {
+  const dispatch = useDispatch();
+
+  return useQuery(
+    ["audios-by-category", category],
+    () => fetchAudiosByCategory(category),
+    {
+      onError(err) {
+        const errorMessage = catchAsyncError(err);
+        dispatch(updateAlert({ message: errorMessage, type: "error" }));
+      },
+      enabled: !!category,
+    }
+  );
+};

@@ -14,7 +14,7 @@ export const categories = [
 
 const Categories = () => {
   const categories = [
-    { name: "Energize", path: "/category/energize" },
+    { name: "Pop", path: "/category/pop" },
     { name: "Relax", path: "/category/relax" },
     { name: "Workout", path: "/category/workout" },
     { name: "Study", path: "/category/study" },
