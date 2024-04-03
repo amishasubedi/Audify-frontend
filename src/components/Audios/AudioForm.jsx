@@ -1,64 +1,81 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import Layout from "../Home/Layout";
 import FormField from "../UI/FormField";
-
 import { DevTool } from "@hookform/devtools";
 import "./Style.css";
 import Header from "../Home/Header";
+import { useDispatch } from "react-redux";
+import { newAudioSchema } from "../utils/validators";
+import catchAsyncError from "../utils/AsyncErrors";
+import { categories } from "../Home/Categories";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import { useState } from "react";
+
+const defaultFormValue = {
+  title: "",
+  category: "",
+  about: "",
+  file: undefined,
+  poster: undefined,
+};
 
 const AudioForm = ({ onSubmit, isLoading }) => {
+  const [audioInfo, setAudioInfo] = useState({ ...defaultFormValue });
+
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
     control,
+    setValue,
+    trigger,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      title: "",
-      category: "",
-      about: "",
-      audioFile: undefined,
-      coverFile: undefined,
-    },
-  });
+  } = useForm();
 
-  const handleFormSubmit = (data, event) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("category", data.category);
-    formData.append("about", data.about);
+  const handleFormSubmit = async () => {
+    try {
+      const formData = new FormData();
+      let finalData;
 
-    if (data.file && data.file.length > 0) {
-      formData.append("audioFile", data.file[0]);
+      finalData = await newAudioSchema.validate(audioInfo);
+      formData.append("file", {
+        name: finalData.file.name,
+        type: finalData.file.type,
+        uri: finalData.file.uri,
+      });
+
+      formData.append("title", finalData.title);
+      formData.append("about", finalData.about);
+      formData.append("category", finalData.category);
+
+      if (finalData.poster.uri)
+        formData.append("poster", {
+          name: finalData.poster.name,
+          type: finalData.poster.type,
+          uri: finalData.poster.uri,
+        });
+
+      onSubmit(formData);
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
     }
-    if (data.poster && data.poster.length > 0) {
-      formData.append("coverFile", data.poster[0]);
-    }
-
-    console.log("Form data ", [...formData]);
-    onSubmit(formData);
-  };
-
-  const onError = (errors) => {
-    console.error(errors);
   };
 
   return (
     <Layout>
       <Header />
-      <div className="wrapper  min-vh-100 align-items-center justify-content-center">
+      <div className="wrapper min-vh-100 align-items-center justify-content-center">
         <div className="row justify-content-center align-items-center">
           <div className="col-md-5">
             <form
               className="py-5 px-4"
-              onSubmit={handleSubmit(handleFormSubmit, onError)}
+              onSubmit={handleSubmit(handleFormSubmit)}
               encType="multipart/form-data"
               noValidate
             >
-              <h4 className="login-title text-white  py-2 mb-4">
-                Upload Audio
-              </h4>
+              <h4 className="login-title text-white py-2 mb-4">Upload Audio</h4>
               <FormField
                 id="title"
                 label="Title"
@@ -82,42 +99,43 @@ const AudioForm = ({ onSubmit, isLoading }) => {
                 errors={errors}
               >
                 <select
-                  className="form-control"
-                  id="category"
+                  className={`form-control ${
+                    errors.category ? "is-invalid" : ""
+                  }`}
                   {...register("category")}
                 >
                   <option value="">Select a Category</option>
-                  <option value="music">Music</option>
-                  <option value="podcast">Podcast</option>
-                  <option value="audiobook">Audiobook</option>
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category.charAt(0).toUpperCase() + category.slice(1)}
+                    </option>
+                  ))}
                 </select>
               </FormField>
 
-              <Controller
-                name="file"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    type="file"
-                    className="file text-white mb-3 mt-5"
-                    onChange={(e) => field.onChange(e.target.files)}
-                  />
-                )}
+              <FormField
+                id="audioFile"
+                label="Audio File"
+                type="file"
+                register={register}
+                errors={errors}
+                onChange={(e) => {
+                  setValue("file", e.target.files[0]);
+                  trigger("file");
+                }}
               />
 
-              <Controller
-                name="poster"
-                control={control}
-                className="file"
-                render={({ field }) => (
-                  <input
-                    type="file"
-                    className="file text-white"
-                    onChange={(e) => field.onChange(e.target.files)}
-                  />
-                )}
+              <FormField
+                id="coverFile"
+                label="Cover File"
+                type="file"
+                register={register}
+                errors={errors}
+                onChange={(e) => {
+                  setValue("poster", e.target.files[0]);
+                  trigger("poster");
+                }}
               />
-
               <div className="text-center">
                 <button
                   type="submit"

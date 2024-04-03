@@ -5,9 +5,9 @@ import { PlayerProvider } from "../Context/player-context";
 import CategoryAudios from "../Audios/CategoryAudios";
 import { useSelector } from "react-redux";
 import Layout from "./Layout";
+import SuggestionsList from "../Audios/SuggestionList";
 import AudioPlayer from "../Audios/AudioPlayer";
 import Header from "./Header";
-import SuggestionsList from "../Audios/SuggestionList";
 
 const CategoryAudioPage = () => {
   const { categoryName } = useParams();
@@ -33,10 +33,10 @@ const CategoryAudioPage = () => {
             <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
           </div>
 
-          {/* <div>
+          <div>
             <h3 className="text-white px-5 mt-5">Explore more songs</h3>
             <SuggestionsList onAudioClick={onAudioPress} />
-          </div> */}
+          </div>
         </div>
       </PlayerProvider>
     </Layout>

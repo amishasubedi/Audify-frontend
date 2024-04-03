@@ -28,10 +28,12 @@ const LatestUploads = ({ onAudioClick }) => {
             <div className="col-md-4" key={audio.id}>
               {" "}
               <AudioCard
+                key={audio.id}
                 title={audio.title}
-                artist={audio.artist}
+                artist={audio.owner.name}
                 imageUrl={audio.poster}
                 audioUrl={audio.file}
+                category={audio.category}
                 onClick={() => onAudioClick(audio, data)}
                 playing={audio.id === onGoingAudio?.id}
               />
