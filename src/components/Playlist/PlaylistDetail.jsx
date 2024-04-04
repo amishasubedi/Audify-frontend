@@ -37,11 +37,16 @@ const PlaylistDetail = () => {
             artist={data.owner_name}
           />
           {data.song_count === 0 ? (
-            <p className="px-5 text-white col-xs-6">Nothing saved yet</p>
+            <>
+              {" "}
+              <p className="px-5 text-white col-xs-6">Nothing saved yet</p>
+              <SuggestionsList onAudioClick={onAudioPress} />
+            </>
           ) : (
             ""
+            // render audios of playlist
           )}
-          <SuggestionsList onAudioClick={onAudioPress} />
+
           <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
         </div>
       </div>
