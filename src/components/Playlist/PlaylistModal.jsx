@@ -2,17 +2,19 @@ import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import {
-  getCategoryValidationRules,
-  getTitleValidationRules,
-} from "../utils/validators";
+import { playlistUploadSchema } from "../utils/validators";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+export const visibility = ["public", "private"];
 
 const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(playlistUploadSchema),
+  });
 
   const [playlistInfo, setPlaylistInfo] = useState({
     title: "",
@@ -60,7 +62,6 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
           id="visibility"
           label="Visibility"
           type="select"
-          registerOptions={getCategoryValidationRules}
           register={register}
           errors={errors}
         >
@@ -70,8 +71,11 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
             {...register("visibility")}
           >
             <option value="">Select Visibility Option</option>
-            <option value="public">Public</option>
-            <option value="private">Private</option>
+            {visibility.map((category) => (
+              <option key={category} value={category}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </option>
+            ))}
           </select>
         </FormField>
         <div className="text-center">

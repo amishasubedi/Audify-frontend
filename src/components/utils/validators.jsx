@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { categories } from "../Home/Categories";
+import { visibility } from "../Playlist/PlaylistModal";
 
 export const getNameValidationRules = () => ({
   required: "Name is required",
@@ -43,6 +44,14 @@ export const getAboutValidationRules = () => ({
 
 export const getCategoryValidationRules = () => ({
   required: "Category is required",
+});
+
+export const playlistUploadSchema = yup.object({
+  title: yup.string().trim().required("Title is missing!"),
+  visibility: yup
+    .string()
+    .oneOf(["public", "private"], "Please select one of the category")
+    .required("Visibility is required!"),
 });
 
 export const commonSchema = {
