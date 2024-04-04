@@ -47,24 +47,43 @@ export const getCategoryValidationRules = () => ({
 
 export const commonSchema = {
   title: yup.string().trim().required("Title is missing!"),
-  category: yup.string().oneOf(categories, "Category is missing!"),
+  category: yup
+    .string()
+    .oneOf(categories, "Please select one of the category")
+    .required("Category is required!"),
   about: yup.string().trim().required("About is missing!"),
-  poster: yup.object().shape({
-    uri: yup.string(),
-    name: yup.string(),
-    type: yup.string(),
-    size: yup.number(),
-  }),
+  coverFile: yup
+    .mixed()
+    .test("fileSize", "Cover file is too large", (value) =>
+      value && value[0] ? value[0].size <= 6000000 : true
+    )
+    .test("fileType", "Unsupported file format", (value) => {
+      if (value && value instanceof File) {
+        return ["image/jpeg", "image/png"].includes(value.type);
+      }
+
+      return true;
+    }),
 };
 
 export const newAudioSchema = yup.object().shape({
   ...commonSchema,
-  file: yup.object().shape({
-    uri: yup.string().required("Audio file is missing!"),
-    name: yup.string().required("Audio file is missing!"),
-    type: yup.string().required("Audio file is missing!"),
-    size: yup.number().required("Audio file is missing!"),
-  }),
+  audioFile: yup
+    .mixed()
+    .required("Audio file is missing")
+    .test("fileSize", "Audio file is too large", (value) => {
+      if (value && value instanceof File) {
+        return value.size <= 10000000;
+      }
+      return true;
+    })
+
+    .test("fileType", "Only MP3 files are allowed", (value) => {
+      if (value && value instanceof File) {
+        return ["audio/mpeg", "audio/mp3"].includes(value.type);
+      }
+      return true;
+    }),
 });
 
 export const oldAudioSchema = yup.object().shape({

@@ -47,14 +47,15 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
         noValidate
       >
         <div className="text-white title-header mb-5">New Playlist</div>
+
         <FormField
           id="title"
           label="Title"
-          type="title"
-          registerOptions={getTitleValidationRules}
+          type="text"
           register={register}
           errors={errors}
         />
+
         <FormField
           id="visibility"
           label="Visibility"
