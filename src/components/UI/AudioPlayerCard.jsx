@@ -43,9 +43,9 @@ const AudioPlayerCard = ({
         </PlaybackButton>
         <PlaybackButton size={45} onClick={onToggleHandler}>
           {playing ? (
-            <i className="fa fa-pause p-2" aria-hidden="true"></i>
+            <i className="fa fa-pause" aria-hidden="true"></i>
           ) : (
-            <i className="fa fa-play p-2" aria-hidden="true"></i>
+            <i className="fa fa-play" aria-hidden="true"></i>
           )}
         </PlaybackButton>
         <PlaybackButton
@@ -53,11 +53,11 @@ const AudioPlayerCard = ({
           ignoreContainer={true}
           onClick={onPlayNextHandler}
         >
-          <i className="fa fa-step-forward p-5" aria-hidden="true"></i>
+          <i className="fa fa-step-forward" aria-hidden="true"></i>
         </PlaybackButton>
       </div>
       <div className="album-art-container">
-        <img src={imageUrl} className="custom-img" />
+        <img src={imageUrl} className="custom-img ms-4" />
       </div>
       <div className="track-info-container p-2">
         <h2 className="title text-white">{title}</h2>

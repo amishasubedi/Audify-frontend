@@ -8,11 +8,12 @@
   height: 70px;
   aspectratio: 1;
   borderwidth: 2px;
-  bordercolor: gray;
   borderradius: 7px;
+  cursor: pointer;
   display: flex;
   alignitems: center;
   justifycontent: center;
+  background-color: blue;
 }
 
 .btntitle: {

@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useFetchRecommendation } from "../Hooks/query-hook";
 import { getPlayerState } from "../../redux/Features/player_slice";
-import AudioListCard from "../UI/Songs";
+import AudioListCard from "../UI/AudioListCard";
+import "./Style.css";
 
 const SuggestionsList = ({ onAudioClick }) => {
   const { data, isLoading, refetch } = useFetchRecommendation();
@@ -21,6 +22,7 @@ const SuggestionsList = ({ onAudioClick }) => {
             <AudioListCard
               key={audio.id}
               title={audio.title}
+              artistId={audio.owner.id}
               artist={audio.owner.name}
               imageUrl={audio.poster}
               category={audio.category}

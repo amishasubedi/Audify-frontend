@@ -1,5 +1,5 @@
 .custom-card {
-  background-color: black;
+  background-color: #202020;
   color: #fff;
   display: flex;
   border-radius: 4px;
@@ -10,7 +10,7 @@
 }
 
 .custom-card:hover {
-  background-color: #222222;
+  background-color: rgb(255, 255, 255, 0.3);
 }
 
 .bg {
@@ -48,15 +48,6 @@
   transition: visibility 0s, opacity 0.3s ease;
 }
 
-.custom-card:hover .card-icons {
-  visibility: visible;
-  opacity: 1;
-}
-
-.custom-card:hover .icon {
-  color: #fff;
-}
-
 .icon + .icon {
   margin-left: 20px;
 }
@@ -77,9 +68,11 @@
 
 .stroke-2 {
   animation-delay: 0.1s;
+  margin-left: 2px;
 }
 
 .stroke-3 {
+  margin-left: 2px;
   animation-delay: 0.2s;
 }
 
@@ -91,20 +84,6 @@
   50% {
     transform: scaleY(2);
   }
-}
-
-.player-controller {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-}
-
-.player-controller-ignore {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
 }
 
 .audio-player-card {
@@ -121,8 +100,8 @@
 }
 
 .album-art-container img {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
 }
 
@@ -210,13 +189,9 @@
 .modal-content {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 .bg:hover {
   background-color: rgba(255, 255, 255, 0.3);
-}
-
-.suggestion-card {
-  border: none;
-  margin-bottom: 1rem;
 }
 
 .artist-link {
@@ -228,4 +203,35 @@
 .artist-link:hover {
   text-decoration: underline;
   color: white;
+}
+
+.playlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  cursor: pointer;
+}
+
+.playlist-table tr {
+  background-color: #202020;
+  color: #fff;
+  border-bottom: 1px solid #333;
+  position: relative;
+  z-index: 13;
+}
+
+.playlist-table tr:hover td {
+  background-color: rgb(255, 255, 255, 0.3);
+  cursor: pointer;
+}
+
+.album-cover {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.btn.player-controller:hover,
+.btn.player-controller-ignore:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }

@@ -7,14 +7,20 @@ const PlaybackButton = ({ size = 45, ignoreContainer, children, onClick }) => {
 
   return (
     <button
-      className={`btn ${buttonClass}`}
+      className={`btn ${buttonClass} ms-2`}
       style={{
         width: size,
         height: size,
         borderRadius: size / 2,
         color: "white",
+        hover: "rgb(255,255,255,0.3)",
       }}
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (onClick) {
+          onClick(e);
+        }
+      }}
     >
       {children}
     </button>
