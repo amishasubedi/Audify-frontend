@@ -26,7 +26,6 @@ const SuggestionListCard = ({
         <div>
           <h5 className="mb-0 text-white">{title}</h5>
           <div className="d-flex align-items-center">
-            {/* <span className="me-2 text-white">{artist}</span> */}
             <ArtistLink name={artist} artistId={artistId} />
             <span className="p-1" style={{ color: "white" }}>
               {" "}

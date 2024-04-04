@@ -84,3 +84,22 @@ export const useFetchAudiosByCategory = (category) => {
     }
   );
 };
+
+const fetchPersonalPlaylist = async () => {
+  const client = await getClient();
+  const { data } = await client("/profile/my-playlist");
+  return data.audios;
+};
+
+export const useFetchPersonalPlaylist = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(["personal-playlist"], {
+    queryFn: fetchPersonalPlaylist,
+
+    onError(err) {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};

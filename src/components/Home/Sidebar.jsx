@@ -13,12 +13,15 @@ import { useDispatch } from "react-redux";
 import { useCreatePlaylistMutation } from "../../redux/Services/api_service";
 import useCustomForm from "../Hooks/form-hook";
 import { updateAlert } from "../../redux/Features/alert_slice";
+import { useFetchPersonalPlaylist } from "../Hooks/query-hook";
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [CreatePlaylist, { isLoading, isSuccess, isError }] =
     useCreatePlaylistMutation();
+
+  const { data } = useFetchPersonalPlaylist();
 
   const { reset } = useCustomForm();
   const dispatch = useDispatch();
@@ -119,11 +122,20 @@ const Sidebar = () => {
                 Liked Music
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/playlist" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="book" className="NavLink">
-                Playlist 1
-              </CDBSidebarMenuItem>
-            </NavLink>
+            {data &&
+              data.map((playlist) => (
+                <NavLink
+                  key={playlist.id}
+                  exact
+                  to={`/playlist/${playlist.id}`}
+                  activeClassName="activeClicked"
+                >
+                  <CDBSidebarMenuItem icon="book" className="NavLink">
+                    {playlist.title}
+                  </CDBSidebarMenuItem>
+                </NavLink>
+              ))}
+
             <NavLink exact to="/ep-later" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="tv" className="NavLink">
                 Episodes for later
