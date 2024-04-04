@@ -5,7 +5,7 @@ import { getPlayerState } from "../../redux/Features/player_slice";
 import AudioListCard from "../UI/AudioListCard";
 import "./Style.css";
 
-const SuggestionsList = ({ onAudioClick }) => {
+const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
   const { data, isLoading, refetch } = useFetchRecommendation();
   const { onGoingAudio } = useSelector(getPlayerState);
 
@@ -27,7 +27,8 @@ const SuggestionsList = ({ onAudioClick }) => {
               imageUrl={audio.poster}
               category={audio.category}
               duration={audio.duration}
-              onClick={() => onAudioClick(audio, data)}
+              onClick={() => onAudioClick(audio, data)} // audio info when clicked
+              onAddToPlaylistClick={() => onAddToPlaylistClick(audio.id)}
               playing={audio.id === onGoingAudio?.id}
             />
           ))}

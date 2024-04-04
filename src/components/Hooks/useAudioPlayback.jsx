@@ -63,21 +63,6 @@ const useAudioPlayback = () => {
     }
   }, [currentIndex, onGoingList, dispatch, load, stop]);
 
-  // const onAddToPlaylist = async (playlistId, audioId) => {
-  //   try {
-  //     const client = await getClient();
-  //     const response = await client.post("/playlist/update-playlist", {
-  //       id: playlistId,
-  //       item: audioId,
-  //     });
-
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     // Handle any errors here, such as showing an error message to the user
-  //     console.error("Error adding audio to playlist:", error);
-  //   }
-  // };
-
   const onNext = () => {
     if (currentIndex < onGoingList.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);

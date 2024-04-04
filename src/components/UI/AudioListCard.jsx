@@ -11,6 +11,7 @@ const AudioListCard = ({
   category,
   playing,
   onClick,
+  onAddToPlaylistClick,
 }) => {
   return (
     <>
@@ -31,7 +32,7 @@ const AudioListCard = ({
           </PlaybackButton>
         </td>
         <td>
-          <PlaybackButton size={45}>
+          <PlaybackButton size={45} onClick={onAddToPlaylistClick}>
             <i className="fa fa-plus-square" aria-hidden="true"></i>
           </PlaybackButton>
         </td>
