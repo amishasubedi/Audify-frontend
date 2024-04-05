@@ -32,11 +32,6 @@ const CategoryAudioPage = () => {
             </div>
             <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
           </div>
-
-          <div>
-            <h3 className="text-white px-5 mt-5">Explore more songs</h3>
-            <SuggestionsList onAudioClick={onAudioPress} />
-          </div>
         </div>
       </PlayerProvider>
     </Layout>

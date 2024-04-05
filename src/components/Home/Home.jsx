@@ -30,7 +30,7 @@ const Home = () => {
             <h3 className="text-white px-5 mt-5">Latest Uploads...</h3>
             <div className="px-5 bg-transparent">
               {" "}
-              <LatestUploads />
+              <LatestUploads onAudioClick={onAudioPress} />
             </div>
             <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
           </div>

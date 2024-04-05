@@ -13,6 +13,7 @@ import CategoryAudioPage from "./components/Home/CategoryAudioPage";
 import AudioPlayerCard from "./components/UI/AudioPlayerCard";
 import PlaylistDetail from "./components/Playlist/PlaylistDetail";
 import SuggestionsList from "./components/Audios/SuggestionList";
+import PublicProfile from "./components/Profile/UserProfile";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/ui" element={<AudioPlayerCard />} />
         <Route path="/category/:categoryName" element={<CategoryAudioPage />} />
         <Route path="/songs" element={<SuggestionsList />} />
+        <Route path="/artists/:userId" element={<PublicProfile />} />
 
         <Route element={<PrivateRoutes />}>
           <Route path="/upload" element={<UploadAudio />} />

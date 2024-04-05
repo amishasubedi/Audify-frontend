@@ -14,7 +14,7 @@ import catchAsyncError from "../utils/AsyncErrors";
 import { useFetchPlaylistDetail } from "../Hooks/query-hook";
 import AudioList from "../Audios/AudioList";
 
-const PlaylistDetail = ({ onAudioClick }) => {
+const PlaylistDetail = () => {
   const { id } = useParams();
   const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);

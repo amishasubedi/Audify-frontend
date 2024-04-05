@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./Style.css";
 import ReactSlider from "react-slider";
@@ -12,8 +12,18 @@ const AudioPlayerCard = ({
   onClick,
   onSliderChange,
 }) => {
-  const { togglePlayPause, onNext, onPrevious, mute, playing } =
-    useAudioPlayback();
+  const { togglePlayPause, onNext, onPrevious, playing } = useAudioPlayback();
+
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [showPlaylists, setShowPlaylists] = useState(false);
+
+  const handleSaveToPlaylistClick = () => {
+    setShowPlaylists(true);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownVisible((prev) => !prev);
+  };
 
   const onToggleHandler = async () => {
     await togglePlayPause();
@@ -57,7 +67,7 @@ const AudioPlayerCard = ({
         </PlaybackButton>
       </div>
       <div className="album-art-container">
-        <img src={imageUrl} className="custom-img ms-4" />
+        <img src={imageUrl} alt="" className="custom-img ms-4" />
       </div>
       <div className="track-info-container p-2">
         <h2 className="title text-white">{title}</h2>
@@ -81,9 +91,22 @@ const AudioPlayerCard = ({
         <PlaybackButton size={45}>
           <i className="fa fa-heart" aria-hidden="true"></i>
         </PlaybackButton>
-        <PlaybackButton size={45} ignoreContainer={true}>
+        <PlaybackButton
+          size={45}
+          ignoreContainer={true}
+          onClick={toggleDropdown}
+        >
           <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
         </PlaybackButton>
+
+        {isDropdownVisible && (
+          <div className="dropdown-menu">
+            <button onClick={handleSaveToPlaylistClick}>
+              + Save to Playlist
+            </button>
+          </div>
+        )}
+
         <PlaybackButton size={45} ignoreContainer={true}>
           <i className="fa fa-volume-up" aria-hidden="true"></i>
         </PlaybackButton>

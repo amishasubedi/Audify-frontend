@@ -125,3 +125,39 @@ export const useFetchAudiosByPlaylist = (playlistId) => {
     }
   );
 };
+
+const fetchPersonalUploads = async () => {
+  const client = await getClient();
+  const { data } = await client("/profile/my-songs");
+  return data.audios;
+};
+
+export const useFetchPersonalUploads = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(["personal-uploads"], {
+    queryFn: fetchPersonalUploads,
+
+    onError(err) {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};
+
+const fetchProfileById = async (userId) => {
+  const client = await getClient();
+  const { data } = await client(`/profile/user/${userId}`);
+  return data.profile;
+};
+
+export const useFetchProfileById = (userId) => {
+  const dispatch = useDispatch();
+
+  return useQuery(["profile-details", userId], () => fetchProfileById(userId), {
+    onError: (err) => {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};

@@ -29,6 +29,7 @@ const LatestUploads = ({ onAudioClick }) => {
               <AudioCard
                 key={audio.id}
                 title={audio.title}
+                artistId={audio.owner.id}
                 artist={audio.owner.name}
                 imageUrl={audio.poster}
                 audioUrl={audio.file}
