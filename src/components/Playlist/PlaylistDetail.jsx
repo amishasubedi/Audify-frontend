@@ -12,8 +12,9 @@ import getClient from "../utils/client";
 import { updateAlert } from "../../redux/Features/alert_slice";
 import catchAsyncError from "../utils/AsyncErrors";
 import { useFetchPlaylistDetail } from "../Hooks/query-hook";
+import AudioList from "../Audios/AudioList";
 
-const PlaylistDetail = () => {
+const PlaylistDetail = ({ onAudioClick }) => {
   const { id } = useParams();
   const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);
@@ -32,7 +33,6 @@ const PlaylistDetail = () => {
   const onAddToPlaylist = async (audioId) => {
     try {
       const client = await getClient();
-      console.log(`Adding song ${audioId} to playlist ${id}`);
       await client.post(
         "/playlist/update-playlist",
         JSON.stringify({
@@ -67,7 +67,6 @@ const PlaylistDetail = () => {
           />
           {data.song_count === 0 ? (
             <>
-              {" "}
               <p className="px-5 text-white col-xs-6">Nothing saved yet</p>
               <SuggestionsList
                 onAudioClick={onAudioPress}
@@ -75,8 +74,13 @@ const PlaylistDetail = () => {
               />
             </>
           ) : (
-            ""
-            // render audios of playlist
+            <>
+              <AudioList
+                onAudioClick={onAudioPress}
+                playlistId={id}
+                playlistName={data.title}
+              />
+            </>
           )}
 
           <div>{onGoingAudio ? <AudioPlayer /> : null}</div>

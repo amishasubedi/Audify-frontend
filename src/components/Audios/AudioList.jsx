@@ -1,21 +1,30 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useFetchRecommendation } from "../Hooks/query-hook";
-import { getPlayerState } from "../../redux/Features/player_slice";
+import { useFetchAudiosByPlaylist } from "../Hooks/query-hook";
 import AudioListCard from "../UI/AudioListCard";
-import "./Style.css";
+import { useSelector } from "react-redux";
+import { getPlayerState } from "../../redux/Features/player_slice";
 
-const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
-  const { data, isLoading, refetch } = useFetchRecommendation();
+const AudioList = ({
+  playlistName,
+  onAudioClick,
+  onAddToPlaylistClick,
+  playlistId,
+}) => {
+  const { data, isLoading, error } = useFetchAudiosByPlaylist(playlistId);
   const { onGoingAudio } = useSelector(getPlayerState);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>Error fetching audios : {error.message}</div>;
+  }
+
   return (
     <div>
-      <h3 className="text-white fw-bold mb-4 px-2">Suggestions</h3>
+      <h3 className="text-white mb-2 mt-2  px-2">
+        Audio/s in playlist {playlistName}
+      </h3>
       <table className="playlist-table">
         <tbody>
           {data.map((audio) => (
@@ -27,18 +36,15 @@ const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
               imageUrl={audio.poster}
               category={audio.category}
               duration={audio.duration}
-              onClick={() => onAudioClick(audio, data)} 
+              onClick={() => onAudioClick(audio, data)}
               onAddToPlaylistClick={() => onAddToPlaylistClick(audio.id)}
               playing={audio.id === onGoingAudio?.id}
             />
           ))}
         </tbody>
       </table>
-      <button className="btn btn-primary mt-3" onClick={() => refetch()}>
-        Refresh
-      </button>
     </div>
   );
 };
 
-export default SuggestionsList;
+export default AudioList;

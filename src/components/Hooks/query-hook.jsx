@@ -103,3 +103,25 @@ export const useFetchPersonalPlaylist = () => {
     },
   });
 };
+
+const fetchAudiosByPlaylist = async (playlistId) => {
+  const client = await getClient();
+  const { data } = await client(`/playlist/${playlistId}`);
+  console.log("Data in playlist", data);
+  return data.audios;
+};
+
+export const useFetchAudiosByPlaylist = (playlistId) => {
+  const dispatch = useDispatch();
+
+  return useQuery(
+    ["playlist-audios", playlistId],
+    () => fetchAudiosByPlaylist(playlistId),
+    {
+      onError: (err) => {
+        const errorMessage = catchAsyncError(err);
+        dispatch(updateAlert({ message: errorMessage, type: "error" }));
+      },
+    }
+  );
+};
