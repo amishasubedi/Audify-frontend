@@ -13,24 +13,26 @@ const PersonalUploads = ({ onAudioClick }) => {
 
   return (
     <div>
-      <h3 className="text-white fw-bold mb-4 px-2">My uploads</h3>
-      <table className="playlist-table">
-        <tbody>
-          {data.map((audio) => (
-            <AudioListCard
-              key={audio.id}
-              title={audio.title}
-              artistId={audio.owner.id}
-              artist={audio.owner.name}
-              imageUrl={audio.poster}
-              category={audio.category}
-              duration={audio.duration}
-              onClick={() => onAudioClick(audio, data)}
-              playing={audio.id === onGoingAudio?.id}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="px-5">
+        <h3 className="text-white fw-bold mb-4 px-5">My uploads</h3>
+        <table className="playlist-table">
+          <tbody>
+            {data.map((audio) => (
+              <AudioListCard
+                key={audio.id}
+                title={audio.title}
+                artistId={audio.owner.id}
+                artist={audio.owner.name}
+                imageUrl={audio.poster}
+                category={audio.category}
+                duration={audio.duration}
+                onClick={() => onAudioClick(audio, data)}
+                playing={audio.id === onGoingAudio?.id}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

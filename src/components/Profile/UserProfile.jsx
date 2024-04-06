@@ -4,10 +4,13 @@ import { useFetchProfileById } from "../Hooks/query-hook";
 import ProfileContainer from "../UI/ProfileContainer";
 import Layout from "../Home/Layout";
 import Header from "../Home/Header";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
+import PublicUploads from "./PublicUploads";
 
 const UserProfile = () => {
   const { userId } = useParams();
-  const { data, isLoading, error } = useFetchProfileById(userId);
+  const { data: profileData, isLoading, error } = useFetchProfileById(userId);
+  const { onAudioPress } = useAudioPlayback();
 
   if (isLoading) {
     return <div>Loading profile...</div>;
@@ -22,14 +25,21 @@ const UserProfile = () => {
       <Header />
       <div>
         <ProfileContainer
-          avatar={data.avatar}
-          name={data.name}
-          email={data.email}
-          followers={data.followers}
-          followings={data.followings}
-          verified={data.verified}
+          avatar={profileData.avatar}
+          name={profileData.name}
+          email={profileData.email}
+          followers={profileData.followers}
+          followings={profileData.followings}
+          verified={profileData.verified}
         />
       </div>
+      <main className="main-content">
+        <PublicUploads
+          onAudioClick={onAudioPress}
+          name={profileData.name}
+          userId={userId}
+        />
+      </main>
     </Layout>
   );
 };

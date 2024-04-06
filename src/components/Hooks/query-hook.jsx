@@ -161,3 +161,20 @@ export const useFetchProfileById = (userId) => {
     },
   });
 };
+
+const fetchUploadsById = async (userId) => {
+  const client = await getClient();
+  const { data } = await client(`/audio/uploads/user/${userId}`);
+  return data.audios;
+};
+
+export const useFetchUploadsById = (userId) => {
+  const dispatch = useDispatch();
+
+  return useQuery(["profile-uploads", userId], () => fetchUploadsById(userId), {
+    onError: (err) => {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};

@@ -26,7 +26,7 @@ const Profile = () => {
         followings={userProfile.followings}
         verified={userProfile.verified}
       />
-      <main className="main-content">
+      <main className="d-flex px-2">
         <PersonalUploads onAudioClick={onAudioPress} />
       </main>
     </Layout>

@@ -6,9 +6,7 @@ import { getPlayerState } from "../../redux/Features/player_slice";
 const AudioPlayer = () => {
   const { onGoingAudio } = useSelector(getPlayerState);
 
-  // useEffect(() => {
-  //   console.log("Playing state changed to:", playing);
-  // }, [playing]);
+  // prevent audio re render
 
   return (
     <AudioPlayerCard
