@@ -12,7 +12,8 @@ const AudioPlayerCard = ({
   onClick,
   onSliderChange,
 }) => {
-  const { togglePlayPause, onNext, onPrevious, playing } = useAudioPlayback();
+  const { togglePlayPause, onNext, onPrevious, playing, duration } =
+    useAudioPlayback();
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [showPlaylists, setShowPlaylists] = useState(false);
@@ -35,6 +36,16 @@ const AudioPlayerCard = ({
 
   const onPlayPreviousHandler = async () => {
     await onPrevious();
+  };
+
+  const formatDuration = (duration) => {
+    if (Number.isNaN(duration) || duration === undefined) {
+      return "--:--";
+    }
+
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   useEffect(() => {
@@ -84,7 +95,7 @@ const AudioPlayerCard = ({
         />
         <div className="time-info">
           <span className="current-time">00:00</span>
-          <span className="duration">06:12</span>
+          <span className="duration">{formatDuration(duration)}</span>
         </div>
       </div>
       <div className="additional-controls-container">

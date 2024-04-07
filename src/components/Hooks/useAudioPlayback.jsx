@@ -19,6 +19,7 @@ const useAudioPlayback = () => {
     playing,
     stop,
     seek,
+    duration,
     setVolume,
     setRate,
     mute,
@@ -34,13 +35,12 @@ const useAudioPlayback = () => {
         artwork: item.poster,
         artist: item.owner.name,
         genre: item.category,
-        isLiveStream: item.isLiveStream,
       }));
       dispatch(updateOnGoingList(lists));
       setCurrentIndex(0);
       load(lists[0].url, { autoplay: true });
     },
-    [dispatch, load]
+    [load]
   );
 
   useEffect(() => {
@@ -102,6 +102,7 @@ const useAudioPlayback = () => {
     setVolume,
     togglePlayPause,
     setRate,
+    duration,
     mute,
     onNext,
     onPrevious,
