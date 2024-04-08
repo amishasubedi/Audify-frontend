@@ -13,6 +13,10 @@ const alertSlice = createSlice({
       alertState.message = payload.message;
       alertState.type = payload.type;
     },
+    clearAlert(alertState) {
+      alertState.message = "";
+      alertState.type = "error";
+    },
   },
 });
 
@@ -21,6 +25,6 @@ export const getAlertState = createSelector(
   (alertState) => alertState
 );
 
-export const { updateAlert } = alertSlice.actions;
+export const { updateAlert, clearAlert } = alertSlice.actions;
 
 export default alertSlice.reducer;

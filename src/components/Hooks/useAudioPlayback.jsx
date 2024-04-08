@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import getClient from "../utils/client";
+import catchAsyncError from "../utils/AsyncErrors";
+import { updateAlert } from "../../redux/Features/alert_slice";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import {
   getPlayerState,
@@ -24,6 +27,26 @@ const useAudioPlayback = () => {
     togglePlayPause,
     getPosition,
   } = useGlobalAudioPlayer();
+
+  const onAddToFavorite = async (audioId) => {
+    try {
+      let formData = new FormData();
+      formData.append("audioId", audioId);
+
+      const client = await getClient();
+      await client.post("/favorite/add", formData);
+
+      dispatch(
+        updateAlert({
+          message: "New audio added to your favorite list",
+          type: "success",
+        })
+      );
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    }
+  };
 
   const updateQueue = useCallback(
     (data, selectedSongId) => {
@@ -66,20 +89,6 @@ const useAudioPlayback = () => {
       }
     };
   }, [playing, getPosition]);
-
-  // useEffect(() => {
-  //   if (currentIndex >= onGoingList.length) {
-  //     setCurrentIndex(0);
-  //   } else if (currentIndex < 0) {
-  //     setCurrentIndex(onGoingList.length - 1);
-  //   } else {
-  //     const song = onGoingList[currentIndex];
-  //     if (song) {
-  //       load(song.url, { autoplay: true });
-  //       dispatch(updateOnGoingAudio(song));
-  //     }
-  //   }
-  // }, [currentIndex, onGoingList, load, dispatch]);
 
   useEffect(() => {
     if (
@@ -148,6 +157,7 @@ const useAudioPlayback = () => {
     duration,
     currentTime,
     onNext,
+    onAddToFavorite,
     onPrevious,
   };
 };

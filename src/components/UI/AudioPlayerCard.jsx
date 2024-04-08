@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+import { useDispatch } from "react-redux";
 import "./Style.css";
 import ReactSlider from "react-slider";
 import PlaybackButton from "./PlaybackButton";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 
-const AudioPlayerCard = ({
-  title,
-  artist,
-  imageUrl,
-  onClick,
-  onSliderChange,
-}) => {
+const AudioPlayerCard = ({ title, artist, imageUrl, onClick, audioId }) => {
   const {
     togglePlayPause,
     onNext,
@@ -20,7 +15,10 @@ const AudioPlayerCard = ({
     duration,
     currentTime,
     seek,
+    onAddToFavorite,
   } = useAudioPlayback();
+
+  const dispatch = useDispatch();
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [showPlaylists, setShowPlaylists] = useState(false);
@@ -47,6 +45,10 @@ const AudioPlayerCard = ({
 
   const handleSliderChange = (newValue) => {
     seek(newValue);
+  };
+
+  const handleAddToFavorite = async () => {
+    await onAddToFavorite(audioId);
   };
 
   const formatDuration = (duration) => {
@@ -107,7 +109,7 @@ const AudioPlayerCard = ({
         </div>
       </div>
       <div className="additional-controls-container">
-        <PlaybackButton size={45}>
+        <PlaybackButton size={45} onClick={handleAddToFavorite}>
           <i className="fa fa-heart" aria-hidden="true"></i>
         </PlaybackButton>
         <PlaybackButton

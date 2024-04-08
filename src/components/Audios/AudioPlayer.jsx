@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import AudioPlayerCard from "../UI/AudioPlayerCard";
 import { useSelector } from "react-redux";
 import { getPlayerState } from "../../redux/Features/player_slice";
@@ -13,6 +12,7 @@ const AudioPlayer = () => {
       title={onGoingAudio.title}
       artist={onGoingAudio.artist}
       imageUrl={onGoingAudio.artwork}
+      audioId={onGoingAudio.id}
       playing={onGoingAudio ? true : false}
       onClick={() => {
         console.log("Load ongoing list in modal later");

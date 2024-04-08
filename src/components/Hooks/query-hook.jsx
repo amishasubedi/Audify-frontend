@@ -145,6 +145,25 @@ export const useFetchPersonalUploads = () => {
   });
 };
 
+const fetchPersonalFavorites = async () => {
+  const client = await getClient();
+  const { data } = await client("/favorite/my-favorite");
+  return data.favorites;
+};
+
+export const useFetchPersonalFavorites = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(["personal-favorite"], {
+    queryFn: fetchPersonalFavorites,
+
+    onError(err) {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};
+
 const fetchProfileById = async (userId) => {
   const client = await getClient();
   const { data } = await client(`/profile/user/${userId}`);
