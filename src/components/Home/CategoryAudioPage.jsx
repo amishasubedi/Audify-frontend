@@ -11,8 +11,8 @@ import Header from "./Header";
 
 const CategoryAudioPage = () => {
   const { categoryName } = useParams();
-  const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);
+  const { onAudioPress } = useAudioPlayback();
 
   const displayCategoryName =
     categoryName.charAt(0).toUpperCase() + categoryName.slice(1);

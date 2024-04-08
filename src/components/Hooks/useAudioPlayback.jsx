@@ -10,7 +10,7 @@ import {
 const useAudioPlayback = () => {
   const { onGoingAudio, onGoingList } = useSelector(getPlayerState);
   const dispatch = useDispatch();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(-1);
   const [currentTime, setCurrentTime] = useState(0);
 
   const {
@@ -26,8 +26,8 @@ const useAudioPlayback = () => {
   } = useGlobalAudioPlayer();
 
   const updateQueue = useCallback(
-    (data) => {
-      const lists = data.map((item) => ({
+    (data, selectedSongId) => {
+      const formattedList = data.map((item) => ({
         id: item.id,
         title: item.title,
         url: item.file,
@@ -35,11 +35,21 @@ const useAudioPlayback = () => {
         artist: item.owner.name,
         genre: item.category,
       }));
-      dispatch(updateOnGoingList(lists));
-      setCurrentIndex(0);
-      load(lists[0].url, { autoplay: true });
+
+      const selectedSongIndex = formattedList.findIndex(
+        (song) => song.id === selectedSongId
+      );
+      dispatch(updateOnGoingList(formattedList));
+
+      if (selectedSongIndex !== -1) {
+        setCurrentIndex(selectedSongIndex);
+        console.log("selected song index", selectedSongIndex);
+        console.log("Current index is", currentIndex);
+        dispatch(updateOnGoingAudio(formattedList[selectedSongIndex]));
+        load(formattedList[selectedSongIndex].url, { autoplay: true }); //
+      }
     },
-    [load]
+    [dispatch, load]
   );
 
   useEffect(() => {
@@ -56,6 +66,20 @@ const useAudioPlayback = () => {
       }
     };
   }, [playing, getPosition]);
+
+  // useEffect(() => {
+  //   if (currentIndex >= onGoingList.length) {
+  //     setCurrentIndex(0);
+  //   } else if (currentIndex < 0) {
+  //     setCurrentIndex(onGoingList.length - 1);
+  //   } else {
+  //     const song = onGoingList[currentIndex];
+  //     if (song) {
+  //       load(song.url, { autoplay: true });
+  //       dispatch(updateOnGoingAudio(song));
+  //     }
+  //   }
+  // }, [currentIndex, onGoingList, load, dispatch]);
 
   useEffect(() => {
     if (
@@ -74,34 +98,41 @@ const useAudioPlayback = () => {
         },
       });
       dispatch(updateOnGoingAudio(onGoingList[currentIndex]));
+      console.log("Updated current index is", currentIndex);
     }
   }, [currentIndex, onGoingList, dispatch, load, stop]);
 
-  const onNext = () => {
+  const onNext = useCallback(() => {
     if (currentIndex < onGoingList.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
-  };
+  }, [onGoingList.length]);
 
-  const onPrevious = () => {
-    if (currentIndex > 0) {
+  const onPrevious = useCallback(() => {
+    if (currentIndex < onGoingList.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
-  };
+  }, [currentIndex]);
 
   const onAudioPress = (item, data) => {
-    const index = data.findIndex((audio) => audio.id === item.id);
     const isNewQueue =
       onGoingList.length === 0 || onGoingList[0].id !== data[0].id;
 
     if (isNewQueue) {
-      updateQueue(data);
-    } else if (index !== currentIndex) {
-      setCurrentIndex(index);
-    } else if (playing && index === currentIndex) {
-      pause();
+      updateQueue(data, item.id);
     } else {
-      play();
+      const selectedIndex = onGoingList.findIndex(
+        (audio) => audio.id === item.id
+      );
+
+      if (selectedIndex !== currentIndex) {
+        setCurrentIndex(selectedIndex);
+        load(onGoingList[selectedIndex].url, { autoplay: true });
+      } else if (playing && selectedIndex === currentIndex) {
+        pause();
+      } else {
+        play();
+      }
     }
   };
 

@@ -59,10 +59,6 @@ const AudioPlayerCard = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  useEffect(() => {
-    console.log("Playing state changed:", playing);
-  }, [playing]);
-
   return (
     <div className="audio-player-card" onClick={onClick}>
       <div className="controls-container">
