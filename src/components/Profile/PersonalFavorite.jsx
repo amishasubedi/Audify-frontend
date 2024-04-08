@@ -28,6 +28,7 @@ const PersonalFavorite = ({ onAudioClick }) => {
                 key={audio.id}
                 title={audio.title}
                 artistId={audio.owner.id}
+                audioId={audio.id}
                 artist={audio.owner.name}
                 imageUrl={audio.poster}
                 category={audio.category}

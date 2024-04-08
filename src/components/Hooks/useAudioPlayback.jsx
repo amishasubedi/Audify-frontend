@@ -4,13 +4,16 @@ import getClient from "../utils/client";
 import catchAsyncError from "../utils/AsyncErrors";
 import { updateAlert } from "../../redux/Features/alert_slice";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
+import { useQuery, useQueryClient } from "react-query";
 import {
   getPlayerState,
   updateOnGoingAudio,
   updateOnGoingList,
 } from "../../redux/Features/player_slice";
+import { get } from "react-hook-form";
 
 const useAudioPlayback = () => {
+  const queryClient = useQueryClient();
   const { onGoingAudio, onGoingList } = useSelector(getPlayerState);
   const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -39,6 +42,28 @@ const useAudioPlayback = () => {
       dispatch(
         updateAlert({
           message: "New audio added to your favorite list",
+          type: "success",
+        })
+      );
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    }
+  };
+
+  const onRemoveFromFavorite = async (audioId) => {
+    try {
+      let formData = new FormData();
+      formData.append("audioId", audioId);
+
+      const client = await getClient();
+      await client.post("/favorite/delete", formData);
+
+      queryClient.invalidateQueries("personal-favorite");
+
+      dispatch(
+        updateAlert({
+          message: "Removed from favorite list",
           type: "success",
         })
       );
@@ -123,9 +148,21 @@ const useAudioPlayback = () => {
     }
   }, [currentIndex]);
 
+  // helper function to check if the current song is playing from same queue or different queue
+  const arraysEqual = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) return false;
+
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i].id !== arr2[i].id) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const onAudioPress = (item, data) => {
     const isNewQueue =
-      onGoingList.length === 0 || onGoingList[0].id !== data[0].id;
+      onGoingList.length === 0 || !arraysEqual(onGoingList, data);
 
     if (isNewQueue) {
       updateQueue(data, item.id);
@@ -157,6 +194,7 @@ const useAudioPlayback = () => {
     duration,
     currentTime,
     onNext,
+    onRemoveFromFavorite,
     onAddToFavorite,
     onPrevious,
   };
