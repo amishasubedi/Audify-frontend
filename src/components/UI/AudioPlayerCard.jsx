@@ -12,8 +12,15 @@ const AudioPlayerCard = ({
   onClick,
   onSliderChange,
 }) => {
-  const { togglePlayPause, onNext, onPrevious, playing, duration } =
-    useAudioPlayback();
+  const {
+    togglePlayPause,
+    onNext,
+    onPrevious,
+    playing,
+    duration,
+    currentTime,
+    seek,
+  } = useAudioPlayback();
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [showPlaylists, setShowPlaylists] = useState(false);
@@ -36,6 +43,10 @@ const AudioPlayerCard = ({
 
   const onPlayPreviousHandler = async () => {
     await onPrevious();
+  };
+
+  const handleSliderChange = (newValue) => {
+    seek(newValue);
   };
 
   const formatDuration = (duration) => {
@@ -86,15 +97,16 @@ const AudioPlayerCard = ({
       </div>
       <div className="slider-container">
         <ReactSlider
-          value={0}
-          max={10}
-          onChange={onSliderChange}
-          className="slider-bar"
-          thumbClassName="slider-thumb"
-          trackClassName="slider-track"
+          value={currentTime}
+          max={duration}
+          onChange={handleSliderChange}
+          className="react-slider"
+          thumbClassName="react-slider__thumb"
+          trackClassName="react-slider__track"
         />
+
         <div className="time-info">
-          <span className="current-time">00:00</span>
+          <span className="current-time">{formatDuration(currentTime)}</span>
           <span className="duration">{formatDuration(duration)}</span>
         </div>
       </div>

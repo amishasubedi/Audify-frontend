@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import getClient from "../utils/client";
 import {
   getPlayerState,
   updateOnGoingAudio,
@@ -12,6 +11,8 @@ const useAudioPlayback = () => {
   const { onGoingAudio, onGoingList } = useSelector(getPlayerState);
   const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+
   const {
     load,
     play,
@@ -20,10 +21,8 @@ const useAudioPlayback = () => {
     stop,
     seek,
     duration,
-    setVolume,
-    setRate,
-    mute,
     togglePlayPause,
+    getPosition,
   } = useGlobalAudioPlayer();
 
   const updateQueue = useCallback(
@@ -42,6 +41,21 @@ const useAudioPlayback = () => {
     },
     [load]
   );
+
+  useEffect(() => {
+    let interval = null;
+    if (playing) {
+      interval = setInterval(() => {
+        const position = getPosition();
+        setCurrentTime(position);
+      }, 1000);
+    }
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [playing, getPosition]);
 
   useEffect(() => {
     if (
@@ -99,11 +113,9 @@ const useAudioPlayback = () => {
     currentIndex,
     stop,
     seek,
-    setVolume,
     togglePlayPause,
-    setRate,
     duration,
-    mute,
+    currentTime,
     onNext,
     onPrevious,
   };
