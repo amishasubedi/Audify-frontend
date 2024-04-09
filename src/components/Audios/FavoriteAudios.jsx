@@ -9,13 +9,8 @@ import { getPlayerState } from "../../redux/Features/player_slice";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 
 const FavoriteAudios = () => {
-  const userProfile = useSelector((state) => state.auth.profile);
   const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);
-
-  if (!userProfile) {
-    return <div>Loading profile...</div>;
-  }
 
   return (
     <Layout>

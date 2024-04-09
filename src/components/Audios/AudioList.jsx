@@ -5,8 +5,7 @@ import { updateAlert } from "../../redux/Features/alert_slice";
 import { queryClient } from "react-query";
 import catchAsyncError from "../utils/AsyncErrors";
 import { getPlayerState } from "../../redux/Features/player_slice";
-import PlaylistAudioCard from "../UI/PlaylistAudioCard";
-
+import FavoritePlayerCard from "../UI/FavoritePlayerCard";
 const AudioList = ({ playlistName, onAudioClick, playlistId, audioId }) => {
   const { data, isLoading, error } = useFetchAudiosByPlaylist(playlistId);
   const { onGoingAudio } = useSelector(getPlayerState);
@@ -60,7 +59,7 @@ const AudioList = ({ playlistName, onAudioClick, playlistId, audioId }) => {
       <table className="playlist-table">
         <tbody>
           {data.map((audio) => (
-            <PlaylistAudioCard
+            <FavoritePlayerCard
               key={audio.id}
               title={audio.title}
               artistId={audio.owner.id}

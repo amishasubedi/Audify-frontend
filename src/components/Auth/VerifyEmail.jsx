@@ -1,36 +1,43 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getEmailValidationRules } from "../utils/validators";
-import { useUser } from "../Context/user_context";
-import useCustomForm from "../Hooks/form-hook";
-import { useVerifyEmailMutation } from "../../redux/Services/api_service";
+import { useForm } from "react-hook-form";
 import "./style.css";
 import AuthLayout from "./AuthLayout";
+import getClient from "../utils/client";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { updateAlert } from "../../redux/Features/alert_slice";
 import catchAsyncError from "../utils/AsyncErrors";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
-  const { userDetails } = useUser();
   const dispatch = useDispatch();
-  const [VerifyEmail, { isLoading, isSuccess, isError }] =
-    useVerifyEmailMutation();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, reset, errors } = useCustomForm();
+  const location = useLocation();
+  const { userId } = location.state || {};
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const initialOtpState = Array(6).fill("");
   const [otp, setOtp] = useState(initialOtpState);
   const otpInputRefs = useRef([]);
 
-  const focusNextInputField = (index) => {
-    if (index < 5) {
-      otpInputRefs.current[index + 1].focus();
-    }
-
-    // for backspace - not working rn
-    if (index > 5) {
-      otpInputRefs.current[index - 1].focus();
+  const focusNextInputField = (index, backspace = false) => {
+    if (backspace) {
+      if (index > 0) {
+        otpInputRefs.current[index - 1].focus();
+      }
+    } else {
+      if (index < 5) {
+        otpInputRefs.current[index + 1].focus();
+      }
     }
   };
 
@@ -43,54 +50,58 @@ const VerifyEmail = () => {
       focusNextInputField(index);
     }
 
-    // backspace not working, fix it later
-    if (value === "backspace" && index > 5) {
-      focusNextInputField(index);
+    // Check if the value is empty to determine if backspace was used
+    if (value === "" && index > 0) {
+      focusNextInputField(index, true);
     }
   };
 
-  const handleOtpPaste = (e) => {
-    const pastedData = e.clipboardData
+  const handleOtpPaste = (event) => {
+    event.preventDefault();
+    const pastedData = event.clipboardData
       .getData("text/plain")
       .slice(0, 6)
       .split("");
 
     if (pastedData.length === 6) {
       setOtp(pastedData);
-      otpInputRefs.current[5].focus();
+      otpInputRefs.current.forEach((inputRef, idx) => {
+        if (inputRef && pastedData[idx] !== undefined) {
+          inputRef.value = pastedData[idx];
+          if (idx === 5) {
+            inputRef.focus();
+          }
+        }
+      });
     }
   };
 
-  const onSubmit = async (e) => {
-    const otpToken = otp.join("");
+  const onSubmit = async () => {
+    setIsLoading(true);
 
+    const otpToken = otp.join("");
     const userInfo = {
       token: otpToken,
-      userId: userDetails.userId,
+      userId: userId,
     };
 
     try {
-      const response = await VerifyEmail(userInfo).unwrap();
+      const client = await getClient();
+      await client.post("/users/verify", userInfo);
+
       dispatch(
         updateAlert({ message: "Email successfully verified", type: "success" })
       );
+
+      navigate("/sign-in");
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));
-    }
-    reset();
-  };
-
-  React.useEffect(() => {
-    if (isSuccess) {
-      navigate("/sign-in");
-    }
-
-    if (isError) {
-      alert("Some thing went wrong, Please try again");
+    } finally {
+      setIsLoading(false);
       reset();
     }
-  }, [isSuccess, isError, navigate, isLoading, reset]);
+  };
 
   return (
     <AuthLayout>

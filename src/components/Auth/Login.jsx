@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import FormField from "../UI/FormField";
-import { useSigninUserMutation } from "../../redux/Services/api_service";
 import catchAsyncError from "../utils/AsyncErrors";
 
 import {
@@ -17,10 +16,14 @@ import {
 import { useDispatch } from "react-redux";
 import AuthLayout from "./AuthLayout";
 import { updateAlert } from "../../redux/Features/alert_slice";
+import getClient from "../utils/client";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -29,36 +32,27 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const [SigninUser, { isLoading, isSuccess, isError }] =
-    useSigninUserMutation();
-
   const onSubmit = async (data) => {
+    setIsLoading(true);
     try {
-      const response = await SigninUser(data).unwrap();
+      const client = await getClient();
+      const response = await client.post("/users/sign-in", data);
 
-      console.log(
-        "Dispatching updateProfile and updateLoggedInState actions",
-        response.profile
-      );
-      dispatch(updateProfile(response.profile));
       dispatch(updateLoggedInState(true));
       dispatch(
-        updateAlert({ message: "Sucessfully logged in", type: "success" })
+        updateAlert({ message: "Successfully logged in", type: "success" })
       );
+      await localStorage.setItem("jsonwebtoken", response.data.token);
 
-      await localStorage.setItem("jsonwebtoken", response.token);
+      reset();
+      navigate("/");
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    } finally {
+      setIsLoading(false);
     }
-    reset();
   };
-
-  React.useEffect(() => {
-    if (isSuccess) {
-      navigate("/");
-    }
-  }, [isSuccess, navigate, isLoading, reset]);
 
   return (
     <AuthLayout>
@@ -101,6 +95,7 @@ const Login = () => {
                 <button
                   type="submit"
                   className="login-btn p-2 text-white rounded-3"
+                  disabled={isLoading}
                 >
                   {isLoading ? "Logging in..." : "Login"}
                 </button>

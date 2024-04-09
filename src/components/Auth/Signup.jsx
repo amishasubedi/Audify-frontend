@@ -1,72 +1,57 @@
-import React from "react";
-import "./style.css";
-import useCustomForm from "../Hooks/form-hook";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../Context/user_context";
-import FormField from "../UI/FormField";
+import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-
-import { useSignupUserMutation } from "../../redux/Services/api_service";
+import FormField from "../UI/FormField";
+import catchAsyncError from "../utils/AsyncErrors";
 
 import {
   getEmailValidationRules,
-  getNameValidationRules,
   getPasswordValidationRules,
+  getNameValidationRules,
 } from "../utils/validators";
-import AuthLayout from "./AuthLayout";
 import { useDispatch } from "react-redux";
+import AuthLayout from "./AuthLayout";
 import { updateAlert } from "../../redux/Features/alert_slice";
-import catchAsyncError from "../utils/AsyncErrors";
+import getClient from "../utils/client";
 
 const Signup = () => {
-  const { userDetails, saveUserDetails } = useUser();
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [SignupUser, { isLoading, isSuccess, isError }] =
-    useSignupUserMutation();
-
-  const { register, handleSubmit, reset, control, errors } = useCustomForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     try {
-      const response = await SignupUser(data).unwrap();
-      console.log("Signup successful", response.data);
+      const client = await getClient();
+      const response = await client.post("/users/sign-up", data);
 
-      const userData = {
-        userId: response.data.ID,
-        name: response.data.Name,
-        email: response.data.Email,
-        followers: response.data.Followers,
-        followings: response.data.Followings,
-      };
-
-      saveUserDetails(userData);
+      const userId = response.data.data.ID;
 
       dispatch(
         updateAlert({
-          message: "Sucessfully created new account",
+          message: "Successfully created account",
           type: "success",
         })
       );
+      reset();
+      navigate("/verify-email", { state: { userId } });
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    } finally {
+      setIsLoading(false);
     }
-    reset();
   };
-
-  React.useEffect(() => {
-    if (isSuccess) {
-      navigate("/verify-email");
-    }
-
-    if (isError) {
-      alert("Some thing went wrong, Please try again");
-      reset();
-    }
-  }, [isSuccess, isError, navigate, isLoading, reset]);
 
   return (
     <AuthLayout>
