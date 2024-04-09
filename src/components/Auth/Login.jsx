@@ -42,6 +42,9 @@ const Login = () => {
       );
       dispatch(updateProfile(response.profile));
       dispatch(updateLoggedInState(true));
+      dispatch(
+        updateAlert({ message: "Sucessfully logged in", type: "success" })
+      );
 
       await localStorage.setItem("jsonwebtoken", response.token);
     } catch (error) {
@@ -55,12 +58,7 @@ const Login = () => {
     if (isSuccess) {
       navigate("/");
     }
-
-    if (isError) {
-      alert("Some thing went wrong, Please try again");
-      reset();
-    }
-  }, [isSuccess, isError, navigate, isLoading, reset]);
+  }, [isSuccess, navigate, isLoading, reset]);
 
   return (
     <AuthLayout>

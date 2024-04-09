@@ -13,8 +13,10 @@ import { updateAlert } from "../../redux/Features/alert_slice";
 import catchAsyncError from "../utils/AsyncErrors";
 import { useFetchPlaylistDetail } from "../Hooks/query-hook";
 import AudioList from "../Audios/AudioList";
+import { useQueryClient } from "react-query";
 
 const PlaylistDetail = () => {
+  const queryClient = useQueryClient();
   const { id } = useParams();
   const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);
@@ -32,22 +34,21 @@ const PlaylistDetail = () => {
 
   const onAddToPlaylist = async (audioId) => {
     try {
+      let formData = new FormData();
+      formData.append("audioId", audioId);
+      formData.append("playlistId", Number(id));
+
       const client = await getClient();
-      await client.post(
-        "/playlist/update-playlist",
-        JSON.stringify({
-          id: Number(id),
-          item: audioId,
-        }),
+      await client.post("/playlist/add", formData);
 
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      queryClient.invalidateQueries("playlist-audios");
+
+      dispatch(
+        updateAlert({
+          message: "Added new song to playlist",
+          type: "success",
+        })
       );
-
-      dispatch(updateAlert({ message: "New audio added", type: "success" }));
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));
@@ -68,10 +69,6 @@ const PlaylistDetail = () => {
           {data.song_count === 0 ? (
             <>
               <p className="px-5 text-white col-xs-6">Nothing saved yet</p>
-              <SuggestionsList
-                onAudioClick={onAudioPress}
-                onAddToPlaylistClick={onAddToPlaylist}
-              />
             </>
           ) : (
             <>
@@ -82,6 +79,10 @@ const PlaylistDetail = () => {
               />
             </>
           )}
+          <SuggestionsList
+            onAudioClick={onAudioPress}
+            onAddToPlaylistClick={onAddToPlaylist}
+          />
 
           <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
         </div>

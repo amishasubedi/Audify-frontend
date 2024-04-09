@@ -14,9 +14,13 @@ import {
   getPasswordValidationRules,
 } from "../utils/validators";
 import AuthLayout from "./AuthLayout";
+import { useDispatch } from "react-redux";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import catchAsyncError from "../utils/AsyncErrors";
 
 const Signup = () => {
   const { userDetails, saveUserDetails } = useUser();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -39,8 +43,16 @@ const Signup = () => {
       };
 
       saveUserDetails(userData);
+
+      dispatch(
+        updateAlert({
+          message: "Sucessfully created new account",
+          type: "success",
+        })
+      );
     } catch (error) {
-      console.error("Signup error", error);
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
     }
     reset();
   };

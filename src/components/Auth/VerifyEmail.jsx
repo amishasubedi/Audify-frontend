@@ -6,10 +6,14 @@ import useCustomForm from "../Hooks/form-hook";
 import { useVerifyEmailMutation } from "../../redux/Services/api_service";
 import "./style.css";
 import AuthLayout from "./AuthLayout";
+import { useDispatch } from "react-redux";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import catchAsyncError from "../utils/AsyncErrors";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
   const { userDetails } = useUser();
+  const dispatch = useDispatch();
   const [VerifyEmail, { isLoading, isSuccess, isError }] =
     useVerifyEmailMutation();
 
@@ -67,10 +71,12 @@ const VerifyEmail = () => {
 
     try {
       const response = await VerifyEmail(userInfo).unwrap();
-      console.log("Email Verified", response);
+      dispatch(
+        updateAlert({ message: "Email successfully verified", type: "success" })
+      );
     } catch (error) {
-      console.error("Email Verification Error", error);
-      alert("Verification failed, please try again.");
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
     }
     reset();
   };
