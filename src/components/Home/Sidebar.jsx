@@ -14,20 +14,50 @@ import { useCreatePlaylistMutation } from "../../redux/Services/api_service";
 import useCustomForm from "../Hooks/form-hook";
 import { updateAlert } from "../../redux/Features/alert_slice";
 import { useFetchPersonalPlaylist } from "../Hooks/query-hook";
+import PlaybackButton from "../UI/PlaybackButton";
+import DeleteModal from "../UI/DeleteModal";
+import { useQueryClient } from "react-query";
+import getClient from "../utils/client";
+import catchAsyncError from "../utils/AsyncErrors";
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { data } = useFetchPersonalPlaylist();
+  const { reset } = useCustomForm();
+  const queryClient = useQueryClient();
+
   const [CreatePlaylist, { isLoading, isSuccess, isError }] =
     useCreatePlaylistMutation();
 
-  const { data } = useFetchPersonalPlaylist();
-
-  const { reset } = useCustomForm();
-  const dispatch = useDispatch();
-
   const handleOnAddToPlaylist = () => {
     setShowModal(true);
+  };
+
+  const handleDeletePlaylist = async (playlistId) => {
+    console.log("Deleting playlist with id:", playlistId);
+
+    try {
+      const client = await getClient();
+      await client.delete(`/playlist/delete/${playlistId}`);
+      navigate("/");
+
+      queryClient.invalidateQueries("personal-playlist");
+      dispatch(
+        updateAlert({
+          message: "Sucessfully deleted playlist",
+          type: "success",
+        })
+      );
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    }
+
+    setShowDeleteModal(false);
   };
 
   const handleUpload = async (formData) => {
@@ -122,21 +152,31 @@ const Sidebar = () => {
                 Liked Music
               </CDBSidebarMenuItem>
             </NavLink>
-            <div>
-              {data &&
-                data.map((playlist) => (
+
+            {data &&
+              data.map((playlist) => (
+                <div key={playlist.id} className="playlist-item">
                   <NavLink
-                    key={playlist.id}
                     exact
                     to={`/playlists/${playlist.id}`}
                     activeClassName="activeClicked"
                   >
-                    <CDBSidebarMenuItem icon="book" className="NavLink">
+                    <CDBSidebarMenuItem icon="book">
                       {playlist.title}
                     </CDBSidebarMenuItem>
                   </NavLink>
-                ))}
-            </div>
+                  <PlaybackButton
+                    size={45}
+                    onClick={() => {
+                      setSelectedPlaylistId(playlist.id);
+                      setShowDeleteModal(true);
+                    }}
+                    className="playback-button"
+                  >
+                    <i className="fa fa-trash" />
+                  </PlaybackButton>
+                </div>
+              ))}
 
             <NavLink exact to="/ep-later" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="tv" className="NavLink">
@@ -150,6 +190,12 @@ const Sidebar = () => {
           <div style={{ padding: "20px 5px" }}>Sidebar Footer</div>
         </CDBSidebarFooter>
       </CDBSidebar>
+
+      <DeleteModal
+        visible={showDeleteModal}
+        onRequestClose={() => setShowDeleteModal(false)}
+        onConfirmDelete={() => handleDeletePlaylist(selectedPlaylistId)}
+      />
     </div>
   );
 };
