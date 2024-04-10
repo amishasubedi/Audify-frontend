@@ -42,6 +42,7 @@ const PlaylistDetail = () => {
       await client.post("/playlist/add", formData);
 
       queryClient.invalidateQueries("playlist-audios");
+      queryClient.invalidateQueries("playlist-details");
 
       dispatch(
         updateAlert({

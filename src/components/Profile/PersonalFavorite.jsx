@@ -1,11 +1,12 @@
 import { updateAlert } from "../../redux/Features/alert_slice";
 import { useFetchPersonalFavorites } from "../Hooks/query-hook";
-import AudioListCard from "../UI/AudioListCard";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
 import { getPlayerState } from "../../redux/Features/player_slice";
 import { useSelector } from "react-redux";
 import FavoritePlayerCard from "../UI/FavoritePlayerCard";
 
 const PersonalFavorite = ({ onAudioClick }) => {
+  const { onRemoveFromFavorite } = useAudioPlayback();
   const { data, isLoading, error } = useFetchPersonalFavorites();
   const { onGoingAudio } = useSelector(getPlayerState);
 
@@ -16,6 +17,10 @@ const PersonalFavorite = ({ onAudioClick }) => {
   if (error) {
     updateAlert({ message: "Fetching favorite error", type: "error" });
   }
+
+  const handleRemoveFromFavorite = async (audioId) => {
+    await onRemoveFromFavorite(audioId);
+  };
 
   return (
     <div>
@@ -34,6 +39,7 @@ const PersonalFavorite = ({ onAudioClick }) => {
                 category={audio.category}
                 duration={audio.duration}
                 onClick={() => onAudioClick(audio, data)}
+                onRemove={() => handleRemoveFromFavorite(audio.id)}
                 playing={audio.id === onGoingAudio?.id}
               />
             ))}

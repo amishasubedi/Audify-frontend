@@ -1,7 +1,6 @@
 import PlaybackButton from "./PlaybackButton";
 import PlayAnimation from "./PlayAnimation";
 import ArtistLink from "./ArtistNameLink";
-import useAudioPlayback from "../Hooks/useAudioPlayback";
 
 const FavoritePlayerCard = ({
   title,
@@ -13,13 +12,8 @@ const FavoritePlayerCard = ({
   category,
   playing,
   onClick,
+  onRemove,
 }) => {
-  const { onRemoveFromFavorite } = useAudioPlayback();
-
-  const handleRemoveFromFavorite = async () => {
-    await onRemoveFromFavorite(audioId);
-  };
-
   return (
     <>
       <tr className="pe-auto" onClick={onClick}>
@@ -37,7 +31,10 @@ const FavoritePlayerCard = ({
           <PlaybackButton
             size={45}
             ignoreContainer={true}
-            onClick={handleRemoveFromFavorite}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove(audioId);
+            }}
           >
             <i className="fa fa-trash" aria-hidden="true"></i>
           </PlaybackButton>

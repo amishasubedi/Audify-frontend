@@ -2,24 +2,26 @@ import { useFetchAudiosByPlaylist } from "../Hooks/query-hook";
 import { useDispatch, useSelector } from "react-redux";
 import getClient from "../utils/client";
 import { updateAlert } from "../../redux/Features/alert_slice";
-import { queryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import catchAsyncError from "../utils/AsyncErrors";
 import { getPlayerState } from "../../redux/Features/player_slice";
 import FavoritePlayerCard from "../UI/FavoritePlayerCard";
-const AudioList = ({ playlistName, onAudioClick, playlistId, audioId }) => {
+
+const AudioList = ({ playlistName, onAudioClick, playlistId }) => {
   const { data, isLoading, error } = useFetchAudiosByPlaylist(playlistId);
   const { onGoingAudio } = useSelector(getPlayerState);
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error fetching audios : {error.message}</div>;
+    return <div>Error fetching audios: {error.message}</div>;
   }
 
-  const onRemoveFromPlaylist = async () => {
+  const onRemoveFromPlaylist = async (audioId) => {
     try {
       let formData = new FormData();
       formData.append("audioId", audioId);
@@ -28,12 +30,8 @@ const AudioList = ({ playlistName, onAudioClick, playlistId, audioId }) => {
       const client = await getClient();
       await client.post("/playlist/remove", formData);
 
-      queryClient.setQueryData(["playlist-audios", playlistId], (oldData) => {
-        return {
-          ...oldData,
-          audios: oldData.audios.filter((audio) => audio.id !== audioId),
-        };
-      });
+      queryClient.invalidateQueries("playlist-audios");
+      queryClient.invalidateQueries("playlist-details");
 
       dispatch(
         updateAlert({
@@ -47,7 +45,7 @@ const AudioList = ({ playlistName, onAudioClick, playlistId, audioId }) => {
     }
   };
 
-  const handleAudioRemove = async () => {
+  const handleRemoveFromPlaylist = async (audioId) => {
     await onRemoveFromPlaylist(audioId);
   };
 
@@ -68,7 +66,7 @@ const AudioList = ({ playlistName, onAudioClick, playlistId, audioId }) => {
               category={audio.category}
               duration={audio.duration}
               onClick={() => onAudioClick(audio, data)}
-              onRemove={handleAudioRemove}
+              onRemove={() => handleRemoveFromPlaylist(audio.id)}
               playing={audio.id === onGoingAudio?.id}
             />
           ))}

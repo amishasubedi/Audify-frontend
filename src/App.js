@@ -35,14 +35,14 @@ function App() {
             element={<CategoryAudioPage />}
           />
           <Route path="/songs" element={<SuggestionsList />} />
-
-          <Route element={<PrivateRoutes />}>
-            <Route path="/upload" element={<UploadAudio />} />
-            <Route path="/artists/:userId" element={<UserProfile />} />
-            <Route path="/favorites" element={<FavoriteAudios />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/playlists/:id" element={<PlaylistDetail />} />
-          </Route>
+          {/* 
+          <Route element={<PrivateRoutes />}> */}
+          <Route path="/upload" element={<UploadAudio />} />
+          <Route path="/artists/:userId" element={<UserProfile />} />
+          <Route path="/favorites" element={<FavoriteAudios />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/playlists/:id" element={<PlaylistDetail />} />
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
     </div>
