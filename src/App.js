@@ -9,12 +9,9 @@ import PrivateRoutes from "./components/utils/PrivateRoutes";
 import UploadAudio from "./components/Audios/UploadAudio";
 import Profile from "./components/Profile/Profile";
 import CategoryAudioPage from "./components/Home/CategoryAudioPage";
-
 import AudioPlayerCard from "./components/UI/AudioPlayerCard";
 import PlaylistDetail from "./components/Playlist/PlaylistDetail";
-import SuggestionsList from "./components/Audios/SuggestionList";
 import Notification from "./components/UI/Notification";
-
 import UserProfile from "./components/Profile/UserProfile";
 import FavoriteAudios from "./components/Audios/FavoriteAudios";
 
@@ -29,12 +26,11 @@ function App() {
           <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="/" element={<Home />} />
-          <Route path="/ui" element={<AudioPlayerCard />} />
+
           <Route
             path="/category/:categoryName"
             element={<CategoryAudioPage />}
           />
-          <Route path="/songs" element={<SuggestionsList />} />
 
           <Route element={<PrivateRoutes />}>
             <Route path="/upload" element={<UploadAudio />} />

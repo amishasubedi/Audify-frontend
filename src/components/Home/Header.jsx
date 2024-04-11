@@ -1,13 +1,29 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { getAuthState } from "../../redux/Features/user_slice";
-
 import "./Style.css";
 
 const Header = () => {
+  const [isTransparent, setIsTransparent] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const shouldSetTransparent = window.scrollY < 50;
+      setIsTransparent(shouldSetTransparent);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const headerClass = isTransparent
+    ? "header sticky-top text-white px-5 py-3 d-flex justify-content-between transparent-header"
+    : "header sticky-top text-white px-5 py-3 d-flex justify-content-between";
+
   return (
-    <div className="header sticky-top text-white px-5 py-3 d-flex justify-content-between">
+    <div className={headerClass}>
       <div className="form-group has-search col-5 px-4">
         <span className="fa fa-search form-control-feedback"></span>
         <input

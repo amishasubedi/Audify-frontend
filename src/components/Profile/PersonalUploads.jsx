@@ -13,8 +13,8 @@ const PersonalUploads = ({ onAudioClick }) => {
 
   return (
     <div>
-      <div className="px-5">
-        <h3 className="text-white fw-bold mb-4 px-5">My uploads</h3>
+      <div className="px-5 mt-5">
+        <h3 className="text-white fw-bold mt-4">Songs</h3>
         <table className="playlist-table">
           <tbody>
             {data.map((audio) => (

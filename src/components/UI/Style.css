@@ -315,3 +315,30 @@
 .save-button.active {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+.profile-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 80%
+  );
+}
+
+.profile-background {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  height: 80vh;
+  margin-top: -70px;
+  z-index: 1;
+}

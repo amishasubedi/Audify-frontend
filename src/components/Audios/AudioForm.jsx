@@ -27,6 +27,7 @@ const AudioForm = ({ onSubmit, isLoading }) => {
     formData.append("about", data.about);
 
     if (data.audioFile) {
+      console.log("audio file", data.audioFile);
       formData.append("audioFile", data.audioFile);
     }
     if (data.coverFile) {

@@ -9,7 +9,7 @@ import PublicUploads from "./PublicUploads";
 
 const UserProfile = () => {
   const { userId } = useParams();
-  const { data: profileData, isLoading, error } = useFetchProfileById(userId);
+  const { data: userProfile, isLoading, error } = useFetchProfileById(userId);
   const { onAudioPress } = useAudioPlayback();
 
   if (isLoading) {
@@ -23,21 +23,21 @@ const UserProfile = () => {
   return (
     <Layout>
       <Header />
-      <div>
-        <ProfileContainer
-          avatar={profileData.avatar}
-          name={profileData.name}
-          email={profileData.email}
-          followers={profileData.followers}
-          followings={profileData.followings}
-          verified={profileData.verified}
-        />
-      </div>
-      <main className="main-content">
+      <ProfileContainer
+        avatar={userProfile.avatar}
+        name={userProfile.name}
+        email={userProfile.email}
+        followers={userProfile.followers}
+        followings={userProfile.followings}
+        verified={userProfile.verified}
+        isOwnProfile={false}
+      />
+
+      <main className="px-2">
         <PublicUploads
           onAudioClick={onAudioPress}
-          name={profileData.name}
-          userId={userId}
+          name={userProfile.name}
+          userId={userProfile.id}
         />
       </main>
     </Layout>

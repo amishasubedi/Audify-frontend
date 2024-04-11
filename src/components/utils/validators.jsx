@@ -54,6 +54,21 @@ export const playlistUploadSchema = yup.object({
     .required("Visibility is required!"),
 });
 
+export const editProfileSchema = yup.object({
+  picFile: yup
+    .mixed()
+    .test("fileSize", "Cover file is too large", (value) =>
+      value && value[0] ? value[0].size <= 6000000 : true
+    )
+    .test("fileType", "Unsupported file format", (value) => {
+      if (value && value instanceof File) {
+        return ["image/jpeg", "image/png"].includes(value.type);
+      }
+
+      return true;
+    }),
+});
+
 export const commonSchema = {
   title: yup.string().trim().required("Title is missing!"),
   category: yup

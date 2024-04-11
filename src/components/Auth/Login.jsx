@@ -37,13 +37,10 @@ const Login = () => {
     try {
       const client = await getClient();
       const response = await client.post("/users/sign-in", data);
-
       dispatch(updateLoggedInState(true));
-      dispatch(
-        updateAlert({ message: "Successfully logged in", type: "success" })
-      );
-      await localStorage.setItem("jsonwebtoken", response.data.token);
+      dispatch(updateProfile(response.data.profile));
 
+      await localStorage.setItem("jsonwebtoken", response.data.token);
       reset();
       navigate("/");
     } catch (error) {
