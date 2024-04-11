@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
-
-import { useDispatch } from "react-redux";
-import "./Style.css";
+import React from "react";
 import ReactSlider from "react-slider";
 import PlaybackButton from "./PlaybackButton";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
+import "./Style.css";
 
-const AudioPlayerCard = ({ title, artist, imageUrl, onClick, audioId }) => {
+const AudioPlayerCard = ({
+  title,
+  artist,
+  imageUrl,
+  onClick,
+  audioId,
+  onSaveToPlaylist,
+  isDropDownVisible,
+}) => {
   const {
     togglePlayPause,
     onNext,
@@ -17,19 +23,6 @@ const AudioPlayerCard = ({ title, artist, imageUrl, onClick, audioId }) => {
     seek,
     onAddToFavorite,
   } = useAudioPlayback();
-
-  const dispatch = useDispatch();
-
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [showPlaylists, setShowPlaylists] = useState(false);
-
-  const handleSaveToPlaylistClick = () => {
-    setShowPlaylists(true);
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownVisible((prev) => !prev);
-  };
 
   const onToggleHandler = async () => {
     await togglePlayPause();
@@ -60,6 +53,10 @@ const AudioPlayerCard = ({ title, artist, imageUrl, onClick, audioId }) => {
     const seconds = Math.floor(duration % 60);
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
+
+  const saveButtonClassName = `save-button ${
+    isDropDownVisible ? "active" : ""
+  }`;
 
   return (
     <div className="audio-player-card" onClick={onClick}>
@@ -114,19 +111,11 @@ const AudioPlayerCard = ({ title, artist, imageUrl, onClick, audioId }) => {
         </PlaybackButton>
         <PlaybackButton
           size={45}
-          ignoreContainer={true}
-          onClick={toggleDropdown}
+          onClick={onSaveToPlaylist}
+          className={saveButtonClassName}
         >
-          <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+          <i className="fa fa-plus-square" aria-hidden="true"></i>
         </PlaybackButton>
-
-        {isDropdownVisible && (
-          <div className="dropdown-menu">
-            <button onClick={handleSaveToPlaylistClick}>
-              + Save to Playlist
-            </button>
-          </div>
-        )}
 
         <PlaybackButton size={45} ignoreContainer={true}>
           <i className="fa fa-volume-up" aria-hidden="true"></i>

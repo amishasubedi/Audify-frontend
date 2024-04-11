@@ -288,3 +288,30 @@
     top: 0;
   }
 }
+
+.option-modal {
+  position: fixed;
+  bottom: 120px;
+  right: 20px;
+  z-index: 3;
+  background-color: #202020;
+  color: white;
+  border: 1px solid #383838;
+  width: 250px;
+  padding: 8px 0;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.option-modal-item {
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.option-modal-item:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.save-button.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}

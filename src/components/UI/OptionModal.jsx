@@ -1,12 +1,25 @@
-import ModalContainer from "./ModalContainer";
+import React from "react";
 
-const OptionModal = ({ show, options, onHide, renderItem }) => {
+const OptionModal = ({ show, options, onHide, onOptionClick }) => {
+  const displayStyle = {
+    display: show ? "block" : "none",
+  };
+
   return (
-    <ModalContainer show={show} onHide={onHide}>
-      {options.map((item, index) => {
-        return <div key={index}>{renderItem(item)}</div>;
-      })}
-    </ModalContainer>
+    <div className="option-modal" style={displayStyle}>
+      {options.map((playlist) => (
+        <div
+          key={playlist.id}
+          className="option-modal-item"
+          onClick={() => {
+            onOptionClick(playlist.id);
+            onHide();
+          }}
+        >
+          {playlist.title}
+        </div>
+      ))}
+    </div>
   );
 };
 
