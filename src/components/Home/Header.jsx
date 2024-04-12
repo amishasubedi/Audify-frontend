@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import getClient from "../utils/client";
+import { useNavigate } from "react-router-dom";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
 import "./Style.css";
+import { useDispatch } from "react-redux";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import catchAsyncError from "../utils/AsyncErrors";
+import {
+  updateOnGoingAudio,
+  updateOnGoingList,
+} from "../../redux/Features/player_slice";
 
 const Header = () => {
   const [isTransparent, setIsTransparent] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { stop } = useAudioPlayback();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +35,32 @@ const Header = () => {
   const headerClass = isTransparent
     ? "header sticky-top text-white px-5 py-3 d-flex justify-content-between transparent-header"
     : "header sticky-top text-white px-5 py-3 d-flex justify-content-between";
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("jsonwebtoken");
+      const client = await getClient();
+      await client.post("/users/logout", `token=${encodeURIComponent(token)}`, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      stop();
+      dispatch(
+        updateAlert({
+          message: "User successfully logged out",
+          type: "success",
+        })
+      );
+      // dispatch(updateOnGoingAudio(""));
+      // dispatch(updateOnGoingList(""));
+      localStorage.removeItem("jsonwebtoken");
+      navigate("/sign-in");
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    }
+  };
 
   return (
     <div className={headerClass}>
@@ -72,9 +112,9 @@ const Header = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/sign-in" className="dropdown-item">
+                <div className="dropdown-item" onClick={handleLogout}>
                   Logout
-                </NavLink>
+                </div>
               </li>
             </>
           </ul>

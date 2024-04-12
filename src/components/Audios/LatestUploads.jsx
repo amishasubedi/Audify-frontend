@@ -17,10 +17,7 @@ const LatestUploads = ({ onAudioClick }) => {
   }
 
   return (
-    <div
-      className="container-fluid"
-      style={{ border: "1px solid #000", padding: "1rem" }}
-    >
+    <div className="container-fluid">
       <div style={{ color: "rgba(255, 255, 255, 0.1)" }}>
         <div className="row g-3">
           {data.map((audio) => (
