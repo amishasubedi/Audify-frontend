@@ -14,7 +14,7 @@ const PublicUploads = ({ onAudioClick, name, userId }) => {
   return (
     <div>
       <div className="px-5 mt-5">
-        <h3 className="text-white fw-bold mt-4">{name}'s Uploads</h3>
+        <h3 className="text-white fw-bold mt-4">Songs</h3>
         <table className="playlist-table">
           <tbody>
             {data.map((audio) => (

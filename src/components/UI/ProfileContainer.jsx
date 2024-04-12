@@ -5,11 +5,14 @@ import { BsPencil } from "react-icons/bs";
 const ProfileContainer = ({
   avatar,
   name,
+  bio,
   followers,
   followings,
   verified,
   isOwnProfile,
   OnAddPictureClick,
+  onButtonClick,
+  buttonTitle,
 }) => {
   const hasAvatar =
     avatar &&
@@ -56,22 +59,20 @@ const ProfileContainer = ({
         <h1 className="text-white fw-bold">
           {name} {verified && <BsCheckCircleFill color="green" />}
         </h1>
-        <p className="text-white mb-3">
-          Grammy nominated OneRepublic, is comprised of singer/songwriter and
-          lead vocalist Ryan Tedder...
-        </p>
+        <p className="text-white mb-3">{bio}</p>
 
         <div className="d-flex justify-content-start gap-2 mb-3">
-          {isOwnProfile ? (
-            <>
-              <span>{followers} Followers</span>
-              <span>{followings} Followings</span>
-            </>
-          ) : (
-            <>
-              <button className="btn btn-outline-light btn-sm">Follow</button>
-            </>
+          {!isOwnProfile && (
+            <button
+              className="btn btn-outline-light btn-sm"
+              onClick={onButtonClick}
+            >
+              {buttonTitle}
+            </button>
           )}
+
+          <span>{followers} Followers</span>
+          <span>{followings} Followings</span>
         </div>
       </div>
     </div>

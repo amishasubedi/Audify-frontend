@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
 import { useForm } from "react-hook-form";
@@ -7,29 +7,43 @@ import { editProfileSchema } from "../utils/validators";
 
 const EditProfileModal = ({
   visible,
-  initialValue,
+  initialValue = {},
   onRequestClose,
   onSubmit,
 }) => {
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     trigger,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(editProfileSchema),
     defaultValues: {
-      name: initialValue?.name ?? "",
+      name: "",
+      bio: "",
     },
   });
+
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [imagePreview, setImagePreview] = useState();
+
+  useEffect(() => {
+    reset({
+      name: initialValue.name || "",
+      bio: initialValue.bio || "",
+      file: initialValue.avatarURL,
+    });
+    setImagePreview(initialValue.avatarURL);
+  }, [initialValue, reset]);
 
   const handleFormSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
+    formData.append("bio", data.bio);
 
     if (data.picFile) {
-      console.log("file", data.picFile);
       formData.append("picFile", data.picFile);
     }
     onSubmit(formData);
@@ -40,14 +54,18 @@ const EditProfileModal = ({
     const file = e.target.files[0];
     if (file) {
       setValue("picFile", file, { shouldValidate: true });
-    } else {
-      setValue("picFile", null);
+      setSelectedFileName(file.name);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
     trigger("picFile");
   };
 
   return (
-    <ModalContainer show={visible} onHide={onRequestClose}>
+    <ModalContainer show={visible} onHide={onRequestClose} className>
       <form
         className="py-5 px-4"
         encType="multipart/form-data"
@@ -59,6 +77,14 @@ const EditProfileModal = ({
         <FormField
           id="name"
           label="Name"
+          type="text"
+          register={register}
+          errors={errors}
+        />
+
+        <FormField
+          id="bio"
+          label="Bio"
           type="text"
           register={register}
           errors={errors}

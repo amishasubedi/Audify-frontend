@@ -4,15 +4,7 @@ import ArtistLink from "./ArtistNameLink";
 
 import "./Style.css";
 
-const AudioCard = ({
-  title,
-  artist,
-  artistId,
-  category,
-  imageUrl,
-  playing,
-  onClick,
-}) => {
+const AudioCard = ({ title, artist, artistId, imageUrl, playing, onClick }) => {
   return (
     <div className="custom-card" onClick={onClick}>
       <img src={imageUrl} alt={title} className="custom-img" />

@@ -45,6 +45,12 @@ const Profile = () => {
     }
   };
 
+  const initialFormValues = {
+    name: userProfile.name,
+    bio: userProfile.bio,
+    avatarURL: userProfile.avatar,
+  };
+
   return (
     <Layout>
       <Header />
@@ -52,6 +58,7 @@ const Profile = () => {
         avatar={userProfile.avatar}
         name={userProfile.name}
         email={userProfile.email}
+        bio={userProfile.bio}
         followers={userProfile.followers}
         followings={userProfile.followings}
         verified={userProfile.verified}
@@ -66,6 +73,7 @@ const Profile = () => {
       <EditProfileModal
         onSubmit={handleEdit}
         visible={showModal}
+        initialValue={initialFormValues}
         onRequestClose={() => {
           setShowModal(false);
         }}

@@ -196,3 +196,24 @@ export const useFetchUploadsById = (userId) => {
     },
   });
 };
+
+const fetchFollowersById = async (userId) => {
+  const client = await getClient();
+  const { data } = await client(`/profile/followers/${userId}`);
+  return data;
+};
+
+export const useFetchFollowersById = (userId) => {
+  const dispatch = useDispatch();
+
+  return useQuery(
+    ["profile-followers", userId],
+    () => fetchFollowersById(userId),
+    {
+      onError: (err) => {
+        const errorMessage = catchAsyncError(err);
+        dispatch(updateAlert({ message: errorMessage, type: "error" }));
+      },
+    }
+  );
+};
