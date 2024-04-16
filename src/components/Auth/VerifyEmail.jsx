@@ -93,7 +93,7 @@ const VerifyEmail = () => {
         updateAlert({ message: "Email successfully verified", type: "success" })
       );
 
-      navigate("/sign-in");
+      navigate("/home");
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));

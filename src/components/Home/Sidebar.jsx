@@ -44,7 +44,7 @@ const Sidebar = () => {
     try {
       const client = await getClient();
       await client.delete(`/playlist/delete/${playlistId}`);
-      navigate("/");
+      navigate("/home");
 
       queryClient.invalidateQueries("personal-playlist");
       dispatch(
@@ -103,7 +103,7 @@ const Sidebar = () => {
       >
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a
-            href="/"
+            href="/home"
             className="text-decoration-none"
             style={{ color: "inherit" }}
           >
@@ -113,7 +113,7 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
+            <NavLink exact to="/home" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="home" className="NavLink">
                 Home
               </CDBSidebarMenuItem>

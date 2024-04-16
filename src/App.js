@@ -21,11 +21,10 @@ function App() {
       <BrowserRouter>
         <Notification />
         <Routes>
-          <Route path="/sign-in" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="sign-up" element={<Signup />} />
           <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="/" element={<Home />} />
 
           <Route
             path="/category/:categoryName"
@@ -33,6 +32,7 @@ function App() {
           />
 
           <Route element={<PrivateRoutes />}>
+            <Route path="/home" element={<Home />} />
             <Route path="/upload" element={<UploadAudio />} />
             <Route path="/artists/:userId" element={<UserProfile />} />
             <Route path="/favorites" element={<FavoriteAudios />} />

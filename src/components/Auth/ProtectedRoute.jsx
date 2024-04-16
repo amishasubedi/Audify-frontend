@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }) => {
   const { loggedIn } = useSelector(getAuthState);
 
   if (!loggedIn) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return children;

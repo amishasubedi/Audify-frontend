@@ -48,7 +48,7 @@ const ForgotPassword = () => {
 
               <div className="d-flex justify-content-between mb-4 link">
                 <Link to="/sign-up">Sign up</Link>
-                <Link to="/sign-in">Sign in</Link>
+                <Link to="/">Sign in</Link>
               </div>
 
               <div className="text-center">

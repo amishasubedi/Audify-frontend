@@ -23,7 +23,7 @@ const UploadAudio = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      navigate("/");
+      navigate("/home");
     }
 
     if (isError) {

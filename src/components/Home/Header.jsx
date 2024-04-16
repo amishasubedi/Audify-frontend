@@ -6,6 +6,10 @@ import useAudioPlayback from "../Hooks/useAudioPlayback";
 import "./Style.css";
 import { useDispatch } from "react-redux";
 import { updateAlert } from "../../redux/Features/alert_slice";
+import {
+  updateLoggedInState,
+  updateProfile,
+} from "../../redux/Features/user_slice";
 import catchAsyncError from "../utils/AsyncErrors";
 import {
   updateOnGoingAudio,
@@ -52,10 +56,13 @@ const Header = () => {
           type: "success",
         })
       );
-      // dispatch(updateOnGoingAudio(""));
-      // dispatch(updateOnGoingList(""));
+
+      dispatch(updateLoggedInState(false));
+      dispatch(updateProfile(""));
+      dispatch(updateOnGoingAudio(""));
+      dispatch(updateOnGoingList(""));
       localStorage.removeItem("jsonwebtoken");
-      navigate("/sign-in");
+      navigate("/");
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));

@@ -105,7 +105,7 @@ const Signup = () => {
                 </button>
               </div>
               <div className="text-end mb-4 link">
-                <Link to="/sign-in">Already have an account?</Link>
+                <Link to="/">Already have an account?</Link>
               </div>
             </form>
             <DevTool control={control} />

@@ -42,7 +42,7 @@ const Login = () => {
 
       await localStorage.setItem("jsonwebtoken", response.data.token);
       reset();
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));
