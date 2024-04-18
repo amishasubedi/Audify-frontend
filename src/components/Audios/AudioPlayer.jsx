@@ -5,7 +5,7 @@ import { getPlayerState } from "../../redux/Features/player_slice";
 import OptionModal from "../UI/OptionModal";
 import { useFetchPersonalPlaylist } from "../Hooks/query-hook";
 import { updateAlert } from "../../redux/Features/alert_slice";
-import { useAddSongToPlaylist } from "../Hooks/useAPI";
+import useFavorite from "../Hooks/useAPI";
 import catchAsyncError from "../utils/AsyncErrors";
 
 const AudioPlayer = () => {
@@ -13,7 +13,7 @@ const AudioPlayer = () => {
   const { data } = useFetchPersonalPlaylist();
   const dispatch = useDispatch();
 
-  const addSongToPlaylist = useAddSongToPlaylist();
+  const { addSongToPlaylist } = useFavorite();
 
   const { onGoingAudio } = useSelector(getPlayerState);
 

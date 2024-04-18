@@ -3,6 +3,7 @@ import ReactSlider from "react-slider";
 import PlaybackButton from "./PlaybackButton";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 import "./Style.css";
+import useFavorite from "../Hooks/useAPI";
 
 const AudioPlayerCard = ({
   title,
@@ -21,12 +22,9 @@ const AudioPlayerCard = ({
     duration,
     currentTime,
     seek,
-    onAddToFavorite,
   } = useAudioPlayback();
 
-  const onToggleHandler = async () => {
-    await togglePlayPause();
-  };
+  const { onAddToFavorite } = useFavorite();
 
   const onPlayNextHandler = async () => {
     await onNext();
@@ -68,7 +66,7 @@ const AudioPlayerCard = ({
         >
           <i className="fa fa-step-backward" aria-hidden="true"></i>
         </PlaybackButton>
-        <PlaybackButton size={45} onClick={onToggleHandler}>
+        <PlaybackButton size={45} onClick={togglePlayPause}>
           {playing ? (
             <i className="fa fa-pause" aria-hidden="true"></i>
           ) : (

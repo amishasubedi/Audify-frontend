@@ -1,5 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@reduxjs/toolkit/query";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   onGoingAudio: null,

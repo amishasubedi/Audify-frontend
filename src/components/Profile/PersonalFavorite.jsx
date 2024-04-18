@@ -1,12 +1,12 @@
 import { updateAlert } from "../../redux/Features/alert_slice";
 import { useFetchPersonalFavorites } from "../Hooks/query-hook";
-import useAudioPlayback from "../Hooks/useAudioPlayback";
 import { getPlayerState } from "../../redux/Features/player_slice";
 import { useSelector } from "react-redux";
 import FavoritePlayerCard from "../UI/FavoritePlayerCard";
+import useFavorite from "../Hooks/useAPI";
 
 const PersonalFavorite = ({ onAudioClick }) => {
-  const { onRemoveFromFavorite } = useAudioPlayback();
+  const { onRemoveFromFavorite } = useFavorite();
   const { data, isLoading, error } = useFetchPersonalFavorites();
   const { onGoingAudio } = useSelector(getPlayerState);
 
