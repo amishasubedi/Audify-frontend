@@ -342,3 +342,61 @@
   margin-top: -70px;
   z-index: 1;
 }
+
+.playlist-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  /* Adjust width and use padding-top for aspect ratio */
+  width: 18rem;
+  padding-top: calc(18rem * 9 / 16); /* 16:9 aspect ratio */
+}
+
+.playlist-card-img {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.playlist-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.playlist-card-overlay:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.card-title,
+.card-text {
+  margin: 0;
+}
+
+.stretched-link {
+  color: white;
+  text-decoration: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.card-text {
+  font-size: 1rem;
+}

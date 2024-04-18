@@ -217,3 +217,22 @@ export const useFetchFollowersById = (userId) => {
     }
   );
 };
+
+const fetchPublicPlaylists = async () => {
+  const client = await getClient();
+  const { data } = await client("/playlist/public");
+  return data.playlists;
+};
+
+export const useFetchPublicPlaylist = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(["public-playlist"], {
+    queryFn: fetchPublicPlaylists,
+
+    onError(err) {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};

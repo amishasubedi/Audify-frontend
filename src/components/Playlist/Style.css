@@ -1,0 +1,27 @@
+.playlist-card {
+  color: #fff;
+  background: linear-gradient(160deg, #000000 0%, #434343 100%);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.playlist-card-img img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.playlist-card .card-body {
+  background: #000000;
+}
+
+.playlist-card .card-title {
+  font-size: 1rem;
+}
+
+.card-text {
+  font-size: 0.85rem;
+}
+
+.playlist-card .card-footer {
+  background: inherit;
+}

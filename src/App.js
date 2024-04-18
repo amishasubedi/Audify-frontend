@@ -26,13 +26,13 @@ function App() {
           <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
 
-          <Route
-            path="/category/:categoryName"
-            element={<CategoryAudioPage />}
-          />
-
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<Home />} />
+
+            <Route
+              path="/category/:categoryName"
+              element={<CategoryAudioPage />}
+            />
             <Route path="/upload" element={<UploadAudio />} />
             <Route path="/artists/:userId" element={<UserProfile />} />
             <Route path="/favorites" element={<FavoriteAudios />} />
