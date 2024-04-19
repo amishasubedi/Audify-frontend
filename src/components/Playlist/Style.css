@@ -1,4 +1,6 @@
-.playlist-card {
+ {
+   {
+    /* .playlist-card {
   color: #fff;
   background: linear-gradient(160deg, #000000 0%, #434343 100%);
   border-radius: 0.5rem;
@@ -24,4 +26,6 @@
 
 .playlist-card .card-footer {
   background: inherit;
+} */
+  }
 }

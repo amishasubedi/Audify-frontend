@@ -22,9 +22,11 @@ const PersonalFavorite = ({ onAudioClick }) => {
     await onRemoveFromFavorite(audioId);
   };
 
+  const isPublic = false;
+
   return (
     <div>
-      <div className="px-5">
+      <div className="px-5 p-3">
         <h3 className="text-white fw-bold mb-4 px-5">My Favorites</h3>
         <table className="playlist-table">
           <tbody>
@@ -38,6 +40,7 @@ const PersonalFavorite = ({ onAudioClick }) => {
                 imageUrl={audio.poster}
                 category={audio.category}
                 duration={audio.duration}
+                isPublic={isPublic}
                 onClick={() => onAudioClick(audio, data)}
                 onRemove={() => handleRemoveFromFavorite(audio.id)}
                 playing={audio.id === onGoingAudio?.id}

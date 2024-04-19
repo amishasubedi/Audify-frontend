@@ -1,7 +1,6 @@
 import React from "react";
 import PlayAnimation from "./PlayAnimation";
 import ArtistLink from "./ArtistNameLink";
-
 import "./Style.css";
 
 const AudioCard = ({ title, artist, artistId, imageUrl, playing, onClick }) => {

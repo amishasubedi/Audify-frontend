@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AudioPlayer from "../Audios/AudioPlayer";
@@ -14,6 +14,7 @@ import catchAsyncError from "../utils/AsyncErrors";
 import { useFetchPlaylistDetail } from "../Hooks/query-hook";
 import AudioList from "../Audios/AudioList";
 import { useQueryClient } from "react-query";
+import { getAuthState } from "../../redux/Features/user_slice";
 
 const PlaylistDetail = () => {
   const queryClient = useQueryClient();
@@ -21,8 +22,13 @@ const PlaylistDetail = () => {
   const { onAudioPress } = useAudioPlayback();
   const { onGoingAudio } = useSelector(getPlayerState);
   const dispatch = useDispatch();
+  const { profile } = useSelector(getAuthState);
 
   const { data, isLoading, error } = useFetchPlaylistDetail(id);
+
+  const isPlaylistOwnedByUser = (playlistOwnerId) => {
+    return profile && profile.id === playlistOwnerId;
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -66,6 +72,8 @@ const PlaylistDetail = () => {
             visibility={data.visibility}
             count={data.song_count}
             artist={data.owner_name}
+            coverURL={data.coverurl}
+            isPublic={!isPlaylistOwnedByUser(data.owner_id)}
           />
           {data.song_count === 0 ? (
             <>
@@ -77,13 +85,16 @@ const PlaylistDetail = () => {
                 onAudioClick={onAudioPress}
                 playlistId={id}
                 playlistName={data.title}
+                isPublic={!isPlaylistOwnedByUser(data.owner_id)}
               />
             </>
           )}
-          <SuggestionsList
-            onAudioClick={onAudioPress}
-            onAddToPlaylistClick={onAddToPlaylist}
-          />
+          {!data.is_public && isPlaylistOwnedByUser(data.owner_id) && (
+            <SuggestionsList
+              onAudioClick={onAudioPress}
+              onAddToPlaylistClick={onAddToPlaylist}
+            />
+          )}
 
           <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
         </div>

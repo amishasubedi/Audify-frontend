@@ -158,12 +158,11 @@ const Sidebar = () => {
               {data &&
                 data.map((playlist) => (
                   <div key={playlist.id} className="playlist-item">
-                    <NavLink
-                      exact
-                      to={`/playlists/${playlist.id}`}
-                      activeClassName="activeClicked"
-                    >
-                      <CDBSidebarMenuItem icon="book">
+                    <NavLink exact to={`/playlists/${playlist.id}`}>
+                      <CDBSidebarMenuItem
+                        icon="book"
+                        className="title-playlist"
+                      >
                         {playlist.title}
                       </CDBSidebarMenuItem>
                     </NavLink>

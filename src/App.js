@@ -9,7 +9,6 @@ import PrivateRoutes from "./components/utils/PrivateRoutes";
 import UploadAudio from "./components/Audios/UploadAudio";
 import Profile from "./components/Profile/Profile";
 import CategoryAudioPage from "./components/Home/CategoryAudioPage";
-import AudioPlayerCard from "./components/UI/AudioPlayerCard";
 import PlaylistDetail from "./components/Playlist/PlaylistDetail";
 import Notification from "./components/UI/Notification";
 import UserProfile from "./components/Profile/UserProfile";

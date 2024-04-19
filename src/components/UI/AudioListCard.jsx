@@ -12,6 +12,7 @@ const AudioListCard = ({
   playing,
   onClick,
   onAddToPlaylistClick,
+  onAddToFavoriteClick,
 }) => {
   return (
     <>
@@ -27,7 +28,11 @@ const AudioListCard = ({
         <td>{category}</td>
         <td>{duration}</td>
         <td>
-          <PlaybackButton size={45} ignoreContainer={true}>
+          <PlaybackButton
+            size={45}
+            ignoreContainer={true}
+            onClick={onAddToFavoriteClick}
+          >
             <i className="fa fa-heart" aria-hidden="true"></i>
           </PlaybackButton>
         </td>

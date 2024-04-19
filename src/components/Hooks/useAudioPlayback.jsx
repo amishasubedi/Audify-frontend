@@ -50,7 +50,7 @@ const useAudioPlayback = () => {
         load(formattedList[selectedSongIndex].url, { autoplay: true }); //
       }
     },
-    [dispatch, load]
+    [dispatch, load, currentIndex]
   );
 
   useEffect(() => {
@@ -93,13 +93,13 @@ const useAudioPlayback = () => {
     if (currentIndex < onGoingList.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
-  }, [onGoingList.length]);
+  }, [onGoingList.length, currentIndex]);
 
   const onPrevious = useCallback(() => {
     if (currentIndex < onGoingList.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
-  }, [currentIndex]);
+  }, [onGoingList.length, currentIndex]);
 
   const onAudioPress = (item, data) => {
     const isNewQueue =

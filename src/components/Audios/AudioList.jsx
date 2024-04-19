@@ -6,12 +6,19 @@ import { useQueryClient } from "react-query";
 import catchAsyncError from "../utils/AsyncErrors";
 import { getPlayerState } from "../../redux/Features/player_slice";
 import FavoritePlayerCard from "../UI/FavoritePlayerCard";
+import useFavorite from "../Hooks/useAPI";
 
-const AudioList = ({ playlistName, onAudioClick, playlistId }) => {
+const AudioList = ({ playlistName, onAudioClick, playlistId, isPublic }) => {
   const { data, isLoading, error } = useFetchAudiosByPlaylist(playlistId);
   const { onGoingAudio } = useSelector(getPlayerState);
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+
+  const { onAddToFavorite } = useFavorite();
+
+  const handlAddToFavorite = async (audioId) => {
+    await onAddToFavorite(audioId);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -65,6 +72,8 @@ const AudioList = ({ playlistName, onAudioClick, playlistId }) => {
               imageUrl={audio.poster}
               category={audio.category}
               duration={audio.duration}
+              isPublic={isPublic}
+              onAddToFavoriteClick={() => handlAddToFavorite(audio.id)}
               onClick={() => onAudioClick(audio, data)}
               onRemove={() => handleRemoveFromPlaylist(audio.id)}
               playing={audio.id === onGoingAudio?.id}

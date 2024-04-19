@@ -12,6 +12,8 @@ const FavoritePlayerCard = ({
   category,
   playing,
   onClick,
+  onAddToFavoriteClick,
+  isPublic = false,
   onRemove,
 }) => {
   return (
@@ -28,16 +30,26 @@ const FavoritePlayerCard = ({
         <td>{category}</td>
         <td>{duration}</td>
         <td>
-          <PlaybackButton
-            size={45}
-            ignoreContainer={true}
-            onClick={(e) => {
-              e.stopPropagation();
-              onRemove(audioId);
-            }}
-          >
-            <i className="fa fa-trash" aria-hidden="true"></i>
-          </PlaybackButton>
+          {!isPublic ? (
+            <PlaybackButton
+              size={45}
+              ignoreContainer={true}
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove(audioId);
+              }}
+            >
+              <i className="fa fa-trash" aria-hidden="true"></i>
+            </PlaybackButton>
+          ) : (
+            <PlaybackButton
+              size={45}
+              ignoreContainer={true}
+              onClick={onAddToFavoriteClick}
+            >
+              <i className="fa fa-heart" aria-hidden="true"></i>
+            </PlaybackButton>
+          )}
         </td>
 
         <div className="animation">{playing ? <PlayAnimation /> : null}</div>

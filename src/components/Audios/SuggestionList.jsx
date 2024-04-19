@@ -3,15 +3,21 @@ import { useSelector } from "react-redux";
 import { useFetchRecommendation } from "../Hooks/query-hook";
 import { getPlayerState } from "../../redux/Features/player_slice";
 import AudioListCard from "../UI/AudioListCard";
+import useFavorite from "../Hooks/useAPI";
 import "./Style.css";
 
 const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
   const { data, isLoading, refetch } = useFetchRecommendation();
   const { onGoingAudio } = useSelector(getPlayerState);
+  const { onAddToFavorite } = useFavorite();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleAddToFavorite = async (audioId) => {
+    await onAddToFavorite(audioId);
+  };
 
   return (
     <div>
@@ -27,8 +33,9 @@ const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
               imageUrl={audio.poster}
               category={audio.category}
               duration={audio.duration}
-              onClick={() => onAudioClick(audio, data)} 
+              onClick={() => onAudioClick(audio, data)}
               onAddToPlaylistClick={() => onAddToPlaylistClick(audio.id)}
+              onAddToFavoriteClick={() => handleAddToFavorite(audio.id)}
               playing={audio.id === onGoingAudio?.id}
             />
           ))}

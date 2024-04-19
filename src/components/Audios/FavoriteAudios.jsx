@@ -15,7 +15,7 @@ const FavoriteAudios = () => {
   return (
     <Layout>
       <Header />
-      <main className=" px-2">
+      <main className="px-5">
         <PersonalFavorite onAudioClick={onAudioPress} />
       </main>
       <div>{onGoingAudio ? <AudioPlayer /> : null}</div>

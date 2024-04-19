@@ -2,14 +2,21 @@ import { useSelector } from "react-redux";
 import { useFetchPersonalUploads } from "../Hooks/query-hook";
 import AudioListCard from "../UI/AudioListCard";
 import { getPlayerState } from "../../redux/Features/player_slice";
+import useFavorite from "../Hooks/useAPI";
 
-const PersonalUploads = ({ onAudioClick }) => {
-  const { data, isLoading, error } = useFetchPersonalUploads();
+const PersonalUploads = ({ onAudioClick, onSaveToPlaylist }) => {
+  const { data, isLoading } = useFetchPersonalUploads();
   const { onGoingAudio } = useSelector(getPlayerState);
+
+  const { onAddToFavorite } = useFavorite();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleAddToFavorite = async (audioid) => {
+    await onAddToFavorite(audioid);
+  };
 
   return (
     <div>
@@ -26,6 +33,7 @@ const PersonalUploads = ({ onAudioClick }) => {
                 imageUrl={audio.poster}
                 category={audio.category}
                 duration={audio.duration}
+                onAddToFavoriteClick={() => handleAddToFavorite}
                 onClick={() => onAudioClick(audio, data)}
                 playing={audio.id === onGoingAudio?.id}
               />

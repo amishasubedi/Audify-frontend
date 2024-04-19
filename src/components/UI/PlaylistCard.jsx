@@ -1,14 +1,24 @@
 import React from "react";
-import "./Style.css";
+import "./Playlist.css";
 
-const PlaylistCard = ({ title, artist, imageUrl, totalSong }) => {
+const PlaylistCard = ({ title, artist, imageUrl, totalSong, onCardClick }) => {
+  const handleClick = () => {
+    if (onCardClick) {
+      onCardClick();
+    }
+  };
+
   return (
     <div className="col-md-3 mt-2">
-      <div className="card" style={{ backgroundColor: "black" }}>
+      <div
+        className="card1"
+        style={{ backgroundColor: "black" }}
+        onClick={handleClick}
+      >
         <div className="card-img-block">
-          <img className="card-img-top" src={imageUrl} alt="" />
+          <img className="card-img-top1" src={imageUrl} alt={title} />
         </div>
-        <div className="card-body pt-1 text-white">
+        <div className="card-body1 pt-1 text-white">
           <h5 className="card-title">{title}</h5>
           <p className="card-text">
             {artist} . {totalSong} {totalSong === 1 ? "track" : "tracks"}
