@@ -12,13 +12,11 @@ const PlaylistDetailCard = ({
   return (
     <div className="container my-4" onClick={onClick}>
       <div className="row">
-        <div className="col-auto">
+        <div className="col-auto img-container">
           <img
             id="img"
             draggable="false"
-            alt="Playlist"
-            width="264"
-            className="card-img-top2"
+            className="img-fluid"
             src={coverURL}
           />
         </div>

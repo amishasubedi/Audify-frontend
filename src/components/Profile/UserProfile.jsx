@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import {
   useFetchFollowersById,
@@ -15,10 +15,13 @@ import catchAsyncError from "../utils/AsyncErrors";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthState } from "../../redux/Features/user_slice";
 import { useQueryClient } from "react-query";
+import { getPlayerState } from "../../redux/Features/player_slice";
+import AudioPlayer from "../Audios/AudioPlayer";
 
 const UserProfile = () => {
   const { userId } = useParams(); // id of user being viewed
   const { data: userProfile, isLoading, error } = useFetchProfileById(userId);
+  const { onGoingAudio } = useSelector(getPlayerState);
 
   const { profile } = useSelector(getAuthState); // my profile
   const { onAudioPress } = useAudioPlayback();
@@ -117,6 +120,7 @@ const UserProfile = () => {
           userId={userProfile.id}
         />
       </main>
+      <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
     </Layout>
   );
 };

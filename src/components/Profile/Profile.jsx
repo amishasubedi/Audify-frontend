@@ -13,6 +13,8 @@ import { useDispatch } from "react-redux";
 import { updateAlert } from "../../redux/Features/alert_slice";
 import catchAsyncError from "../utils/AsyncErrors";
 import { useQueryClient } from "react-query";
+import { getPlayerState } from "../../redux/Features/player_slice";
+import AudioPlayer from "../Audios/AudioPlayer";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.profile);
@@ -22,6 +24,7 @@ const Profile = () => {
   const { data: userProfile } = useFetchProfileById(user.id);
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const { onGoingAudio } = useSelector(getPlayerState);
 
   if (!userProfile) {
     return <div>Loading profile...</div>;
@@ -52,33 +55,40 @@ const Profile = () => {
   };
 
   return (
-    <Layout>
-      <Header />
-      <ProfileContainer
-        avatar={userProfile.avatar}
-        name={userProfile.name}
-        email={userProfile.email}
-        bio={userProfile.bio}
-        followers={userProfile.followers}
-        followings={userProfile.followings}
-        verified={userProfile.verified}
-        OnAddPictureClick={handleonEditProfileClick}
-        isOwnProfile={true}
-      />
+    <div className="pb-5">
+      <Layout>
+        <Header />
 
-      <main className="px-5">
-        <PersonalUploads onAudioClick={onAudioPress} />
-      </main>
+        <ProfileContainer
+          avatar={userProfile.avatar}
+          name={userProfile.name}
+          email={userProfile.email}
+          bio={userProfile.bio}
+          followers={userProfile.followers}
+          followings={userProfile.followings}
+          verified={userProfile.verified}
+          OnAddPictureClick={handleonEditProfileClick}
+          isOwnProfile={true}
+        />
 
-      <EditProfileModal
-        onSubmit={handleEdit}
-        visible={showModal}
-        initialValue={initialFormValues}
-        onRequestClose={() => {
-          setShowModal(false);
-        }}
-      />
-    </Layout>
+        <main className="p-3 px-5 mt-4 mb-5">
+          <PersonalUploads onAudioClick={onAudioPress} />
+          <div className="audio-player-spacer"></div>{" "}
+          {/* This is the new spacer div */}
+        </main>
+
+        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
+
+        <EditProfileModal
+          onSubmit={handleEdit}
+          visible={showModal}
+          initialValue={initialFormValues}
+          onRequestClose={() => {
+            setShowModal(false);
+          }}
+        />
+      </Layout>
+    </div>
   );
 };
 

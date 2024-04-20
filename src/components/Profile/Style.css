@@ -66,3 +66,7 @@
     width: 100%;
   }
 }
+
+.audio-player-spacer {
+  height: 1000px;
+}

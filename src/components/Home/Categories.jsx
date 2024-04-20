@@ -3,34 +3,37 @@ import { NavLink } from "react-router-dom";
 export const categories = [
   "Pop",
   "Relax",
-  "Workout",
-  "Sad",
-  "Happy",
   "Gym",
   "Study",
+  "Energise",
+  "Commute",
+  "Rock",
+  "Podcast",
+  "Sleep",
 ];
 
 const Categories = () => {
   const categories = [
     { name: "Pop", path: "/category/pop" },
     { name: "Relax", path: "/category/relax" },
-    { name: "Workout", path: "/category/workout" },
+    { name: "Gym", path: "/category/workout" },
     { name: "Study", path: "/category/study" },
-    { name: "Party", path: "/category/party" },
-    { name: "Chill", path: "/category/chill" },
+    { name: "Energise", path: "/category/party" },
+    { name: "Commute", path: "/category/commute" },
+    { name: "Rock", path: "/category/rock" },
+    { name: "Podcast", path: "/category/podcast" },
+    { name: "Sleep", path: "/category/sleep" },
   ];
 
   return (
-    <div className="justify-content-right px-4 py-1 mt-5">
-      <div className="px-5">
-        {categories.map((category, index) => (
-          <NavLink key={index} exact to={category.path} className="mx-2 ">
-            <button className="category-btn text-white p-2 px-4">
-              {category.name}
-            </button>
-          </NavLink>
-        ))}
-      </div>
+    <div className="d-flex px-5 mt-5 justify-content-start align-items-center">
+      {categories.map((category, index) => (
+        <NavLink key={index} exact to={category.path}>
+          <button className="category-btn text-white p-2 px-4 mx-2">
+            {category.name}
+          </button>
+        </NavLink>
+      ))}
     </div>
   );
 };
