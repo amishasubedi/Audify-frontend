@@ -11,7 +11,7 @@ import {
 const useAudioPlayback = () => {
   const { onGoingList } = useSelector(getPlayerState);
   const dispatch = useDispatch();
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [currentIndex, setCurrentIndex] = useState(-1); // -1 is currently preventing the re render of audios
   const [currentTime, setCurrentTime] = useState(0);
 
   const {
@@ -44,10 +44,7 @@ const useAudioPlayback = () => {
 
       if (selectedSongIndex !== -1) {
         setCurrentIndex(selectedSongIndex);
-        console.log("selected song index", selectedSongIndex);
-        console.log("Current index is", currentIndex);
         dispatch(updateOnGoingAudio(formattedList[selectedSongIndex]));
-        load(formattedList[selectedSongIndex].url, { autoplay: true }); //
       }
     },
     [dispatch, load, currentIndex]

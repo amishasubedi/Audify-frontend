@@ -99,29 +99,31 @@ const UserProfile = () => {
   };
 
   return (
-    <Layout>
-      <Header />
-      <ProfileContainer
-        avatar={userProfile.avatar}
-        name={userProfile.name}
-        email={userProfile.email}
-        followers={userProfile.followers}
-        followings={userProfile.followings}
-        verified={userProfile.verified}
-        buttonTitle={isFollowing ? "Unfollow" : "Follow"}
-        isOwnProfile={Number(userId) === profile.id}
-        onButtonClick={handleButtonClick}
-      />
-
-      <main className="px-2">
-        <PublicUploads
-          onAudioClick={onAudioPress}
+    <div className="pb-5">
+      <Layout>
+        <Header />
+        <ProfileContainer
+          avatar={userProfile.avatar}
           name={userProfile.name}
-          userId={userProfile.id}
+          email={userProfile.email}
+          followers={userProfile.followers}
+          followings={userProfile.followings}
+          verified={userProfile.verified}
+          buttonTitle={isFollowing ? "Unfollow" : "Follow"}
+          isOwnProfile={Number(userId) === profile.id}
+          onButtonClick={handleButtonClick}
         />
-      </main>
-      <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
-    </Layout>
+
+        <main className="p-3 px-5 mt-4 mb-5">
+          <PublicUploads
+            onAudioClick={onAudioPress}
+            name={userProfile.name}
+            userId={userProfile.id}
+          />
+        </main>
+        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
+      </Layout>
+    </div>
   );
 };
 

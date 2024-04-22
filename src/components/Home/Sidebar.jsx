@@ -113,17 +113,17 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/home" activeClassName="activeClicked">
+            <NavLink exact to="/home">
               <CDBSidebarMenuItem icon="home" className="NavLink">
                 Home
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/explore" activeClassName="activeClicked">
+            <NavLink exact to="/explore">
               <CDBSidebarMenuItem icon="compass" className="NavLink">
                 Explore
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/library" activeClassName="activeClicked">
+            <NavLink exact to="/library">
               <CDBSidebarMenuItem icon="music" className="NavLink">
                 Library
               </CDBSidebarMenuItem>
@@ -148,7 +148,7 @@ const Sidebar = () => {
               onSubmit={handleUpload}
             />
 
-            <NavLink exact to="/favorites" activeClassName="activeClicked">
+            <NavLink exact to="/favorites">
               <CDBSidebarMenuItem icon="heart" className="NavLink">
                 Liked Music
               </CDBSidebarMenuItem>
@@ -157,8 +157,15 @@ const Sidebar = () => {
               {" "}
               {data &&
                 data.map((playlist) => (
-                  <div key={playlist.id} className="playlist-item">
-                    <NavLink exact to={`/playlists/${playlist.id}`}>
+                  <div
+                    key={playlist.id}
+                    className="playlist-item d-flex justify-content-between align-items-center"
+                  >
+                    <NavLink
+                      exact
+                      to={`/playlists/${playlist.id}`}
+                      className="text-truncate"
+                    >
                       <CDBSidebarMenuItem
                         icon="book"
                         className="title-playlist"
@@ -185,7 +192,7 @@ const Sidebar = () => {
               />
             </div>
 
-            <NavLink exact to="/ep-later" activeClassName="activeClicked">
+            <NavLink exact to="/ep-later">
               <CDBSidebarMenuItem icon="tv" className="NavLink">
                 Episodes for later
               </CDBSidebarMenuItem>

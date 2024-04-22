@@ -37,9 +37,9 @@ const Home = () => {
             </div>
             <div className="px-5">
               <div className="px-5 mt-5">
-                <h9 className="text-secondary fw-bold">
+                <p className="text-secondary fw-bold">
                   START RADIO BASED ON A SONG
-                </h9>
+                </p>
                 <h1 className="text-white fw-bold px-1">Quick Picks</h1>
               </div>
 
@@ -50,7 +50,7 @@ const Home = () => {
             </div>
             <div className="px-5">
               <div className="px-5 mt-5">
-                <h9 className="text-secondary fw-bold">FOR YOU</h9>
+                <p className="text-secondary fw-bold">FOR YOU</p>
                 <h1 className="text-white fw-bold px-1">Community Playlists</h1>
               </div>
               <div className="px-5 bg-transparent">
@@ -60,7 +60,7 @@ const Home = () => {
             </div>
             <div className="px-5">
               <div className="px-5 mt-5">
-                <h9 className="text-secondary fw-bold">EXPLORE MORE ARTISTS</h9>
+                <p className="text-secondary fw-bold">EXPLORE MORE ARTISTS</p>
                 <h1 className="text-white fw-bold px-1 mb-4">
                   Recommended Artists
                 </h1>

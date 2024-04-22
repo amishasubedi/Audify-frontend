@@ -1,31 +1,38 @@
- {
-   {
-    /* .playlist-card {
-  color: #fff;
-  background: linear-gradient(160deg, #000000 0%, #434343 100%);
-  border-radius: 0.5rem;
-  overflow: hidden;
+.playlist-scroll-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  gap: 16px;
 }
 
-.playlist-card-img img {
-  height: 200px;
-  object-fit: cover;
+.playlist-scroll-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-.playlist-card .card-body {
-  background: #000000;
+.playlist-scroll-container:hover {
+  overflow-x: auto;
 }
 
-.playlist-card .card-title {
-  font-size: 1rem;
+.playlist-scroll-container::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
 }
 
-.card-text {
-  font-size: 0.85rem;
+.playlist-scroll-container::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
 }
 
-.playlist-card .card-footer {
-  background: inherit;
-} */
-  }
+.playlist-scroll-container:hover::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+.playlist-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+.playlist-scroll-container:hover {
+  scrollbar-color: #666 transparent;
 }

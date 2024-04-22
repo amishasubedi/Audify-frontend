@@ -10,29 +10,29 @@ const PlaylistDetailCard = ({
   isPublic = false,
 }) => {
   return (
-    <div className="container my-4" onClick={onClick}>
-      <div className="row">
-        <div className="col-auto img-container">
-          <img
-            id="img"
-            draggable="false"
-            className="img-fluid"
-            src={coverURL}
-          />
-        </div>
-
-        <div className="col">
-          <h2 className="mb-0 text-white fw-bold">{playlistName}</h2>
-          <p className="mb-0 text-white">
-            {visibility} . {artist}
-          </p>
-          <p className="text-white">{`${count} tracks`}</p>
-          {!isPublic && (
-            <button className="btn btn-outline-primary btn-sm">
-              Edit playlist
-            </button>
-          )}
-        </div>
+    <div
+      className="d-flex align-items-center bg-transparent cursor-pointer my-4"
+      onClick={onClick}
+    >
+      <div className="playlist-image-container">
+        <img
+          src={coverURL}
+          alt={`Cover for ${playlistName}`}
+          className="playlist-cover"
+          draggable="false"
+        />
+      </div>
+      <div className="flex px-5">
+        <h2 className="text-white fw-bold">{playlistName}</h2>
+        <p className="text-white">
+          {visibility} . {artist}
+        </p>
+        <p className="playlist-tracks text-white">{`${count} tracks`}</p>
+        {!isPublic && (
+          <button className="login-btn p-2 text-white rounded-3">
+            Edit playlist
+          </button>
+        )}
       </div>
     </div>
   );

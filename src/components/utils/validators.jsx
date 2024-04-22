@@ -1,6 +1,5 @@
 import * as yup from "yup";
 import { categories } from "../Home/Categories";
-import { visibility } from "../Playlist/PlaylistModal";
 
 export const getNameValidationRules = () => ({
   required: "Name is required",
