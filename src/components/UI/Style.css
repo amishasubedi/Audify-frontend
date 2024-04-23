@@ -342,3 +342,12 @@
   margin-top: -70px;
   z-index: 1;
 }
+
+.artist-image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.artist-image:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}

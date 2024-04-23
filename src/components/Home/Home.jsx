@@ -11,6 +11,7 @@ import AudioPlayer from "../Audios/AudioPlayer";
 import PublicPlaylist from "../Playlist/PublicPlaylist";
 import ProfileCard from "../UI/ArtistCard";
 import { getAuthState } from "../../redux/Features/user_slice";
+import RecommendedProfile from "../Profile/RecommendedProfile";
 
 const Home = () => {
   const { onAudioPress } = useAudioPlayback();
@@ -67,7 +68,7 @@ const Home = () => {
               </div>
               <div className="px-5 bg-transparent">
                 {" "}
-                <ProfileCard />
+                <RecommendedProfile />
               </div>
             </div>
           </div>

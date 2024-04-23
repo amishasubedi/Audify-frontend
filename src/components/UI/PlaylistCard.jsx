@@ -2,18 +2,12 @@ import React from "react";
 import "./Playlist.css";
 
 const PlaylistCard = ({ title, artist, imageUrl, totalSong, onCardClick }) => {
-  const handleClick = () => {
-    if (onCardClick) {
-      onCardClick();
-    }
-  };
-
   return (
     <div className="col-md-3 mt-2">
       <div
         className="card1"
         style={{ backgroundColor: "black" }}
-        onClick={handleClick}
+        onClick={onCardClick}
       >
         <div className="card-img-block">
           <img className="card-img-top1" src={imageUrl} alt={title} />

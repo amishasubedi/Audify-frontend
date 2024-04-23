@@ -236,3 +236,22 @@ export const useFetchPublicPlaylist = () => {
     },
   });
 };
+
+const fetchRecommendedProfile = async () => {
+  const client = await getClient();
+  const { data } = await client("/users/recommendation");
+  return data.recommendedUsers;
+};
+
+export const useFetchRecommendedProfile = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(["recommended-users"], {
+    queryFn: fetchRecommendedProfile,
+
+    onError(err) {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};
