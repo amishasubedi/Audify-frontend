@@ -77,8 +77,6 @@ const Profile = () => {
           {/* This is the new spacer div */}
         </main>
 
-        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
-
         <EditProfileModal
           onSubmit={handleEdit}
           visible={showModal}

@@ -4,6 +4,7 @@ import PlaybackButton from "./PlaybackButton";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 import "./Style.css";
 import useFavorite from "../Hooks/useAPI";
+import { useGlobalAudioPlayer } from "react-use-audio-player";
 
 const AudioPlayerCard = ({
   title,
@@ -14,15 +15,10 @@ const AudioPlayerCard = ({
   onSaveToPlaylist,
   isDropDownVisible,
 }) => {
-  const {
-    togglePlayPause,
-    onNext,
-    onPrevious,
-    playing,
-    duration,
-    currentTime,
-    seek,
-  } = useAudioPlayback();
+  const { togglePlayPause, onNext, onPrevious, playing, currentTime, seek } =
+    useAudioPlayback();
+
+  const { duration } = useGlobalAudioPlayer();
 
   const { onAddToFavorite } = useFavorite();
 

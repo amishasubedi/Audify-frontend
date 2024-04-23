@@ -95,8 +95,6 @@ const PlaylistDetail = () => {
               onAddToPlaylistClick={onAddToPlaylist}
             />
           )}
-
-          <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
         </div>
       </div>
     </Layout>

@@ -13,11 +13,16 @@ import PlaylistDetail from "./components/Playlist/PlaylistDetail";
 import Notification from "./components/UI/Notification";
 import UserProfile from "./components/Profile/UserProfile";
 import FavoriteAudios from "./components/Audios/FavoriteAudios";
+import { useSelector } from "react-redux";
+import { getPlayerState } from "./redux/Features/player_slice";
+import AudioPlayer from "./components/Audios/AudioPlayer";
 
 function App() {
+  const { onGoingAudio } = useSelector(getPlayerState);
   return (
     <div>
       <BrowserRouter>
+        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
         <Notification />
         <Routes>
           <Route path="/" element={<Login />} />

@@ -15,7 +15,6 @@ import RecommendedProfile from "../Profile/RecommendedProfile";
 
 const Home = () => {
   const { onAudioPress } = useAudioPlayback();
-  const { onGoingAudio } = useSelector(getPlayerState);
   const { profile } = useSelector(getAuthState);
 
   const isAdmin = profile.name === "Admin";
@@ -72,7 +71,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div>{onGoingAudio ? <AudioPlayer /> : null}</div>)
         </>
       )}
     </Layout>

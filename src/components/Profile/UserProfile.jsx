@@ -121,7 +121,6 @@ const UserProfile = () => {
             userId={userProfile.id}
           />
         </main>
-        <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
       </Layout>
     </div>
   );

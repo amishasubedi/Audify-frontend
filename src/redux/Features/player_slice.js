@@ -3,7 +3,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   onGoingAudio: null,
   onGoingList: [],
-  playbackRate: 1,
+  currentSongIndex: null,
 };
 
 const playerSlice = createSlice({
@@ -18,8 +18,8 @@ const playerSlice = createSlice({
       playerState.onGoingList = payload;
     },
 
-    updatePlaybackRate(playerState, { payload }) {
-      playerState.playbackRate = payload;
+    updateCurrentIndex(playerState, { payload }) {
+      playerState.currentSongIndex = payload;
     },
   },
 });
@@ -29,7 +29,11 @@ export const getPlayerState = createSelector(
   (playerState) => playerState
 );
 
-export const { updateOnGoingAudio, updateOnGoingList, updatePlaybackRate } =
-  playerSlice.actions;
+export const {
+  updateOnGoingAudio,
+  updateOnGoingList,
+  updateCurrentPosition,
+  updateCurrentIndex,
+} = playerSlice.actions;
 
 export default playerSlice.reducer;

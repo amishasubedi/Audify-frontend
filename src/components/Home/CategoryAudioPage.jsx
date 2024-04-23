@@ -9,7 +9,6 @@ import Header from "./Header";
 
 const CategoryAudioPage = () => {
   const { categoryName } = useParams();
-  const { onGoingAudio } = useSelector(getPlayerState);
   const { onAudioPress } = useAudioPlayback();
 
   const displayCategoryName =
@@ -27,7 +26,6 @@ const CategoryAudioPage = () => {
               categoryName={categoryName}
             />
           </div>
-          <div>{onGoingAudio ? <AudioPlayer /> : null}</div>
         </div>
       </div>
     </Layout>
