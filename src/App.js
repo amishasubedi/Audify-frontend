@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { getPlayerState } from "./redux/Features/player_slice";
 import AudioPlayer from "./components/Audios/AudioPlayer";
 import Explore from "./components/Audios/Explore";
+import SearchResults from "./components/Audios/SearchResults";
 
 function App() {
   const { onGoingAudio } = useSelector(getPlayerState);
@@ -34,6 +35,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/search-results" element={<SearchResults />} />
 
             <Route
               path="/category/:categoryName"

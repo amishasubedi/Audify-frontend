@@ -18,6 +18,7 @@ import {
 } from "../../redux/Features/player_slice";
 
 const Header = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [isTransparent, setIsTransparent] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -71,6 +72,21 @@ const Header = () => {
     }
   };
 
+  const handleSearch = async (event) => {
+    if (event.key === "Enter") {
+      try {
+        const client = await getClient();
+        const response = await client.get(
+          `/audio/search?q=${encodeURIComponent(searchQuery)}`
+        );
+        navigate("/search-results", { state: { results: response.data } });
+      } catch (error) {
+        const errorMessage = catchAsyncError(error);
+        dispatch(updateAlert({ message: errorMessage, type: "error" }));
+      }
+    }
+  };
+
   return (
     <div className={headerClass}>
       <div className="form-group has-search col-5 px-4">
@@ -79,6 +95,9 @@ const Header = () => {
           type="text"
           className="form-control"
           placeholder="Search songs, albums, artists, podcasts"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyUp={handleSearch}
         />
       </div>
       <div className="d-flex align-items-center">
