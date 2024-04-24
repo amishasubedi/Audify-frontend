@@ -255,3 +255,22 @@ export const useFetchRecommendedProfile = () => {
     },
   });
 };
+
+const fetchAllUsers = async () => {
+  const client = await getClient();
+  const { data } = await client("/users/all-users");
+  return data.users;
+};
+
+export const useFetchAllUsers = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(["all-users"], {
+    queryFn: fetchAllUsers,
+
+    onError(err) {
+      const errorMessage = catchAsyncError(err);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    },
+  });
+};

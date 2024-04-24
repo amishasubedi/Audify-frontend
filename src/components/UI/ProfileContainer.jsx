@@ -1,5 +1,6 @@
 import React from "react";
-import { BsCheckCircleFill, BsPencil } from "react-icons/bs";
+import { BsCheckCircleFill } from "react-icons/bs";
+import { BsPencil } from "react-icons/bs";
 
 const ProfileContainer = ({
   avatar,
@@ -9,6 +10,7 @@ const ProfileContainer = ({
   followings,
   verified,
   isOwnProfile,
+  is_admin = false,
   OnAddPictureClick,
   onButtonClick,
   buttonTitle,
@@ -61,7 +63,7 @@ const ProfileContainer = ({
         <p className="text-white mb-3">{bio}</p>
 
         <div className="d-flex justify-content-start gap-2 mb-3">
-          {!isOwnProfile && (
+          {!isOwnProfile && !is_admin && (
             <button
               className="btn btn-outline-light btn-sm"
               onClick={onButtonClick}

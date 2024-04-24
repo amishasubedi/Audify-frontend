@@ -110,6 +110,7 @@ const UserProfile = () => {
           verified={userProfile.verified}
           buttonTitle={isFollowing ? "Unfollow" : "Follow"}
           isOwnProfile={Number(userId) === profile.id}
+          is_admin={profile?.is_admin}
           onButtonClick={handleButtonClick}
         />
 

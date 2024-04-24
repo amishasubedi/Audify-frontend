@@ -5,11 +5,11 @@ import LatestUploads from "../Audios/LatestUploads";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 import PublicPlaylist from "../Playlist/PublicPlaylist";
 import RecommendedProfile from "../Profile/RecommendedProfile";
-import ProfileCard from "../UI/ArtistCard";
 import Categories from "./Categories";
 import Header from "./Header";
 import Layout from "./Layout";
 import "./Style.css";
+import UsersList from "./Admin/UsersList";
 
 const Home = () => {
   const { onAudioPress } = useAudioPlayback();
@@ -23,8 +23,7 @@ const Home = () => {
       {isAdmin && (
         <div className="px-5">
           <h2 className="text-white px-5">ADMIN PORTAL</h2>
-          <h2>User Profiles</h2>
-          <ProfileCard />
+          <UsersList />
         </div>
       )}
       {!isAdmin && (
