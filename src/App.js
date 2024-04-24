@@ -16,6 +16,7 @@ import FavoriteAudios from "./components/Audios/FavoriteAudios";
 import { useSelector } from "react-redux";
 import { getPlayerState } from "./redux/Features/player_slice";
 import AudioPlayer from "./components/Audios/AudioPlayer";
+import Explore from "./components/Audios/Explore";
 
 function App() {
   const { onGoingAudio } = useSelector(getPlayerState);
@@ -32,6 +33,7 @@ function App() {
 
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/explore" element={<Explore />} />
 
             <Route
               path="/category/:categoryName"

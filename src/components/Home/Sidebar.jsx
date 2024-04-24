@@ -119,6 +119,12 @@ const Sidebar = () => {
               </CDBSidebarMenuItem>
             </NavLink>
 
+            <NavLink exact to="/explore">
+              <CDBSidebarMenuItem icon="compass" className="NavLink">
+                Explore
+              </CDBSidebarMenuItem>
+            </NavLink>
+
             <hr />
             <div className="d-flex justify-content-center">
               <div>
