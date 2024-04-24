@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
+import { getPlayerState } from "../../redux/Features/player_slice";
 import { useFetchUploadsById } from "../Hooks/query-hook";
 import AudioListCard from "../UI/AudioListCard";
-import { getPlayerState } from "../../redux/Features/player_slice";
 
 const PublicUploads = ({ onAudioClick, name, userId }) => {
   const { data, isLoading, error } = useFetchUploadsById(userId);

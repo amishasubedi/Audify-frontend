@@ -1,4 +1,3 @@
-import React from "react";
 import { isAxiosError } from "axios";
 
 const catchAsyncError = (error) => {

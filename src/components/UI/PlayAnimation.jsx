@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "./Style.css";
 
 const PlayAnimation = () => {

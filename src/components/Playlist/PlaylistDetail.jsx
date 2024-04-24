@@ -1,20 +1,19 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import AudioPlayer from "../Audios/AudioPlayer";
-import { getPlayerState } from "../../redux/Features/player_slice";
-import PlaylistDetailCard from "../UI/PlaylistDetailCard";
-import SuggestionsList from "../Audios/SuggestionList";
-import useAudioPlayback from "../Hooks/useAudioPlayback";
-import Layout from "../Home/Layout";
-import Header from "../Home/Header";
-import getClient from "../utils/client";
-import { updateAlert } from "../../redux/Features/alert_slice";
-import catchAsyncError from "../utils/AsyncErrors";
-import { useFetchPlaylistDetail } from "../Hooks/query-hook";
-import AudioList from "../Audios/AudioList";
 import { useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import { getPlayerState } from "../../redux/Features/player_slice";
 import { getAuthState } from "../../redux/Features/user_slice";
+import AudioList from "../Audios/AudioList";
+import SuggestionsList from "../Audios/SuggestionList";
+import Header from "../Home/Header";
+import Layout from "../Home/Layout";
+import { useFetchPlaylistDetail } from "../Hooks/query-hook";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
+import PlaylistDetailCard from "../UI/PlaylistDetailCard";
+import catchAsyncError from "../utils/AsyncErrors";
+import getClient from "../utils/client";
 
 const PlaylistDetail = () => {
   const queryClient = useQueryClient();

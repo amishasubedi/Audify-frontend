@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import AudioCard from "../UI/AudioCard";
-import { useFetchLatestAudios } from "../Hooks/query-hook";
+import React from "react";
 import { useSelector } from "react-redux";
 import { getPlayerState } from "../../redux/Features/player_slice";
+import { useFetchLatestAudios } from "../Hooks/query-hook";
+import AudioCard from "../UI/AudioCard";
 
 const LatestUploads = ({ onAudioClick }) => {
   const { data, isLoading } = useFetchLatestAudios();

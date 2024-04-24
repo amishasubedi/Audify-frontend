@@ -1,22 +1,21 @@
 import React from "react";
+import { useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import { getPlayerState } from "../../redux/Features/player_slice";
+import { getAuthState } from "../../redux/Features/user_slice";
+import Header from "../Home/Header";
+import Layout from "../Home/Layout";
 import {
   useFetchFollowersById,
   useFetchProfileById,
 } from "../Hooks/query-hook";
-import ProfileContainer from "../UI/ProfileContainer";
-import Layout from "../Home/Layout";
-import Header from "../Home/Header";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
-import PublicUploads from "./PublicUploads";
-import getClient from "../utils/client";
-import { updateAlert } from "../../redux/Features/alert_slice";
+import ProfileContainer from "../UI/ProfileContainer";
 import catchAsyncError from "../utils/AsyncErrors";
-import { useDispatch, useSelector } from "react-redux";
-import { getAuthState } from "../../redux/Features/user_slice";
-import { useQueryClient } from "react-query";
-import { getPlayerState } from "../../redux/Features/player_slice";
-import AudioPlayer from "../Audios/AudioPlayer";
+import getClient from "../utils/client";
+import PublicUploads from "./PublicUploads";
 
 const UserProfile = () => {
   const { userId } = useParams(); // id of user being viewed

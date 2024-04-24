@@ -1,8 +1,8 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { editProfileSchema } from "../utils/validators";
 
 const EditProfileModal = ({

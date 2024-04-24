@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import Layout from "../Home/Layout";
+import { useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import { getPlayerState } from "../../redux/Features/player_slice";
 import Header from "../Home/Header";
-import "./Style.css";
-import PersonalUploads from "./PersonalUploads";
+import Layout from "../Home/Layout";
+import { useFetchProfileById } from "../Hooks/query-hook";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 import ProfileContainer from "../UI/ProfileContainer";
-import getClient from "../utils/client";
-import { useFetchProfileById } from "../Hooks/query-hook";
-import EditProfileModal from "./EditProfileModal";
-import { useDispatch } from "react-redux";
-import { updateAlert } from "../../redux/Features/alert_slice";
 import catchAsyncError from "../utils/AsyncErrors";
-import { useQueryClient } from "react-query";
-import { getPlayerState } from "../../redux/Features/player_slice";
-import AudioPlayer from "../Audios/AudioPlayer";
+import getClient from "../utils/client";
+import EditProfileModal from "./EditProfileModal";
+import PersonalUploads from "./PersonalUploads";
+import "./Style.css";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.profile);

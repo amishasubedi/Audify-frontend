@@ -1,17 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { getAuthState } from "../../redux/Features/user_slice";
+import LatestUploads from "../Audios/LatestUploads";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
+import PublicPlaylist from "../Playlist/PublicPlaylist";
+import RecommendedProfile from "../Profile/RecommendedProfile";
+import ProfileCard from "../UI/ArtistCard";
 import Categories from "./Categories";
 import Header from "./Header";
 import Layout from "./Layout";
-import LatestUploads from "../Audios/LatestUploads";
-import useAudioPlayback from "../Hooks/useAudioPlayback";
 import "./Style.css";
-import { useSelector } from "react-redux";
-import { getPlayerState } from "../../redux/Features/player_slice";
-import AudioPlayer from "../Audios/AudioPlayer";
-import PublicPlaylist from "../Playlist/PublicPlaylist";
-import ProfileCard from "../UI/ArtistCard";
-import { getAuthState } from "../../redux/Features/user_slice";
-import RecommendedProfile from "../Profile/RecommendedProfile";
 
 const Home = () => {
   const { onAudioPress } = useAudioPlayback();

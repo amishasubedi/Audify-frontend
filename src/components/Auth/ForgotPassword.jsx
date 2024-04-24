@@ -1,20 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import FormField from "../UI/FormField";
-import { getEmailValidationRules } from "../utils/validators";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import "./style.css";
+import { DevTool } from "@hookform/devtools";
+import FormField from "../UI/FormField";
+import catchAsyncError from "../utils/AsyncErrors";
+
+import {
+  getEmailValidationRules,
+  getPasswordValidationRules,
+} from "../utils/validators";
+import {
+  updateLoggedInState,
+  updateProfile,
+} from "../../redux/Features/user_slice";
+import { useDispatch } from "react-redux";
 import AuthLayout from "./AuthLayout";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import getClient from "../utils/client";
 
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Submitted", data);
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    try {
+      const client = await getClient();
+      await client.patch("/users/update-password", data);
+      reset();
+      navigate("/");
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,15 +63,24 @@ const ForgotPassword = () => {
               onSubmit={handleSubmit(onSubmit)}
               noValidate
             >
-              <h4 className="login-title text-center py-2 mb-4 text-white">
-                Forget Password
+              <h4 className="login-title text-white  py-2 mb-4">
+                Reset Password
               </h4>
               <FormField
                 id="email"
                 label="Email"
                 type="email"
                 register={register}
-                registerOptions={getEmailValidationRules()}
+                required
+                errors={errors}
+              />
+
+              <FormField
+                id="Password"
+                label="New Password"
+                type="password"
+                register={register}
+                required
                 errors={errors}
               />
 
@@ -56,7 +94,7 @@ const ForgotPassword = () => {
                   type="submit"
                   className="login-btn p-2 text-white rounded-3"
                 >
-                  Send Link
+                  {isLoading ? "Resetting Password..." : "Reset"}
                 </button>
               </div>
             </form>

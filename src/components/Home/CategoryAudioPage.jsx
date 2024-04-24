@@ -1,11 +1,8 @@
-import useAudioPlayback from "../Hooks/useAudioPlayback";
 import { useParams } from "react-router-dom";
-import { getPlayerState } from "../../redux/Features/player_slice";
 import CategoryAudios from "../Audios/CategoryAudios";
-import { useSelector } from "react-redux";
-import Layout from "./Layout";
-import AudioPlayer from "../Audios/AudioPlayer";
+import useAudioPlayback from "../Hooks/useAudioPlayback";
 import Header from "./Header";
+import Layout from "./Layout";
 
 const CategoryAudioPage = () => {
   const { categoryName } = useParams();

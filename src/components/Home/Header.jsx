@@ -4,9 +4,10 @@ import getClient from "../utils/client";
 import { useNavigate } from "react-router-dom";
 import useAudioPlayback from "../Hooks/useAudioPlayback";
 import "./Style.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateAlert } from "../../redux/Features/alert_slice";
 import {
+  getAuthState,
   updateLoggedInState,
   updateProfile,
 } from "../../redux/Features/user_slice";
@@ -22,6 +23,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const { stop } = useAudioPlayback();
+  const { profile } = useSelector(getAuthState);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,36 +96,32 @@ const Header = () => {
               color: "#fff",
             }}
           >
-            A
+            {profile.name.charAt(0)}
           </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <>
-              <li>
-                <NavLink to="/profile" className="dropdown-item">
-                  Profile
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings" className="dropdown-item">
-                  Settings
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/upload" className="dropdown-item">
-                  Upload Music
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/history" className="dropdown-item">
-                  History
-                </NavLink>
-              </li>
-              <li>
-                <div className="dropdown-item" onClick={handleLogout}>
-                  Logout
-                </div>
-              </li>
-            </>
+          <ul
+            className="dropdown-menu bg-dark"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li>
+              <NavLink to="/profile" className="dropdown-item text-white">
+                <i className="fa fa-user me-2"></i>
+                Profile
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/upload" className="dropdown-item text-white">
+                <i className="fa fa-cloud-upload-alt me-2"></i>
+                Upload Music
+              </NavLink>
+            </li>
+
+            <li>
+              <div className="dropdown-item text-white" onClick={handleLogout}>
+                <i className="fa fa-sign-out-alt me-2"></i>
+                Logout
+              </div>
+            </li>
           </ul>
         </div>
       </div>

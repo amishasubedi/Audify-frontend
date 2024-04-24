@@ -118,16 +118,7 @@ const Sidebar = () => {
                 Home
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/explore">
-              <CDBSidebarMenuItem icon="compass" className="NavLink">
-                Explore
-              </CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/library">
-              <CDBSidebarMenuItem icon="music" className="NavLink">
-                Library
-              </CDBSidebarMenuItem>
-            </NavLink>
+
             <hr />
             <div className="d-flex justify-content-center">
               <div>
@@ -191,12 +182,6 @@ const Sidebar = () => {
                 onConfirmDelete={() => handleDeletePlaylist(selectedPlaylistId)}
               />
             </div>
-
-            <NavLink exact to="/ep-later">
-              <CDBSidebarMenuItem icon="tv" className="NavLink">
-                Episodes for later
-              </CDBSidebarMenuItem>
-            </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 

@@ -1,6 +1,5 @@
 import React from "react";
-import { BsCheckCircleFill } from "react-icons/bs";
-import { BsPencil } from "react-icons/bs";
+import { BsCheckCircleFill, BsPencil } from "react-icons/bs";
 
 const ProfileContainer = ({
   avatar,
