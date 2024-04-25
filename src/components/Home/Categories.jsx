@@ -16,7 +16,7 @@ const Categories = () => {
   const categories = [
     { name: "Pop", path: "/category/pop" },
     { name: "Relax", path: "/category/relax" },
-    { name: "Gym", path: "/category/workout" },
+    { name: "Gym", path: "/category/gym" },
     { name: "Study", path: "/category/study" },
     { name: "Energise", path: "/category/party" },
     { name: "Commute", path: "/category/commute" },

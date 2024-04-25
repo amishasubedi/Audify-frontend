@@ -118,7 +118,6 @@ const Sidebar = () => {
                 Home
               </CDBSidebarMenuItem>
             </NavLink>
-
             <NavLink exact to="/explore">
               <CDBSidebarMenuItem icon="compass" className="NavLink">
                 Explore

@@ -3,9 +3,13 @@ import AudioForm from "./AudioForm";
 import { useUploadAudioMutation } from "../../redux/Services/api_service";
 import useCustomForm from "../Hooks/form-hook";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import catchAsyncError from "../utils/AsyncErrors";
 
 const UploadAudio = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [UploadAudio, { isLoading, isSuccess, isError }] =
     useUploadAudioMutation();
 
@@ -14,10 +18,13 @@ const UploadAudio = () => {
   const handleUpload = async (formData) => {
     console.log("type of handle upload", typeof handleUpload);
     try {
-      const response = await UploadAudio(formData).unwrap();
-      console.log("Uploaded audio successfully", response);
+      await UploadAudio(formData).unwrap();
+      dispatch(
+        updateAlert({ message: "Uploaded audio successfully", type: "success" })
+      );
     } catch (error) {
-      console.log("Upload failed", error);
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
     }
   };
 

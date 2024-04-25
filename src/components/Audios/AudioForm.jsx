@@ -23,7 +23,7 @@ const AudioForm = ({ onSubmit, isLoading }) => {
   const handleFormSubmit = async (data) => {
     const formData = new FormData();
     formData.append("title", data.title);
-    formData.append("category", data.category);
+    formData.append("category", data.category.toLowerCase());
     formData.append("about", data.about);
 
     if (data.audioFile) {

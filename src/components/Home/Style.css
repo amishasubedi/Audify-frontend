@@ -91,6 +91,12 @@
   padding-left: 240px;
 }
 
+@media (max-width: 768px) {
+  .main-content {
+    padding-left: 0;
+  }
+}
+
 .playlist-nav-link .playlist-item-container {
   display: flex;
   justify-content: space-between;
