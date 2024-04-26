@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
@@ -26,16 +26,12 @@ const EditProfileModal = ({
     },
   });
 
-  const [selectedFileName, setSelectedFileName] = useState("");
-  const [imagePreview, setImagePreview] = useState();
-
   useEffect(() => {
     reset({
       name: initialValue.name || "",
       bio: initialValue.bio || "",
       file: initialValue.avatarURL,
     });
-    setImagePreview(initialValue.avatarURL);
   }, [initialValue, reset]);
 
   const handleFormSubmit = (data) => {
@@ -54,12 +50,8 @@ const EditProfileModal = ({
     const file = e.target.files[0];
     if (file) {
       setValue("picFile", file, { shouldValidate: true });
-      setSelectedFileName(file.name);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+    } else {
+      setValue("picFile", null);
     }
     trigger("picFile");
   };

@@ -30,7 +30,7 @@ const ProfileContainer = ({
     >
       {isOwnProfile && (
         <button
-          className="btn btn-outline-light btn-lg"
+          className="btn btn-dark btn-lg"
           style={{ position: "absolute", zIndex: 2 }}
           onClick={OnAddPictureClick}
         >
