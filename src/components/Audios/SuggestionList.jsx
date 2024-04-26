@@ -8,7 +8,7 @@ import "./Style.css";
 
 const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
   const { data, isLoading, refetch } = useFetchRecommendation();
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const { onGoingAudio, playing } = useSelector(getPlayerState);
   const { onAddToFavorite } = useFavorite();
 
   if (isLoading) {
@@ -17,11 +17,12 @@ const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
 
   const handleAddToFavorite = async (audioId) => {
     await onAddToFavorite(audioId);
+    console.log("playing ", playing.playing);
   };
 
   return (
     <div>
-      <h3 className="text-white fw-bold mb-4 px-2">Suggestions</h3>
+      <h3 className="text-white fw-bold mt-4 px-2 flex">Suggestions</h3>
       <table className="playlist-table">
         <tbody>
           {data.map((audio) => (
@@ -36,14 +37,19 @@ const SuggestionsList = ({ onAudioClick, onAddToPlaylistClick }) => {
               onClick={() => onAudioClick(audio, data)}
               onAddToPlaylistClick={() => onAddToPlaylistClick(audio.id)}
               onAddToFavoriteClick={() => handleAddToFavorite(audio.id)}
-              playing={audio.id === onGoingAudio?.id}
+              playing={playing.playing && audio.id === onGoingAudio?.id}
             />
           ))}
         </tbody>
       </table>
-      <button className="btn btn-primary mt-3" onClick={() => refetch()}>
-        Refresh
-      </button>
+      <div className="mb-5">
+        <button
+          className="login-btn p-2 mt-2 mb-5 text-white rounded-3"
+          onClick={() => refetch()}
+        >
+          Refresh
+        </button>
+      </div>
     </div>
   );
 };

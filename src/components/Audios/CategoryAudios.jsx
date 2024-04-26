@@ -6,7 +6,7 @@ import { getPlayerState } from "../../redux/Features/player_slice";
 
 const CategoryAudios = ({ onAudioClick, categoryName }) => {
   const { data, isLoading } = useFetchAudiosByCategory(categoryName);
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const { onGoingAudio, playing } = useSelector(getPlayerState);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -30,7 +30,7 @@ const CategoryAudios = ({ onAudioClick, categoryName }) => {
                 imageUrl={audio.poster}
                 audioUrl={audio.file}
                 onClick={() => onAudioClick(audio, data)}
-                playing={audio.id === onGoingAudio?.id}
+                playing={playing.playing && audio.id === onGoingAudio?.id}
               />
             </div>
           ))}

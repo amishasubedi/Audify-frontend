@@ -4,6 +4,7 @@ const initialState = {
   onGoingAudio: null,
   onGoingList: [],
   currentSongIndex: null,
+  playing: null,
 };
 
 const playerSlice = createSlice({
@@ -21,6 +22,10 @@ const playerSlice = createSlice({
     updateCurrentIndex(playerState, { payload }) {
       playerState.currentSongIndex = payload;
     },
+
+    updatePlayingStatus(playerState, { payload }) {
+      playerState.playing = payload;
+    },
   },
 });
 
@@ -34,6 +39,7 @@ export const {
   updateOnGoingList,
   updateCurrentPosition,
   updateCurrentIndex,
+  updatePlayingStatus,
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

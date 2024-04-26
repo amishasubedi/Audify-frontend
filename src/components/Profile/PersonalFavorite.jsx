@@ -8,7 +8,7 @@ import useFavorite from "../Hooks/useAPI";
 const PersonalFavorite = ({ onAudioClick }) => {
   const { onRemoveFromFavorite } = useFavorite();
   const { data, isLoading, error } = useFetchPersonalFavorites();
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const { onGoingAudio, playing } = useSelector(getPlayerState);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -43,7 +43,7 @@ const PersonalFavorite = ({ onAudioClick }) => {
                 isPublic={isPublic}
                 onClick={() => onAudioClick(audio, data)}
                 onRemove={() => handleRemoveFromFavorite(audio.id)}
-                playing={audio.id === onGoingAudio?.id}
+                playing={playing.playing && audio.id === onGoingAudio?.id}
               />
             ))}
           </tbody>

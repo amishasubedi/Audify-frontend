@@ -10,7 +10,7 @@ import useFavorite from "../Hooks/useAPI";
 
 const AudioList = ({ playlistName, onAudioClick, playlistId, isPublic }) => {
   const { data, isLoading, error } = useFetchAudiosByPlaylist(playlistId);
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const { onGoingAudio, playing } = useSelector(getPlayerState);
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
@@ -76,7 +76,7 @@ const AudioList = ({ playlistName, onAudioClick, playlistId, isPublic }) => {
               onAddToFavoriteClick={() => handlAddToFavorite(audio.id)}
               onClick={() => onAudioClick(audio, data)}
               onRemove={() => handleRemoveFromPlaylist(audio.id)}
-              playing={audio.id === onGoingAudio?.id}
+              playing={playing.playing && audio.id === onGoingAudio?.id}
             />
           ))}
         </tbody>

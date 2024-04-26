@@ -6,7 +6,7 @@ import AudioCard from "../UI/AudioCard";
 
 const LatestUploads = ({ onAudioClick }) => {
   const { data, isLoading } = useFetchLatestAudios();
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const { onGoingAudio, playing } = useSelector(getPlayerState);
 
   if (isLoading) {
     return (
@@ -32,7 +32,7 @@ const LatestUploads = ({ onAudioClick }) => {
                 audioUrl={audio.file}
                 category={audio.category}
                 onClick={() => onAudioClick(audio, data)}
-                playing={audio.id === onGoingAudio?.id}
+                playing={playing.playing && audio.id === onGoingAudio?.id}
               />
             </div>
           ))}

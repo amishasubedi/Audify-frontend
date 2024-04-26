@@ -3,9 +3,9 @@ import { getPlayerState } from "../../redux/Features/player_slice";
 import { useFetchUploadsById } from "../Hooks/query-hook";
 import AudioListCard from "../UI/AudioListCard";
 
-const PublicUploads = ({ onAudioClick, name, userId }) => {
-  const { data, isLoading, error } = useFetchUploadsById(userId);
-  const { onGoingAudio } = useSelector(getPlayerState);
+const PublicUploads = ({ onAudioClick, userId }) => {
+  const { data, isLoading } = useFetchUploadsById(userId);
+  const { onGoingAudio, playing } = useSelector(getPlayerState);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -27,7 +27,7 @@ const PublicUploads = ({ onAudioClick, name, userId }) => {
                 category={audio.category}
                 duration={audio.duration}
                 onClick={() => onAudioClick(audio, data)}
-                playing={audio.id === onGoingAudio?.id}
+                playing={playing.playing && audio.id === onGoingAudio?.id}
               />
             ))}
           </tbody>

@@ -18,21 +18,13 @@ const AudioPlayerCard = ({
     togglePlayPause,
     onNext,
     onPrevious,
-    playing,
+    isPlaying,
     currentTime,
     seek,
     duration,
   } = useAudioPlayback();
 
   const { onAddToFavorite } = useFavorite();
-
-  const onPlayNextHandler = async () => {
-    await onNext();
-  };
-
-  const onPlayPreviousHandler = async () => {
-    await onPrevious();
-  };
 
   const handleSliderChange = (newValue) => {
     seek(newValue);
@@ -59,25 +51,17 @@ const AudioPlayerCard = ({
   return (
     <div className="audio-player-card" onClick={onClick}>
       <div className="controls-container">
-        <PlaybackButton
-          size={45}
-          ignoreContainer={true}
-          onClick={onPlayPreviousHandler}
-        >
+        <PlaybackButton size={45} ignoreContainer={true} onClick={onPrevious}>
           <i className="fa fa-step-backward" aria-hidden="true"></i>
         </PlaybackButton>
         <PlaybackButton size={45} onClick={togglePlayPause}>
-          {playing ? (
+          {isPlaying ? (
             <i className="fa fa-pause" aria-hidden="true"></i>
           ) : (
             <i className="fa fa-play" aria-hidden="true"></i>
           )}
         </PlaybackButton>
-        <PlaybackButton
-          size={45}
-          ignoreContainer={true}
-          onClick={onPlayNextHandler}
-        >
+        <PlaybackButton size={45} ignoreContainer={true} onClick={onNext}>
           <i className="fa fa-step-forward" aria-hidden="true"></i>
         </PlaybackButton>
       </div>

@@ -6,7 +6,7 @@ import useFavorite from "../Hooks/useAPI";
 
 const PersonalUploads = ({ onAudioClick, onSaveToPlaylist }) => {
   const { data, isLoading } = useFetchPersonalUploads();
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const { onGoingAudio, playing } = useSelector(getPlayerState);
 
   const { onAddToFavorite } = useFavorite();
 
@@ -35,7 +35,7 @@ const PersonalUploads = ({ onAudioClick, onSaveToPlaylist }) => {
                 duration={audio.duration}
                 onAddToFavoriteClick={() => handleAddToFavorite}
                 onClick={() => onAudioClick(audio, data)}
-                playing={audio.id === onGoingAudio?.id}
+                playing={playing.playing && audio.id === onGoingAudio?.id}
               />
             ))}
           </tbody>
