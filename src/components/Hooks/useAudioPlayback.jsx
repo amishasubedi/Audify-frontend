@@ -15,28 +15,20 @@ const useAudioPlayback = () => {
   const dispatch = useDispatch();
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [lastIndex, setLastIndex] = useState(currentSongIndex);
 
-  const {
-    load,
-    play: startPlaying,
-    pause: pausePlaying,
-    stop,
-    seek,
-    getPosition,
-  } = useGlobalAudioPlayer();
+  const { load, play, pause, stop, seek, playing, getPosition } =
+    useGlobalAudioPlayer();
 
   const togglePlayPause = useCallback(() => {
-    if (isPlaying) {
-      pausePlaying();
+    if (playing) {
+      pause();
       dispatch(updatePlayingStatus({ playing: false }));
     } else {
-      startPlaying();
+      play();
       dispatch(updatePlayingStatus({ playing: true }));
     }
-    setIsPlaying(!isPlaying);
-  }, [isPlaying, startPlaying, pausePlaying, dispatch]);
+  }, [playing, play, pause, dispatch]);
 
   useEffect(() => {
     const trackChanged = lastIndex !== currentSongIndex;
@@ -63,22 +55,14 @@ const useAudioPlayback = () => {
       dispatch(
         updateOnGoingAudio({ ...currentTrack, duration: tempAudio.duration })
       );
-      setIsPlaying(true);
+
       setLastIndex(currentSongIndex);
     }
-  }, [
-    currentSongIndex,
-    onGoingList,
-    lastIndex,
-    isPlaying,
-    load,
-    dispatch,
-    stop,
-  ]);
+  }, [currentSongIndex, onGoingList, lastIndex, playing, load, dispatch, stop]);
 
   useEffect(() => {
     let interval = null;
-    if (isPlaying) {
+    if (playing) {
       interval = setInterval(() => {
         setCurrentTime(getPosition());
       }, 1000);
@@ -88,7 +72,7 @@ const useAudioPlayback = () => {
         clearInterval(interval);
       }
     };
-  }, [getPosition, isPlaying]);
+  }, [getPosition, playing]);
 
   const onNext = useCallback(() => {
     const nextIndex = currentSongIndex + 1;
@@ -123,9 +107,9 @@ const useAudioPlayback = () => {
       dispatch(updateOnGoingList(formattedList));
       dispatch(updateCurrentIndex(newIndex));
       load(formattedList[newIndex].url, { autoplay: true });
-      setIsPlaying(true);
+
       dispatch(updatePlayingStatus({ playing: true }));
-      startPlaying();
+      play();
     } else {
       const selectedIndex = onGoingList.findIndex(
         (audio) => audio.id === item.id
@@ -134,16 +118,16 @@ const useAudioPlayback = () => {
       if (selectedIndex !== currentSongIndex) {
         dispatch(updateCurrentIndex(selectedIndex));
         load(onGoingList[selectedIndex].url, { autoplay: true });
-        setIsPlaying(true);
+
         dispatch(updatePlayingStatus({ playing: true }));
 
-        startPlaying();
+        play();
       } else if (onGoingList[selectedIndex].url !== item.file) {
         load(item.file, { autoplay: true });
-        setIsPlaying(true);
+
         dispatch(updatePlayingStatus({ playing: true }));
 
-        startPlaying();
+        play();
       } else {
         togglePlayPause();
       }
@@ -152,9 +136,9 @@ const useAudioPlayback = () => {
 
   return {
     onAudioPress,
-    play: startPlaying,
-    pause: pausePlaying,
-    isPlaying,
+    play,
+    pause,
+    playing,
     onNext,
     onPrevious,
     stop,

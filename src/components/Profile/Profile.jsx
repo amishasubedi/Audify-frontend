@@ -18,11 +18,11 @@ const Profile = () => {
   const user = useSelector((state) => state.auth.profile);
   const { onAudioPress } = useAudioPlayback();
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data: userProfile } = useFetchProfileById(user.id);
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { onGoingAudio } = useSelector(getPlayerState);
 
   if (!userProfile) {
     return <div>Loading profile...</div>;
@@ -34,12 +34,13 @@ const Profile = () => {
 
   const handleEdit = async (data) => {
     try {
+      setIsLoading(true);
       const client = await getClient();
-      await client.post("/users/check", data);
+      await client.patch("/users/check", data);
 
       queryClient.invalidateQueries("profile-details");
-
       dispatch(updateAlert({ message: "Saved changes", type: "success" }));
+      setIsLoading(false);
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(updateAlert({ message: errorMessage, type: "error" }));
@@ -82,6 +83,7 @@ const Profile = () => {
           onRequestClose={() => {
             setShowModal(false);
           }}
+          isLoading={isLoading}
         />
       </Layout>
     </div>

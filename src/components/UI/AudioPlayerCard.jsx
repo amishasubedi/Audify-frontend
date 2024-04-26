@@ -18,7 +18,7 @@ const AudioPlayerCard = ({
     togglePlayPause,
     onNext,
     onPrevious,
-    isPlaying,
+    playing,
     currentTime,
     seek,
     duration,
@@ -55,7 +55,7 @@ const AudioPlayerCard = ({
           <i className="fa fa-step-backward" aria-hidden="true"></i>
         </PlaybackButton>
         <PlaybackButton size={45} onClick={togglePlayPause}>
-          {isPlaying ? (
+          {playing ? (
             <i className="fa fa-pause" aria-hidden="true"></i>
           ) : (
             <i className="fa fa-play" aria-hidden="true"></i>

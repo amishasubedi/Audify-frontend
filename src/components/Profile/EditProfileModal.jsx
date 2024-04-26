@@ -10,6 +10,7 @@ const EditProfileModal = ({
   initialValue = {},
   onRequestClose,
   onSubmit,
+  isLoading,
 }) => {
   const {
     register,
@@ -96,7 +97,7 @@ const EditProfileModal = ({
             type="submit"
             className="login-btn p-2 text-white rounded-3 mt-4"
           >
-            Save Changes
+            {isLoading ? "Saving changes..." : "Save Changes"}
           </button>
         </div>
       </form>

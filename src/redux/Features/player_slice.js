@@ -4,7 +4,7 @@ const initialState = {
   onGoingAudio: null,
   onGoingList: [],
   currentSongIndex: null,
-  playing: null,
+  playing: false,
 };
 
 const playerSlice = createSlice({
