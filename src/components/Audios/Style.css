@@ -1,24 +1,18 @@
-.wrapper {
-  .row {
-    gap: 2rem;
-  }
-}
-
-.iconcontainer: {
+.iconcontainer {
   height: 70px;
-  aspectratio: 1;
-  borderwidth: 2px;
-  borderradius: 7px;
+  aspect-ratio: 1;
+  border-width: 2px;
+  border-radius: 7px;
   cursor: pointer;
   display: flex;
-  alignitems: center;
-  justifycontent: center;
+  align-items: center;
+  justify-content: center;
   background-color: blue;
 }
 
-.btntitle: {
+.btntitle {
   color: rgba(255, 255, 255, 0.1);
-  margintop: 5px;
+  margin-top: 5px;
 }
 
 .btn {
