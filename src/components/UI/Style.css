@@ -293,7 +293,7 @@
   position: fixed;
   bottom: 120px;
   right: 20px;
-  z-index: 5;
+  z-index: 50;
   background-color: #202020;
   color: white;
   border: 1px solid #383838;

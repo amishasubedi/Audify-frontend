@@ -20,7 +20,7 @@ import PublicUploads from "./PublicUploads";
 const UserProfile = () => {
   const { userId } = useParams();
   const { data: userProfile, isLoading, error } = useFetchProfileById(userId);
-  const [showOptionsModal, setShowOptionsModal] = useState(false);
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
 
   const { profile } = useSelector(getAuthState);
   const { onAudioPress } = useAudioPlayback();
@@ -33,24 +33,23 @@ const UserProfile = () => {
     error: userFollowersError,
   } = useFetchFollowersById(userId);
 
-  const handleonShowFollowers = () => {
-    if (userFollowers.length === 0) {
+  const handleShowFollowers = () => {
+    if (!userFollowers || userFollowers?.length === 0) {
       dispatch(
         updateAlert({
           message: "No Followers yet",
           type: "success",
         })
       );
+    } else {
+      setShowFollowersModal(!showFollowersModal);
     }
-    setShowOptionsModal(!showOptionsModal);
   };
 
-  // Am i in their followers list?
   const isFollowing =
-    userFollowers?.followers?.some((follower) => follower.ID === profile?.id) ??
-    false;
+    userFollowers?.some((follower) => follower.ID === profile?.id) ?? false;
 
-  if (isLoading || userFollowersLoading) {
+  if (isLoading || userFollowersLoading || userFollowersLoading) {
     return <div>Loading...</div>;
   }
 
@@ -109,7 +108,16 @@ const UserProfile = () => {
     }
   };
 
-  const renderOption = (follower) => <span>{follower.name}</span>;
+  const renderFollowersOption = (follower) => (
+    <div className="d-flex align-items-center">
+      <img
+        src={follower.AvatarURL}
+        alt={follower.Name}
+        style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }}
+      />
+      <span>{follower.Name}</span>
+    </div>
+  );
 
   return (
     <div className="pb-5">
@@ -126,13 +134,14 @@ const UserProfile = () => {
           isOwnProfile={Number(userId) === profile.id}
           is_admin={profile?.is_admin}
           onButtonClick={handleButtonClick}
-          onFollowersClick={handleonShowFollowers}
+          onFollowersClick={handleShowFollowers}
         />
 
         <OptionModal
-          show={showOptionsModal}
-          onHide={() => setShowOptionsModal(false)}
+          show={showFollowersModal}
+          onHide={() => setShowFollowersModal(false)}
           options={userFollowers}
+          renderOption={renderFollowersOption}
         />
 
         <main className="p-3 px-5 mt-4 mb-5">
@@ -140,7 +149,6 @@ const UserProfile = () => {
             onAudioClick={onAudioPress}
             name={userProfile.name}
             userId={userProfile.id}
-            renderOption={renderOption}
           />
         </main>
       </Layout>

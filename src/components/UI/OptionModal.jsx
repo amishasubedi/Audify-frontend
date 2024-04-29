@@ -13,7 +13,7 @@ const OptionModal = ({
 
   return (
     <div className="option-modal" style={displayStyle}>
-      {options.map((option, index) => (
+      {options?.map((option, index) => (
         <div
           key={index}
           className="option-modal-item"
