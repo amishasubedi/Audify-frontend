@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateAlert } from "../../redux/Features/alert_slice";
-import { getPlayerState } from "../../redux/Features/player_slice";
 import { getAuthState } from "../../redux/Features/user_slice";
 import Header from "../Home/Header";
 import Layout from "../Home/Layout";
+import OptionModal from "../UI/OptionModal";
 import {
   useFetchFollowersById,
   useFetchProfileById,
@@ -18,11 +18,11 @@ import getClient from "../utils/client";
 import PublicUploads from "./PublicUploads";
 
 const UserProfile = () => {
-  const { userId } = useParams(); // id of user being viewed
+  const { userId } = useParams();
   const { data: userProfile, isLoading, error } = useFetchProfileById(userId);
-  const { onGoingAudio } = useSelector(getPlayerState);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
 
-  const { profile } = useSelector(getAuthState); // my profile
+  const { profile } = useSelector(getAuthState);
   const { onAudioPress } = useAudioPlayback();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -31,7 +31,19 @@ const UserProfile = () => {
     data: userFollowers,
     isLoading: userFollowersLoading,
     error: userFollowersError,
-  } = useFetchFollowersById(userId); // followers of user being viewed
+  } = useFetchFollowersById(userId);
+
+  const handleonShowFollowers = () => {
+    if (userFollowers.length === 0) {
+      dispatch(
+        updateAlert({
+          message: "No Followers yet",
+          type: "success",
+        })
+      );
+    }
+    setShowOptionsModal(!showOptionsModal);
+  };
 
   // Am i in their followers list?
   const isFollowing =
@@ -97,6 +109,8 @@ const UserProfile = () => {
     }
   };
 
+  const renderOption = (follower) => <span>{follower.name}</span>;
+
   return (
     <div className="pb-5">
       <Layout>
@@ -112,6 +126,13 @@ const UserProfile = () => {
           isOwnProfile={Number(userId) === profile.id}
           is_admin={profile?.is_admin}
           onButtonClick={handleButtonClick}
+          onFollowersClick={handleonShowFollowers}
+        />
+
+        <OptionModal
+          show={showOptionsModal}
+          onHide={() => setShowOptionsModal(false)}
+          options={userFollowers}
         />
 
         <main className="p-3 px-5 mt-4 mb-5">
@@ -119,6 +140,7 @@ const UserProfile = () => {
             onAudioClick={onAudioPress}
             name={userProfile.name}
             userId={userProfile.id}
+            renderOption={renderOption}
           />
         </main>
       </Layout>

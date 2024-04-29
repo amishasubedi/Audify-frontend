@@ -3,7 +3,6 @@ import { useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateAlert } from "../../redux/Features/alert_slice";
-import { getPlayerState } from "../../redux/Features/player_slice";
 import { getAuthState } from "../../redux/Features/user_slice";
 import AudioList from "../Audios/AudioList";
 import SuggestionsList from "../Audios/SuggestionList";
@@ -19,7 +18,7 @@ const PlaylistDetail = () => {
   const queryClient = useQueryClient();
   const { id } = useParams();
   const { onAudioPress } = useAudioPlayback();
-  const { onGoingAudio } = useSelector(getPlayerState);
+
   const dispatch = useDispatch();
   const { profile } = useSelector(getAuthState);
 

@@ -1,6 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { getPlayerState } from "../../redux/Features/player_slice";
 import Header from "../Home/Header";
 import Layout from "../Home/Layout";
 import useAudioPlayback from "../Hooks/useAudioPlayback";

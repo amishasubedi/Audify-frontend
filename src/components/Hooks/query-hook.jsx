@@ -200,7 +200,7 @@ export const useFetchUploadsById = (userId) => {
 const fetchFollowersById = async (userId) => {
   const client = await getClient();
   const { data } = await client(`/profile/followers/${userId}`);
-  return data;
+  return data.followers;
 };
 
 export const useFetchFollowersById = (userId) => {
@@ -209,6 +209,27 @@ export const useFetchFollowersById = (userId) => {
   return useQuery(
     ["profile-followers", userId],
     () => fetchFollowersById(userId),
+    {
+      onError: (err) => {
+        const errorMessage = catchAsyncError(err);
+        dispatch(updateAlert({ message: errorMessage, type: "error" }));
+      },
+    }
+  );
+};
+
+const fetchFollowingsById = async (userId) => {
+  const client = await getClient();
+  const { data } = await client(`/profile/followings/${userId}`);
+  return data.following;
+};
+
+export const useFetchFollowingsById = (userId) => {
+  const dispatch = useDispatch();
+
+  return useQuery(
+    ["profile-followings", userId],
+    () => fetchFollowingsById(userId),
     {
       onError: (err) => {
         const errorMessage = catchAsyncError(err);

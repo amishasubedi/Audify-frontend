@@ -1,6 +1,6 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
 import { editProfileSchema } from "../utils/validators";
@@ -17,6 +17,7 @@ const EditProfileModal = ({
     handleSubmit,
     reset,
     setValue,
+    watch,
     trigger,
     formState: { errors },
   } = useForm({
@@ -28,37 +29,48 @@ const EditProfileModal = ({
   });
 
   useEffect(() => {
-    reset({
-      name: initialValue.name || "",
-      bio: initialValue.bio || "",
-      file: initialValue.avatarURL,
-    });
+    if (Object.keys(initialValue).length) {
+      reset({
+        name: initialValue.name || "",
+        bio: initialValue.bio || "",
+        avatarURL: initialValue.avatarURL,
+      });
+    }
   }, [initialValue, reset]);
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log(value, name, type);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const handleFormSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("bio", data.bio);
-
     if (data.picFile) {
       formData.append("picFile", data.picFile);
     }
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     onSubmit(formData);
     onRequestClose();
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0] || null;
     if (file) {
       setValue("picFile", file, { shouldValidate: true });
-    } else {
-      setValue("picFile", null);
+      trigger("picFile");
     }
-    trigger("picFile");
   };
 
   return (
-    <ModalContainer show={visible} onHide={onRequestClose} className>
+    <ModalContainer show={visible} onHide={onRequestClose}>
       <form
         className="py-5 px-4"
         encType="multipart/form-data"

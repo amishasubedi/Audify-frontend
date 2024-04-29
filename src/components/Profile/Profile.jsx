@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAlert } from "../../redux/Features/alert_slice";
-import { getPlayerState } from "../../redux/Features/player_slice";
 import Header from "../Home/Header";
 import Layout from "../Home/Layout";
 import { useFetchProfileById } from "../Hooks/query-hook";

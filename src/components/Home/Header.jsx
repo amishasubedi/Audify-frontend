@@ -115,7 +115,7 @@ const Header = () => {
               color: "#fff",
             }}
           >
-            {profile.name.charAt(0)}
+            {profile?.name ? profile.name.charAt(0) : "U"}
           </button>
           <ul
             className="dropdown-menu bg-dark"

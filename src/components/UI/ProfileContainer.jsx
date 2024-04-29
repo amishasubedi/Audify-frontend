@@ -14,6 +14,8 @@ const ProfileContainer = ({
   OnAddPictureClick,
   onButtonClick,
   buttonTitle,
+  onFollowersClick,
+  onFollowingsClick,
 }) => {
   const hasAvatar =
     avatar &&
@@ -72,8 +74,18 @@ const ProfileContainer = ({
             </button>
           )}
 
-          <span>{followers} Followers</span>
-          <span>{followings} Followings</span>
+          <button
+            className="bg-dark text-white rounded-3"
+            onClick={onFollowersClick}
+          >
+            {followers} Followers
+          </button>
+          <button
+            className="bg-dark text-white rounded-3"
+            onClick={onFollowingsClick}
+          >
+            {followings} Followings
+          </button>
         </div>
       </div>
     </div>

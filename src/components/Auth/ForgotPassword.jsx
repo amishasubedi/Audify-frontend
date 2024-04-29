@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
+
 import FormField from "../UI/FormField";
 import catchAsyncError from "../utils/AsyncErrors";
-
-import {
-  getEmailValidationRules,
-  getPasswordValidationRules,
-} from "../utils/validators";
-import {
-  updateLoggedInState,
-  updateProfile,
-} from "../../redux/Features/user_slice";
 import { useDispatch } from "react-redux";
 import AuthLayout from "./AuthLayout";
 import { updateAlert } from "../../redux/Features/alert_slice";
