@@ -1,28 +1,22 @@
 import React from "react";
 
-const OptionModal = ({
-  show,
-  options,
-  onHide,
-  onOptionClick,
-  renderOption,
-}) => {
+const OptionModal = ({ show, options, onHide, onOptionClick }) => {
   const displayStyle = {
     display: show ? "block" : "none",
   };
 
   return (
     <div className="option-modal" style={displayStyle}>
-      {options?.map((option, index) => (
+      {options.map((playlist) => (
         <div
-          key={index}
+          key={playlist.id}
           className="option-modal-item"
           onClick={() => {
-            onOptionClick(index);
+            onOptionClick(playlist.id);
             onHide();
           }}
         >
-          {renderOption(option)}
+          {playlist.title}
         </div>
       ))}
     </div>

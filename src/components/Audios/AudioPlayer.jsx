@@ -57,8 +57,6 @@ const AudioPlayer = () => {
     }
   };
 
-  const renderPlaylistOption = (playlist) => <span>{playlist.title}</span>;
-
   return (
     <>
       <AudioPlayerCard
@@ -78,7 +76,6 @@ const AudioPlayer = () => {
         onHide={() => setShowOptionsModal(false)}
         options={data}
         onOptionClick={handleOnAddToPlaylist}
-        renderOption={renderPlaylistOption}
       />
     </>
   );
