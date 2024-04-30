@@ -8,11 +8,6 @@ const FormField = ({
   type = "text",
   children,
 }) => {
-  // const handleFileChange = (e) => {
-  //   if (onChange) {
-  //     onChange(e);
-  //   }
-  // };
   return (
     <div className="form-floating mb-3">
       {type === "select" ? (

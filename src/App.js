@@ -18,6 +18,8 @@ import { getPlayerState } from "./redux/Features/player_slice";
 import AudioPlayer from "./components/Audios/AudioPlayer";
 import Explore from "./components/Audios/Explore";
 import SearchResults from "./components/Audios/SearchResults";
+import RecommendedProfile from "./components/Profile/RecommendedProfile";
+import PublicPlaylist from "./components/Playlist/PublicPlaylist";
 
 function App() {
   const { onGoingAudio } = useSelector(getPlayerState);
@@ -31,6 +33,8 @@ function App() {
           <Route path="sign-up" element={<Signup />} />
           <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="rec" element={<RecommendedProfile />} />
+          <Route path="rec1" element={<PublicPlaylist />} />
 
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<Home />} />

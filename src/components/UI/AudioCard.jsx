@@ -8,7 +8,7 @@ const AudioCard = ({ title, artist, artistId, imageUrl, playing, onClick }) => {
     <div className="custom-card" onClick={onClick}>
       <img src={imageUrl} alt={title} className="custom-img" />
       <div className="card-body">
-        <h5 className="card-title p-2">{title}</h5>
+        <h5 className="card-title p-2 text-truncate">{title}</h5>
         <div className="p-2">
           <ArtistLink name={artist} artistId={artistId} />
         </div>

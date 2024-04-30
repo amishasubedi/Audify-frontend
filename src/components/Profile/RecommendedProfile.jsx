@@ -18,7 +18,7 @@ const RecommendedProfile = () => {
 
   return (
     <div className="container-fluid">
-      <div className="d-flex flex-nowrap playlist-scroll-container">
+      <div className="d-flex flex-nowrap user-scroll-container">
         {data.map((user) => (
           <ArtistCard
             key={user.id}

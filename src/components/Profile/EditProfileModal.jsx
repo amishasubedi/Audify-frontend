@@ -1,49 +1,38 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
 import { editProfileSchema } from "../utils/validators";
 
 const EditProfileModal = ({
   visible,
-  initialValue = {},
+  initialValue,
   onRequestClose,
   onSubmit,
   isLoading,
 }) => {
   const {
-    register,
+    control,
     handleSubmit,
-    reset,
-    setValue,
     watch,
-    trigger,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(editProfileSchema),
     defaultValues: {
-      name: "",
-      bio: "",
+      name: initialValue.name || "",
+      bio: initialValue.bio || "",
+      picFile: null,
     },
   });
 
+  // Use useEffect to watch the picFile and update it in the form state
+  const picFile = watch("picFile");
   useEffect(() => {
-    if (Object.keys(initialValue).length) {
-      reset({
-        name: initialValue.name || "",
-        bio: initialValue.bio || "",
-        avatarURL: initialValue.avatarURL,
-      });
+    if (picFile && picFile.length > 0) {
+      setValue("picFile", picFile[0], { shouldDirty: true });
     }
-  }, [initialValue, reset]);
-
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      console.log(value, name, type);
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [picFile, setValue]);
 
   const handleFormSubmit = (data) => {
     const formData = new FormData();
@@ -51,67 +40,47 @@ const EditProfileModal = ({
     formData.append("bio", data.bio);
     if (data.picFile) {
       formData.append("picFile", data.picFile);
-    }
-
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+    } else {
+      console.log("No file included in the submission");
     }
 
     onSubmit(formData);
     onRequestClose();
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0] || null;
-    if (file) {
-      setValue("picFile", file, { shouldValidate: true });
-      trigger("picFile");
-    }
-  };
-
   return (
     <ModalContainer show={visible} onHide={onRequestClose}>
       <form
-        className="py-5 px-4"
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleFormSubmit)}
         noValidate
       >
-        <div className="text-white title-header mb-5">Edit Profile</div>
-
-        <FormField
-          id="name"
-          label="Name"
-          type="text"
-          register={register}
-          errors={errors}
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => <input {...field} placeholder="Name" />}
         />
-
-        <FormField
-          id="bio"
-          label="Bio"
-          type="text"
-          register={register}
-          errors={errors}
+        <Controller
+          name="bio"
+          control={control}
+          render={({ field }) => <input {...field} placeholder="Bio" />}
         />
-
-        <FormField
-          id="picFile"
-          label="Profile Picture"
-          type="file"
-          register={register}
-          errors={errors}
-          onChange={handleFileChange}
+        <Controller
+          name="picFile"
+          control={control}
+          render={({ field }) => (
+            <input
+              type="file"
+              onChange={(e) => {
+                const files = e.target.files;
+                field.onChange(files[0]); // Update the form directly with the file
+              }}
+            />
+          )}
         />
-
-        <div className="text-center">
-          <button
-            type="submit"
-            className="login-btn p-2 text-white rounded-3 mt-4"
-          >
-            {isLoading ? "Saving changes..." : "Save Changes"}
-          </button>
-        </div>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Saving changes..." : "Save Changes"}
+        </button>
       </form>
     </ModalContainer>
   );

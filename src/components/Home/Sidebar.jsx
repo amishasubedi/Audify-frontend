@@ -101,13 +101,18 @@ const Sidebar = () => {
         }}
         textColor="#fff"
       >
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+        <CDBSidebarHeader>
           <a
-            href="/home"
-            className="text-decoration-none"
+            className="text-decoration-none d-flex align-items-center"
             style={{ color: "inherit" }}
           >
-            Audify
+            <img
+              src="https://atlas-content-cdn.pixelsquid.com/stock-images/symbol-music-note-red-musical-zeeGmeA-600.jpg"
+              alt="Audify Logo"
+              className="img-fluid"
+              style={{ maxHeight: "40px" }}
+            />
+            <span className="ms-2">Audify</span>
           </a>
         </CDBSidebarHeader>
 
