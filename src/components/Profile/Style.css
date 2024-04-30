@@ -70,3 +70,42 @@
 .audio-player-spacer {
   height: 10px;
 }
+
+.playlist-scroll-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  gap: 16px;
+}
+
+.playlist-scroll-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.playlist-scroll-container:hover {
+  overflow-x: auto;
+}
+
+.playlist-scroll-container::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+.playlist-scroll-container::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+.playlist-scroll-container:hover::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+.playlist-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+.playlist-scroll-container:hover {
+  scrollbar-color: #666 transparent;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -6,7 +6,6 @@ import { updateAlert } from "../../redux/Features/alert_slice";
 import { getAuthState } from "../../redux/Features/user_slice";
 import Header from "../Home/Header";
 import Layout from "../Home/Layout";
-import OptionModal from "../UI/OptionModal";
 import {
   useFetchFollowersById,
   useFetchProfileById,
@@ -20,7 +19,6 @@ import PublicUploads from "./PublicUploads";
 const UserProfile = () => {
   const { userId } = useParams();
   const { data: userProfile, isLoading, error } = useFetchProfileById(userId);
-  const [showFollowersModal, setShowFollowersModal] = useState(false);
 
   const { profile } = useSelector(getAuthState);
   const { onAudioPress } = useAudioPlayback();
@@ -32,19 +30,6 @@ const UserProfile = () => {
     isLoading: userFollowersLoading,
     error: userFollowersError,
   } = useFetchFollowersById(userId);
-
-  const handleShowFollowers = () => {
-    if (!userFollowers || userFollowers?.length === 0) {
-      dispatch(
-        updateAlert({
-          message: "No Followers yet",
-          type: "success",
-        })
-      );
-    } else {
-      setShowFollowersModal(!showFollowersModal);
-    }
-  };
 
   const isFollowing =
     userFollowers?.some((follower) => follower.ID === profile?.id) ?? false;
@@ -108,17 +93,6 @@ const UserProfile = () => {
     }
   };
 
-  const renderFollowersOption = (follower) => (
-    <div className="d-flex align-items-center">
-      <img
-        src={follower.AvatarURL}
-        alt={follower.Name}
-        style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }}
-      />
-      <span>{follower.Name}</span>
-    </div>
-  );
-
   return (
     <div className="pb-5">
       <Layout>
@@ -134,14 +108,6 @@ const UserProfile = () => {
           isOwnProfile={Number(userId) === profile.id}
           is_admin={profile?.is_admin}
           onButtonClick={handleButtonClick}
-          onFollowersClick={handleShowFollowers}
-        />
-
-        <OptionModal
-          show={showFollowersModal}
-          onHide={() => setShowFollowersModal(false)}
-          options={userFollowers}
-          renderOption={renderFollowersOption}
         />
 
         <main className="p-3 px-5 mt-4 mb-5">

@@ -76,8 +76,10 @@ const Header = () => {
     if (event.key === "Enter") {
       try {
         const client = await getClient();
+        const capitalizedQuery =
+          searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1);
         const response = await client.get(
-          `/audio/search?q=${encodeURIComponent(searchQuery)}`
+          `/audio/search?q=${encodeURIComponent(capitalizedQuery)}`
         );
         navigate("/search-results", { state: { results: response.data } });
       } catch (error) {
@@ -94,7 +96,7 @@ const Header = () => {
         <input
           type="text"
           className="form-control"
-          placeholder="Search songs, albums, artists, podcasts"
+          placeholder="Search artists"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyUp={handleSearch}

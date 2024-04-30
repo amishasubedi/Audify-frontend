@@ -31,9 +31,9 @@ function App() {
           <Route path="sign-up" element={<Signup />} />
           <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="/home" element={<Home />} />
 
           <Route element={<PrivateRoutes />}>
+            <Route path="/home" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/search-results" element={<SearchResults />} />
 
