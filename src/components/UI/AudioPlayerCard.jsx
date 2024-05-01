@@ -98,13 +98,6 @@ const AudioPlayerCard = ({
         >
           <i className="fa fa-plus-square" aria-hidden="true"></i>
         </PlaybackButton>
-
-        <PlaybackButton size={45} ignoreContainer={true}>
-          <i className="fa fa-volume-up" aria-hidden="true"></i>
-        </PlaybackButton>
-        <PlaybackButton size={45} ignoreContainer={true}>
-          <i className="fa fa-caret-up" aria-hidden="true"></i>
-        </PlaybackButton>
       </div>
     </div>
   );
