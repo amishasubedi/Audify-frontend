@@ -103,6 +103,7 @@ const Sidebar = () => {
       >
         <CDBSidebarHeader>
           <a
+            href="/home"
             className="text-decoration-none d-flex align-items-center"
             style={{ color: "inherit" }}
           >
@@ -146,6 +147,7 @@ const Sidebar = () => {
               onRequestClose={() => {
                 setShowModal(false);
               }}
+              isEditing={false}
               onSubmit={handleUpload}
             />
 

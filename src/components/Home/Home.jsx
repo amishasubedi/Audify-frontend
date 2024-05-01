@@ -55,10 +55,10 @@ const Home = () => {
                 <PublicPlaylist />
               </div>
             </div>
-            <div className="px-5">
+            <div className="px-5 mb-5">
               <div className="px-5 mt-5">
                 <p className="text-secondary fw-bold">EXPLORE MORE ARTISTS</p>
-                <h1 className="text-white fw-bold px-1 mb-4">
+                <h1 className="text-white fw-bold px-1 mb-5">
                   Recommended Artists
                 </h1>
               </div>

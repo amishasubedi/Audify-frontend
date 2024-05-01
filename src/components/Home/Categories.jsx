@@ -18,7 +18,7 @@ const Categories = () => {
     { name: "Relax", path: "/category/relax" },
     { name: "Gym", path: "/category/gym" },
     { name: "Study", path: "/category/study" },
-    { name: "Energise", path: "/category/party" },
+    { name: "Energise", path: "/category/energise" },
     { name: "Commute", path: "/category/commute" },
     { name: "Rock", path: "/category/rock" },
     { name: "Podcast", path: "/category/podcast" },

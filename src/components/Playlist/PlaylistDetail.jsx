@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -13,14 +13,20 @@ import useAudioPlayback from "../Hooks/useAudioPlayback";
 import PlaylistDetailCard from "../UI/PlaylistDetailCard";
 import catchAsyncError from "../utils/AsyncErrors";
 import getClient from "../utils/client";
+import PlaylistModal from "../Playlist/PlaylistModal";
 
 const PlaylistDetail = () => {
   const queryClient = useQueryClient();
   const { id } = useParams();
   const { onAudioPress } = useAudioPlayback();
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
   const { profile } = useSelector(getAuthState);
+
+  const handleOnEditPlaylist = () => {
+    setShowModal(true);
+  };
 
   const { data, isLoading, error } = useFetchPlaylistDetail(id);
 
@@ -60,6 +66,34 @@ const PlaylistDetail = () => {
     }
   };
 
+  const handleEditPlaylist = async (formData) => {
+    try {
+      const payload = {
+        id: Number(id),
+        title: formData.title,
+        visibility: formData.visibility,
+      };
+
+      const client = await getClient();
+      await client.patch(`/playlist/update-playlist`, payload);
+      console.log("form data", payload);
+
+      queryClient.invalidateQueries("playlist-details");
+
+      dispatch(
+        updateAlert({
+          message: "Playlist updated successfully",
+          type: "success",
+        })
+      );
+
+      setShowModal(false);
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(updateAlert({ message: errorMessage, type: "error" }));
+    }
+  };
+
   return (
     <Layout>
       <Header />
@@ -72,6 +106,7 @@ const PlaylistDetail = () => {
             artist={data.owner_name}
             coverURL={data.coverurl}
             isPublic={!isPlaylistOwnedByUser(data.owner_id)}
+            onEditPlaylistClick={() => handleOnEditPlaylist()}
           />
           {data.song_count === 0 ? (
             <>
@@ -95,6 +130,17 @@ const PlaylistDetail = () => {
           )}
         </div>
       </div>
+
+      <PlaylistModal
+        visible={showModal}
+        isEditing={true}
+        initialValue={{
+          title: data.title,
+          visibility: data.visibility,
+        }}
+        onRequestClose={() => setShowModal(false)}
+        onSubmit={handleEditPlaylist}
+      />
     </Layout>
   );
 };

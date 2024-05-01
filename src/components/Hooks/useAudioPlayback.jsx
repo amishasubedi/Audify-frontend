@@ -14,7 +14,7 @@ const useAudioPlayback = () => {
   const { onGoingList, currentSongIndex } = useSelector(getPlayerState);
   const dispatch = useDispatch();
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(206);
   const [lastIndex, setLastIndex] = useState(currentSongIndex);
 
   const { load, play, pause, stop, seek, playing, getPosition } =

@@ -7,6 +7,7 @@ const PlaylistDetailCard = ({
   artist,
   onClick,
   coverURL,
+  onEditPlaylistClick,
   isPublic = false,
 }) => {
   return (
@@ -29,7 +30,10 @@ const PlaylistDetailCard = ({
         </p>
         <p className="playlist-tracks text-white">{`${count} tracks`}</p>
         {!isPublic && (
-          <button className="login-btn p-2 text-white rounded-3">
+          <button
+            className="login-btn p-2 text-white rounded-3"
+            onClick={onEditPlaylistClick}
+          >
             Edit playlist
           </button>
         )}

@@ -1,54 +1,51 @@
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { playlistUploadSchema, editPlaylistSchema } from "../utils/validators";
 import FormField from "../UI/FormField";
 import ModalContainer from "../UI/ModalContainer";
-import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
-import { playlistUploadSchema } from "../utils/validators";
-import { yupResolver } from "@hookform/resolvers/yup";
 
-export const visibility = ["public", "private"];
+export const visibilityOptions = ["public", "private"];
 
-const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
+const PlaylistModal = ({
+  visible,
+  isEditing = false,
+  initialValue = { title: "", visibility: "" },
+  onRequestClose,
+  onSubmit,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
-    resolver: yupResolver(playlistUploadSchema),
-  });
-
-  const [playlistInfo, setPlaylistInfo] = useState({
-    title: "",
-    visibility: false,
+    resolver: yupResolver(
+      isEditing ? editPlaylistSchema : playlistUploadSchema
+    ),
+    defaultValues: initialValue,
   });
 
   const handleClose = () => {
-    setPlaylistInfo({ title: "", visibility: false });
     onRequestClose();
   };
 
   const handleFormSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("visibility", data.visibility);
-    onSubmit(formData);
+    onSubmit(data);
     handleClose();
   };
 
   useEffect(() => {
-    if (initialValue) {
-      setPlaylistInfo({ ...initialValue });
-    }
-  }, [initialValue]);
+    setValue("title", initialValue.title || "");
+    setValue("visibility", initialValue.visibility || "");
+  }, [initialValue, setValue]);
 
   return (
     <ModalContainer show={visible} onHide={handleClose}>
-      <form
-        className="py-5 px-4"
-        encType="multipart/form-data"
-        onSubmit={handleSubmit(handleFormSubmit)}
-        noValidate
-      >
-        <div className="text-white title-header mb-5">New Playlist</div>
+      <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+        <div className="text-white title-header mb-5">
+          {isEditing ? "Edit Playlist" : "New Playlist"}
+        </div>
 
         <FormField
           id="title"
@@ -71,19 +68,22 @@ const PlaylistModal = ({ visible, initialValue, onRequestClose, onSubmit }) => {
             {...register("visibility")}
           >
             <option value="">Select Visibility Option</option>
-            {visibility.map((category) => (
-              <option key={category} value={category}>
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+            {visibilityOptions.map((option) => (
+              <option key={option} value={option}>
+                {option.charAt(0).toUpperCase() + option.slice(1)}{" "}
+                {option === "public" && <i className="fas fa-globe" />}
+                {option === "private" && <i className="fas fa-lock" />}
               </option>
             ))}
           </select>
         </FormField>
+
         <div className="text-center">
           <button
             type="submit"
             className="login-btn p-2 text-white rounded-3 mt-4"
           >
-            Create New Playlist
+            {isEditing ? "Save Changes" : "Create New Playlist"}
           </button>
         </div>
       </form>

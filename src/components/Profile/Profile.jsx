@@ -12,6 +12,7 @@ import getClient from "../utils/client";
 import EditProfileModal from "./EditProfileModal";
 import PersonalUploads from "./PersonalUploads";
 import "./Style.css";
+import useFavorite from "../Hooks/useAPI";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.profile);
@@ -22,6 +23,12 @@ const Profile = () => {
   const { data: userProfile } = useFetchProfileById(user.id);
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+
+  const { onAddToFavorite } = useFavorite();
+
+  const handleAddToFavorite = async (audioid) => {
+    await onAddToFavorite(audioid);
+  };
 
   if (!userProfile) {
     return <div>Loading profile...</div>;
@@ -70,9 +77,11 @@ const Profile = () => {
         />
 
         <main className="p-3 px-5 mt-4 mb-5">
-          <PersonalUploads onAudioClick={onAudioPress} />
+          <PersonalUploads
+            onAudioClick={onAudioPress}
+            onAddToFavoriteClick={handleAddToFavorite}
+          />
           <div className="audio-player-spacer"></div>{" "}
-          {/* This is the new spacer div */}
         </main>
 
         <EditProfileModal

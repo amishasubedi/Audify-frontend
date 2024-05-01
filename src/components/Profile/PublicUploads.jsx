@@ -1,15 +1,71 @@
-import { useSelector } from "react-redux";
-import { getPlayerState } from "../../redux/Features/player_slice";
-import { useFetchUploadsById } from "../Hooks/query-hook";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useFetchUploadsById,
+  useFetchPersonalPlaylist,
+} from "../Hooks/query-hook";
 import AudioListCard from "../UI/AudioListCard";
+import { updateAlert } from "../../redux/Features/alert_slice";
+import { getPlayerState } from "../../redux/Features/player_slice";
+import useFavorite from "../Hooks/useAPI";
+import catchAsyncError from "../utils/AsyncErrors";
+import OptionModal from "../UI/OptionModal";
 
 const PublicUploads = ({ onAudioClick, userId }) => {
+  const dispatch = useDispatch();
   const { data, isLoading } = useFetchUploadsById(userId);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
   const { onGoingAudio, playing } = useSelector(getPlayerState);
+  const { onAddToFavorite, addSongToPlaylist } = useFavorite();
+  const { data: playlist } = useFetchPersonalPlaylist();
+  const [audioIdToAdd, setAudioIdToAdd] = useState(null);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleAddToFavorite = async (audioId) => {
+    await onAddToFavorite(audioId);
+  };
+
+  const handleonSaveToPlaylistClick = (audioId) => {
+    if (!playlist || playlist.length === 0) {
+      dispatch(
+        updateAlert({
+          message: "Please create a playlist first",
+          type: "error",
+        })
+      );
+    } else {
+      setShowOptionsModal(true);
+      setAudioIdToAdd(audioId);
+    }
+  };
+
+  const handleOnAddToPlaylist = async (audioId, playlistId) => {
+    try {
+      await addSongToPlaylist(audioId, playlistId);
+      setShowOptionsModal(false);
+
+      const playlistName =
+        playlist.find((p) => p.id === playlistId)?.title ||
+        "the selected playlist";
+      dispatch(
+        updateAlert({
+          message: `Saved to ${playlistName}`,
+          type: "success",
+        })
+      );
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(
+        updateAlert({
+          message: errorMessage,
+          type: "error",
+        })
+      );
+    }
+  };
 
   return (
     <div>
@@ -26,10 +82,22 @@ const PublicUploads = ({ onAudioClick, userId }) => {
                 imageUrl={audio.poster}
                 category={audio.category}
                 duration={audio.duration}
+                onAddToFavoriteClick={() => handleAddToFavorite(audio.id)}
                 onClick={() => onAudioClick(audio, data)}
                 playing={playing.playing && audio.id === onGoingAudio?.id}
+                onAddToPlaylistClick={() =>
+                  handleonSaveToPlaylistClick(audio.id)
+                }
               />
             ))}
+            <OptionModal
+              show={showOptionsModal}
+              onHide={() => setShowOptionsModal(false)}
+              options={playlist}
+              onOptionClick={(playlistId) =>
+                handleOnAddToPlaylist(audioIdToAdd, playlistId)
+              }
+            />
           </tbody>
         </table>
       </div>
