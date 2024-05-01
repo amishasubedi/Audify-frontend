@@ -127,6 +127,7 @@ const AudioForm = ({ onSubmit, isLoading }) => {
                 <button
                   type="submit"
                   className="login-btn p-2 text-white rounded-3 mt-4"
+                  disabled={isLoading}
                 >
                   {isLoading ? "Uploading audio..." : "Upload"}
                 </button>

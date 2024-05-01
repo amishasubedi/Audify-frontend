@@ -147,7 +147,6 @@ const Sidebar = () => {
               onRequestClose={() => {
                 setShowModal(false);
               }}
-              isEditing={false}
               onSubmit={handleUpload}
             />
 

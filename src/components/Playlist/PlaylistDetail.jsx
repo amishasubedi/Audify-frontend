@@ -13,7 +13,7 @@ import useAudioPlayback from "../Hooks/useAudioPlayback";
 import PlaylistDetailCard from "../UI/PlaylistDetailCard";
 import catchAsyncError from "../utils/AsyncErrors";
 import getClient from "../utils/client";
-import PlaylistModal from "../Playlist/PlaylistModal";
+import EditPlaylistModal from "./EditPlaylistModal";
 
 const PlaylistDetail = () => {
   const queryClient = useQueryClient();
@@ -131,15 +131,14 @@ const PlaylistDetail = () => {
         </div>
       </div>
 
-      <PlaylistModal
+      <EditPlaylistModal
         visible={showModal}
-        isEditing={true}
         initialValue={{
           title: data.title,
           visibility: data.visibility,
         }}
         onRequestClose={() => setShowModal(false)}
-        onSubmit={handleEditPlaylist}
+        onUpdate={handleEditPlaylist}
       />
     </Layout>
   );
